@@ -1,0 +1,3 @@
+touch `find com.simlike.simscript.ui/src -name *.xtend`
+touch `find com.simlike.simscript.generator/src -name *.xtend`
+      # most likely, SimScript-UI in such a way that the generator needs re-building as well

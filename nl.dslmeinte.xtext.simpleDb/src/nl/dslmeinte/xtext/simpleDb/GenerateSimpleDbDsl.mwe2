@@ -1,0 +1,75 @@
+module nl.dslmeinte.xtext.simpleDb.GenerateSimpleDbDsl
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.xtext.generator.*
+import org.eclipse.xtext.ui.generator.*
+
+var grammarURI = "classpath:/nl/dslmeinte/xtext/simpleDb/SimpleDbDsl.xtext"
+var file.extensions = "simple_db"
+var projectName = "nl.dslmeinte.xtext.simpleDb"
+var runtimeProject = "../${projectName}"
+
+Workflow {
+
+    bean = StandaloneSetup {
+        scanClassPath = true
+        platformUri = "${runtimeProject}/.."
+        registerGeneratedEPackage = "com.simlike.simscript.structure.structureDsl.StructureDslPackage"
+        registerGenModelFile = "platform:/resource/com.simlike.simscript.structure/src-gen/com/simlike/simscript/structure/SimStructureDsl.genmodel"
+    }
+
+    component = DirectoryCleaner {
+        directory = "${runtimeProject}/src-gen/nl"
+    }
+
+    component = DirectoryCleaner {
+        directory = "${runtimeProject}.ui/src-gen/nl"
+    }
+
+    component = Generator {
+
+        pathRtProject = runtimeProject
+        pathUiProject = "${runtimeProject}.ui"
+        pathTestProject = "${runtimeProject}.tests"
+        projectNameRt = projectName
+        projectNameUi = "${projectName}.ui"
+
+        language = {
+            uri = grammarURI
+            fileExtensions = file.extensions
+
+            fragment = ecore.EcoreGeneratorFragment {}
+            fragment = grammarAccess.GrammarAccessFragment {}
+            fragment = resourceFactory.ResourceFactoryFragment { fileExtensions = file.extensions }
+            fragment = parser.antlr.XtextAntlrGeneratorFragment {}
+            fragment = scoping.ImportNamespacesScopingFragment { generateStub = false }
+            fragment = exporting.SimpleNamesFragment {}
+            fragment = validation.JavaValidatorFragment {
+            //    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
+            //    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+            }
+
+            fragment = formatting.FormatterFragment {}
+            fragment = serializer.SerializerFragment {}
+
+            fragment = generator.GeneratorFragment {
+                generateMwe = false
+                generateJavaMain = false
+            }
+            fragment = builder.BuilderIntegrationFragment {}
+
+            fragment = parser.antlr.XtextAntlrUiGeneratorFragment {}
+            fragment = contentAssist.JavaBasedContentAssistFragment {}
+            fragment = labeling.LabelProviderFragment {}
+            fragment = outline.OutlineTreeProviderFragment {}
+            fragment = outline.QuickOutlineFragment {}
+            fragment = quickfix.QuickfixProviderFragment {}
+
+            fragment = refactoring.RefactorElementNameFragment {}
+            fragment = templates.CodetemplatesGeneratorFragment {}
+            fragment = compare.CompareFragment { fileExtensions = file.extensions }
+        }
+
+    }
+
+}

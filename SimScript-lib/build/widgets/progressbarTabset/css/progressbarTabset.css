@@ -1,0 +1,95 @@
+.progressBar {
+	width:100%;
+	display:block;
+	clear:both;
+}
+
+.option {
+	/*use percentage for width number of options 
+	33.4% for 3 items*/
+	display: inline-block;
+	position: relative;
+	overflow: visible;
+	height: 56px;
+	margin-right:-5px;
+}
+
+.option .bar {
+	height:50px;
+	margin-top:6px;
+	width:50%;
+	z-index:1;
+	position:absolute;
+	top:0px;
+	background:url(img/unselectedBlueBar.png) repeat-x center;
+}
+
+.option .barLeft {
+	left:0px;
+}
+
+.option .barRight {
+	right:0px;
+}
+
+.option .barActive {
+	background:url(img/selectedBlueBar.png) repeat-x center;
+}
+
+.option .num, .option .numActive {
+	height:50px;
+	width:50px;
+	line-height:50px;
+	font-size:30px;
+	margin:auto;
+	position:relative;
+	z-index:99;
+	margin-top:6px;
+	clear:both;
+	text-align:center;
+}
+
+.option .num {
+	background:url(img/unselectedBlueCircle.png) no-repeat;
+}
+
+.option .numActive {
+	background:url(img/selectedBlueCircle.png) no-repeat;
+}
+
+.option .num span, .option .numActive span {
+	position:relative;
+	right:1px;
+	color:#FFFFFF;
+	font-weight:bold;
+}
+
+.optionName {
+	position:relative;
+	left:50%;
+	margin-left:30px;
+	bottom:50px;
+}
+
+.buttonContainer {
+	width: 100%;
+	position: relative;
+}
+
+.prevButton {
+	min-width: 28px;
+	height: 32px;
+	background: url(img/prevArrow.png) no-repeat left center;
+	position: absolute;
+	left: 100px;
+	cursor: pointer;
+}
+
+.nextButton {
+	width: 28px;
+	height: 32px;
+	background: url(img/nextArrow.png) no-repeat right center;
+	position: absolute;
+	right: 100px;
+	cursor: pointer;
+}

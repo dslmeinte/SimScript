@@ -1,0 +1,43 @@
+ui-module
+
+screen form() {
+
+	values {
+		wb = new WrappedBool()
+	}
+
+	embed subForm(wb=wb)
+
+}
+
+component subForm(wb : WrappedBool) {
+
+	values {
+		displayBool = true
+	}
+
+	block(header={"Sub form"}) {
+		table {
+			"Display bool?" { input(displayBool) }
+		}
+		when(displayBool) {
+			table {
+				"bool?:" { input(wb.bool radio={"true"/"false"}) " Unfortunately, this works..." }
+			}
+		}
+	}
+
+}
+
+screen uniqueIdTest() {
+	values {
+		meting : Boolean
+	}
+	embed radioButton(meting=meting)
+	embed radioButton(meting=meting)
+}
+
+component radioButton(meting : Boolean) {
+	input(meting radio={"ja"/"nee"})
+}
+

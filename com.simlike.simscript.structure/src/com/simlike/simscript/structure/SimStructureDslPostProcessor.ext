@@ -1,0 +1,5 @@
+import xtext;
+
+// delegate to an Xtend2 implementation:
+process(GeneratedMetamodel this) : JAVA com.simlike.simscript.structure.SimStructureDslPostProcessor.augment(org.eclipse.xtext.GeneratedMetamodel);
+//process(GeneratedMetamodel this) : JAVA com.simlike.simscript.structure.metamodel.NicerButNotWorkingPostProcessor.augment(org.eclipse.xtext.GeneratedMetamodel);

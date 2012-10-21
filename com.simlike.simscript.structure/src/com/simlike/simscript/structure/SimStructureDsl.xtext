@@ -1,0 +1,117 @@
+grammar com.simlike.simscript.structure.SimStructureDsl with org.eclipse.xtext.common.Terminals
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore		// (ignore warning (if any...))
+
+generate structureDsl "http://www.simlike.com/simscript/structure/StructureDsl"
+
+
+StructureModel:
+	typeDefinitions+=DefinedType*
+	;
+
+DefinedType:
+	StructureDefinition | EnumerationDefinition
+	;
+
+StructureDefinition returns Structure:
+	'structure' name=ID  persistent?='persistent'?
+	'{'
+		features+=Feature*
+	'}'
+	;
+	/*
+	 * validation:
+	 * 		1-  #features > 0														[√]
+	 * 		2-  !persistent || structure-typed-features.forAll[type.persistent] 	[√]
+	 */
+	/*
+	 * semantics: corresponds to a JSON structure (+ all associated semantics, no references)
+	 * 		as well as POJOs, controllers and CRUD servlets on the backend in case of the `persistent` marking
+	 */
+
+Feature:
+	name=ID optional?='optional'? ':' type=TypeLiteral
+	;
+
+EnumerationDefinition returns Enumeration:
+	'enumeration' name=ID
+	'{'
+		literals+=EnumerationLiteral*
+	'}'
+	;
+	/*
+	 * validation:
+	 * 		1-  #literals > 0					[√]
+	 * 		2-  literals are uniquely-named		[ ]
+	 */
+
+EnumerationLiteral:
+	name=EnumerationName '->' displayName=STRING
+	;
+
+EnumerationName returns ecore::EString:
+	ID | STRING | INT
+	;
+
+
+/*
+ * +-------------+
+ * | type system |
+ * +-------------+
+ */
+
+TypeLiteral:
+	BuiltinTypeLiteral | DefinedTypeLiteral | ListTypeLiteral | SyntheticTypeLiteral
+	;
+
+BuiltinTypeLiteral:
+	builtin=BuiltinTypes
+	;
+
+/*
+ * Any changes made to this enum should be reflected in:
+ * - JavascriptGenerator.asEmptyJsMap
+ * - TestGenerator.getTestThingy and getTestEquals
+ * - SimpleTypeFactory and SimpleTypeConverter
+ * - JavaGeneratorHelper.asJavaTypeLiteral
+ * - SimStructureDslExtensions.isSimpleTyped
+ * - TypeSystemExtension.isPrimitiveTyped
+ */
+enum BuiltinTypes:
+	  string='String'
+	| boolean='Boolean'
+	| integer='Integer'
+	| url='URL'
+	| text='Text'
+	| number='Number'
+	| email='Email'
+	| phone='Phone'
+	| date='Date'
+	| password='Password'
+	;
+	// highlighting: just colored, not bold (=fugly)	[ ]
+
+DefinedTypeLiteral:
+	type=[DefinedType]
+	;
+	// highlighting: render in italics					[ ]
+
+ListTypeLiteral:
+	'[' itemType=TypeLiteral ']'
+	;
+
+SyntheticTypeLiteral:
+	  {CallbackLiteral} 'Callback'				// semantics: the (type literal of) a [ui::StatementBlock] in a `callback` feature
+	| {CallbackErrorResponseLiteral} 'Error'	// semantics: the (type literal of) the response returned when an interface (AJAX) call fails
+	| {VoidLiteral} '$Void'						// semantics: the (type literal of) void type
+	;
+	// validation: synthetic types can't be used in SimScript-Structure		[√]
+
+
+// TODO  move expressions to here
+/*
+ * Challenge: the expressions sub language refers to some concepts which are not intrinsic to the SimScript-Structure DSL,
+ * such as interfaces (or NamedService-s) from SimScript-Backend. It should be able to "inject" those things in SimScript-UI
+ * even though they are not defined in SimScript-Structure.
+ */
+

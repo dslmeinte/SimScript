@@ -1,0 +1,2 @@
+touch `find nl.dslmeinte.xtext.mappings/src -name *.xtend`
+touch `find nl.dslmeinte.xtext.simpleDb/src -name *.xtend`

@@ -1,0 +1,33 @@
+grammar com.simlike.simscript.application.SimApplicationDsl with org.eclipse.xtext.common.Terminals
+
+generate simApplicationDsl "http://www.simlike.com/simscript/application/SimApplicationDsl"
+
+import "http://www.simlike.com/simscript/ui/SimUiDsl" as ui
+
+
+ApplicationModel:
+	'application'
+		'title' '=' title=STRING
+		'target-platform' '=' targetPlatform=TargetPlatforms
+		('include-css' includeCSSs+=STRING*)?
+		defaultCSS?='with-default-css'?
+		'included-modules' includedModules+=[ui::UiModule]*
+		'entry-module' '=' entryModule=[ui::UiModule]
+		('include-custom-JavaScript' includeCustomJS+=STRING*)?
+		genericBackButtonPrevention?='with-generic-back-button-prevention'?
+	;
+	// scoping: entryModule in [containing(ApplicationModel)].modules	[√]
+
+
+enum TargetPlatforms:
+	html5 | facebook | mobile
+	;
+
+// TODO  define authentication
+
+/*
+ * Various possible strategies:
+ * 		1. Point to a HTML file which has some place holders which searched and replaced.
+ * 		2. Customize specific elements of an HTML file that is for the most part generated.
+ */
+

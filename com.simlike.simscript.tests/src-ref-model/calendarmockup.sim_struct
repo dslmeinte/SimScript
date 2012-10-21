@@ -1,0 +1,14 @@
+structure WrappedDate {
+	date : Date
+}
+
+structure Thingy {
+	someInfo	: Text
+	fishes		: [Fish]
+}
+
+structure Fish {
+	name			: String
+	bubbleBlower	: Boolean
+}
+

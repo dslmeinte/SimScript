@@ -1,0 +1,34 @@
+ui-module
+
+screen root() {
+	values {
+		currentDate : Date = today
+	}
+	calendar(currentDate onSelect={currentDate = selection} allowFrom=today)
+	// plus/minus Days/Months/Years/Minutes/Hours/Seconds (number) : plusDays(1)
+	// isBefore (date) : isBefore(today)
+	// isAfter (date) : isAfter(today)
+	// days/months/years/minutes/hours/seconds To (date) : daysTo(today)
+	
+	embed plannedStuffList(date=currentDate)
+	
+}
+
+component plannedStuffList(date : Date) {
+
+	values {
+		thingies = call getStuff(new WrappedDate(date=date))
+	}
+
+	/*
+	 * Note how we iterate through the result of an interface call.
+	 * This means that whenever date (the inputType) changes, the call should be redone.
+	 */
+	list( ( i -> thingy ) in thingies) {
+		thingy.someInfo
+		list( ( j -> fish ) in thingy.fishes ) {
+			fish.name input(fish.bubbleBlower)
+		}
+	}
+
+}

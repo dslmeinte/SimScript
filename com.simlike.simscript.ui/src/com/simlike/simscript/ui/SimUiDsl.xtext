@@ -1,0 +1,934 @@
+grammar com.simlike.simscript.ui.SimUiDsl with com.simlike.simscript.structure.SimStructureDsl
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore		// (ignore warning!)
+
+import "http://www.simlike.com/simscript/structure/StructureDsl" as struct
+import "http://www.simlike.com/simscript/backend/SimBackendDsl" as backend
+
+generate simUiDsl "http://www.simlike.com/simscript/ui/SimUiDsl"	// (ignore warning!)
+
+/**
+ * General Dependencies/Assumptions:
+ * 1.)	All widgets need framework js code (which should also be included in the HTML file) to work.
+ */
+
+
+/*
+ * +------------+
+ * | structural |
+ * +------------+
+ */
+
+UiModule:
+	{UiModule}
+	'ui-module'
+		notAuthenticated?='not-authenticated'?
+		definitions+=TopLevelDefinition*
+	;
+	// TODO  consider adding "module globals" such as (immutable) parameters and error handling
+	/*
+	 * validation:
+	 * 	the first screen of a module should not take any parameters, or the GotoModuleStatement should have arguments
+	 */
+
+TopLevelDefinition:
+	Viewable | TableRowsDefinition | MethodDefinition
+	;
+
+
+TableRowsDefinition:
+	'table-rows' name=ID parameterList=ParameterList '{'
+		rows+=TableRow*
+	'}'
+	;
+
+
+Viewable:
+	DefinedViewable | ManualViewable
+	;
+	// derived feature: =screen(Viewable it) ::= type == _screen_	[√]
+	// pulled-up features: type, name, parameterList
+
+DefinedViewable:
+	type=ViewableTypes name=ID parameterList=ParameterList '{'
+		valuesBlock=ValuesBlock?				// (feature's value may be null)
+		definitions+=LocalViewableDefinition*	// (feature's value is always non-null)
+	'}'
+	;
+	// validation: warning in case of 0 elements					[√]
+	// derived feature: =screen(Viewable it) ::= type == _screen_	[√]
+	/*
+	 * TODO  consider making a modal a separate viewable type
+	 * The idea is that a modal should often be able to act as a confirm or an obligatory
+	 * choice between a few actions in a way that's quite functional - e.g., persistent dialog box.
+	 */
+
+ManualViewable:
+	'manual' type=ViewableTypes name=ID parameterList=ParameterList 'in' namespace=QualifiedName
+	;
+
+QualifiedName:
+	ID ('.' ID)*
+	;
+
+
+LocalViewableDefinition:
+	Element | MethodDefinition
+	;
+
+enum ViewableTypes:
+	screen | component
+	;
+
+ValuesBlock:
+	{ValuesBlock}
+	'values' '{'
+		declarations+=ValueDeclaration*
+	'}'
+	;
+
+ValueDeclaration:
+	value=Value ( ':' declaredType=TypeLiteral)? (valueType=ValueTypes valueExpr=Expression)?
+	;
+	// validation: either the type, the value or both must be declared, must match and the value should be observable	[√]
+	// (TODO  straighten spec out)
+
+enum ValueTypes:
+	  variable='='
+	| derived='<-'
+	;
+
+Value:
+	name=ID
+	;
+
+AbstractValueDeclaration:	// (synthetic convenience type)
+	ValueDeclaration | LocalValueDeclarationStatement
+	;
+	// validation: ( declaredType == null ) || declaredType.isAssignableFrom(valueExpr.type)	[√]
+
+
+Parameter:
+	name=ID ':' type=TypeLiteral
+	;
+
+ParameterList:
+	{ParameterList}
+	'(' ( parameters+=Parameter ( (','|'|') parameters+=Parameter )* )? ','? ')'
+	;
+	/*
+	 * Note: you can either use commas or pipes to separate parameters and you
+	 * 			can optionally have a non-separating, trailing comma.
+	 * 			(The intent is to prevent having a sense of implied ordering.)
+	 */
+
+
+MethodDefinition:
+	'method' method=Method parameterList=ParameterList statementBlock=StatementBlock
+	;
+	/*
+	 * semantics:
+	 * 		The return value of a method is simply the value of the (evaluation of the) last statement - and likewise for the return type.
+	 * 		In most cases, the return value will be null and its type will be Void - a method is a function if that's not the case.
+	 * 		(Note that there's no return statement which'd make the statement flow more difficult to understand and analyse.)
+	 */
+
+Method:
+	name=ID
+	;
+
+
+/*
+ * +----------+
+ * | elements |
+ * +----------+
+ */
+
+Element:
+	  Quotation | Binding													// value elements
+	| ComponentInvocation													// embedding
+	// structural elements:
+	| BlockElement | ListElement | TableElement | LabeledTableElement | ProgressBarTabSet | GroupElement | WhenElement
+	// other elements:
+	| InputElement
+	| ButtonElement
+	| CountdownTimer
+	| CalendarElement
+	| TimeSlotListElement
+	| SlotAddElement
+	| ImageElement
+	| FrameElement
+	| LineBreakElement
+	| ObserveElement
+	| LabeledTableRow
+	;
+
+
+Quotation:
+	path=Expression
+	;
+
+Binding:
+	'bind' '(' bindSite=Expression ')'
+	;
+	/*
+	 * validation: bindSite.type must be observable		[√]
+	 * semantics: indicates a reactive expression
+	 */ 
+
+
+ElementBody:
+	{ElementBody}
+	'{' elements+=Element* '}'
+	;
+	// validation: warning if elements.empty			[√]
+
+
+ComponentInvocation:
+	'embed' viewable=[Viewable] argumentList=ArgumentList
+	;
+	/*
+	 * validation:
+	 * 		1-  viewable is a component																		[√]
+	 * 		2-  all parameters of the viewable are covered by the arguments (and not more than once)		[√]
+	 * workaround: prefixed with 'embed' to avoid parsing clash
+	 */
+	// TODO  considering combining the previous 2 rules by creating a method call operator in the expressions language (&c.) - and get rid of 'embed'
+
+
+Argument:
+	parameter=[Parameter] '=' valueExpr=Expression
+	;
+	/*
+	 * scoping: parameter in containing(ComponentInvocation).viewable	[√]
+	 * validation: parameter.type.isAssignableFrom(valueExpr.type)		[√]
+	 * 
+	 * Note that arguments are named, so there's no dependency on parameter order!
+	 */
+
+ArgumentList:
+	{ArgumentList}
+	'(' ( arguments+=Argument ( ','? arguments+=Argument )* ','? )? ')'
+	;
+	/*
+	 * The commas are optional - for now, I might remove them later on. In the meanwhile,
+	 * you can have a non-separating, trailing comma as well.
+	 * 
+	 * The reason is that whitespace tends to be provide sufficient visual separation
+	 * and the '=' character sufficient visual binding. Also, commas have a connotation
+	 * of implied ordering which is irrelevant here.
+	 */
+
+
+InputElement:
+	'input'
+	'('
+		bindSite=Expression
+		(
+			  ( 'hint' '=' hint=STRING )?
+			& ( 'min' '=' minValue=Expression )?
+			& ( 'max' '=' maxValue=Expression )?
+			& ( radioOption=RadioOption )?
+			& ( 'onChange' '=' onChange=Expression )?	// event is fired when value is changed and input field looses focus
+			& ( 'onSubmit' '=' onSubmit=Expression )?	// event is fired when Enter is pressed and input is valid
+			& ( structureOption=StructureOption )?
+		)
+	')'
+	;
+	/*
+	 * validation:
+	 * 		1-  bindSite must be a proper target/valid left-hand side			[√]
+	 * 		2-	bindSite must not be a callback- or void-typed 					[√]
+	 * 		x-  warning given for types on which hint is not supported			[√]
+	 * 		3-  min/max only allowed if bindSite is numerically-typed			[√]
+	 * 		4-	min&max must be numerically-typed								[√]
+	 * 		5-  radioOption can only be given if bindSite is boolean-typed		[√]
+	 * 		6-  onChange.type == Callback										[√]
+	 * 		y-  warning given for unsupported onChange option					[√]
+	 * 		7-  structure option required <==> input is structure-typed 		[√]
+	 * 		8-  warning given for (potentially) uninitialized enum fields		[ ]		TODO  OR fix FIXME in JS framework/widgets code
+	 * 		9-  onSumbit.type == Callback										[√]
+	 */
+	// semantics: corresponds to an HTML input element, with the hint being given for (at least) textually-typed fields
+	// TODO  add length option (which is supported by some of the widgets)?
+
+RadioOption:
+	'radio' '=' '{' true=STRING '/' false=STRING '}'
+	;
+
+StructureOption:
+	'source' '=' '{' sourceExpr=Expression '->' displayFunction=[Method] '}'
+	;
+	/*
+	 * validation:
+	 * 		1-  source must be list-typed with structure type as item type		[√]
+	 * 		2-  displayFunction must refer a function of signature
+	 * 				(bindSite.type.listItemType) -> String (i.e., a closure)	[√]
+	 */
+
+
+ButtonElement:
+	'button' '(' (
+		  ( 'text' '=' text=STRING ) 
+		& ( 'onClick' '=' action=Expression ) 
+		& ( 'class' '=' cssClass=STRING )? 
+	) ')'
+	;
+	/*
+	 * validation: action.type == Callback				[√]
+	 * design decision: `action` needs to be an Expression because we want to be able to refer to passed callbacks (and such)
+	 */
+
+
+BlockElement:
+	'block' '(' ( 
+		  ('onClick' '=' onClick=Expression)?
+		& ('class' '=' cssClass=STRING)?
+		& ('bodyClass' '=' bodyCssClass=STRING)?
+		& ('style' '=' style=STRING)?
+		& ('header' '=' header=ElementBody)?
+		& ('headerClass' '=' headerCssClass=STRING)?
+		& (noCss?='noCss')?
+	) ')' body=ElementBody
+	;
+	/*
+	 * validation: onClick.type == Callback				[√] 
+	 */
+
+
+ListElement:
+	'list' '('
+		'(' indexVariable=ListVariable '->' valueVariable=ListVariable ')' 'in'
+		listExpression=Expression
+	')' body=ElementBody
+	;
+	// validation: listExpression.type.arrayTyped		[√]
+	// TODO  add element that serves as a deletion mechanism
+
+ListVariable:
+	name=ID
+	;
+
+
+TableElement:
+	{TableElement}
+	'table' '{'
+		subElements+=TableBodyElement*
+	'}'
+	;
+	// validation: warning if subElements.empty								[√]
+
+TableBodyElement:
+	TableRow | TableRowsInvocation
+	;
+
+TableRowsInvocation:
+	'embed' definition=[TableRowsDefinition] argumentList=ArgumentList
+	;
+
+TableRow:
+	label=Expression body=ElementBody									// the implicit, quasi-non-LL(*) kind
+	;
+	// validation: label.type = STRING										[√]
+
+
+LabeledTableElement:
+	{LabeledTableElement}
+	'labeled-table' body=ElementBody
+	;
+	// validate: all directly-contained, non-structural elements are a LabeledTableRow	[√]
+
+LabeledTableRow:
+	'label' '=' label=Expression body=ElementBody 						// the explicit, LL(*) kind
+	;
+	// validation: label.type = STRING										[√]
+
+
+ProgressBarTabSet:
+	{ProgressBarTabSet}
+	'progressBarTabSet' '('
+		tabs+=TabDeclaration*
+	')'
+	;
+	// validation: warning if #tabs == 0				[√]
+
+
+TabDeclaration:
+	'{'
+		  ( 'header' '=' header=ElementBody )
+		& ( 'component' '=' viewable=[Viewable] argumentList=ArgumentList )
+		& ( 'previous' '=' previousCallback=CallbackExpression )?
+		& ( 'next' '=' nextCallback=CallbackExpression )?
+	'}'
+	;
+	/*
+	 * validation:
+	 * 		1-  title must be string-typed				[√]
+	 * 		2-  viewable must be a component			[√]
+	 */
+
+
+// TODO  remove this construct as we seem to prefer using block-s with CSS
+GroupElement:
+	{GroupElement}
+	'group' ('(' 'orientation' '=' orientation=GroupOrientations ('v-align''='v_align=VerticalAlignment)?')')? '{'
+		(
+			  nestedGroups+=GroupElement+
+			| leafGroups+=ElementBody+
+		)
+	'}'
+	;
+	/*
+	 * Note: alternatives have > 0 cardinality to avoid an ambiguity.
+	 * (Haven't found out yet how to avoid that with a syntactic predicate...)
+	 */
+
+enum GroupOrientations:
+	vertical | horizontal	// vertical is default (1st literal)
+	;
+
+enum VerticalAlignment:
+	top | bottom | middle
+	;
+
+
+CountdownTimer:
+	'countdownTimer' '(' observed?='observe'?  endTime=Expression ( 'onEnd' '=' onEnd=Expression )? ')'
+	;
+	/*
+	 * validation:
+	 *		1-  bindSite must be a proper target/valid left-hand side iff bound		[√]
+	 * 		2-  onEnd.type == CallbackExpression iff onEnd != null					[√]
+	 */
+
+
+ObserveElement:
+	'observe' observeExpr=Expression statementBlock=StatementBlock
+	;
+	// TODO  document precise semantics (and how is it different from a Binding e.g.)
+
+
+CalendarElement:
+	'calendar' '(' date=Expression
+		(
+			  ( 'onSelect' '=' onSelect=Expression )?
+			& ( 'allowFrom' '=' allowFrom=Expression )?
+			& ( 'dateFormat' '=' dateFormat=STRING )?
+			& ( 'cssForDays' '=' '(' 'days''=' days=Expression ',' 'class' '=' cssClass=STRING ')' )?
+		)
+	')'
+	;
+	/*
+	 * validation:
+	 * 		1-  onSelect.type == CallbackExpression		[√]
+	 * 		2-	allowFrom.type.dateTyped				[√]
+	 * 		3-	date.type.dateTyped						[ ]
+	 * 		4-  date.lhs???		TODO
+	 * 		5-	days.type.listTyped						[ ]
+	 * 		6-	days.type.listItemType.dateTyped		[ ]
+	 */
+
+
+TimeSlotListElement:
+	'timeSlotList' '(' slots=Expression 
+		(('onSelect' '=' onSelect=Expression)? & ('onDelete' '=' onDelete=Expression)?) ')'
+	;
+	/* validation:
+	 * 		1-	slots.type = [Slot]						[ ]
+	 */
+
+SlotAddElement:
+	'slotAddList' '('
+		product=Expression day=Expression slots=Expression ( '{' startHour=Expression 'to' endHour=Expression '}' )?
+	')'
+	;
+
+WhenElement:
+	'when' '(' condition=Expression ')' body=ElementBody
+	;
+	// validation: condition.type.booleanTyped			[√]
+
+
+ImageElement:
+	'image' '(' (
+		  observed?='observe'? sourceUrl=Expression 
+		& ('width' '=' width=Expression)?
+		& ('height' '=' height=Expression)?
+	) ')'
+	;
+	/* 
+	 * validation: source.type.stringTyped				[√]
+	 * width and height should be Integer typed.		[ ]
+	 */
+
+
+FrameElement:	// (not called 'IFrameElement' because of possible confusion with an interface)
+	'iframe' '('
+		sourceUrl=Expression
+		(
+			  ('width' '=' width=Expression)?
+			& ('height' '=' height=Expression)?
+		)
+	')'
+	;
+	/*
+	 * validation:
+	 * 		1-  sourceUrl.type.stringTyped				[√]
+	 * 		2-	{width, height}.type.integerTyped		[√]
+	 */
+	// TODO  make source URL observable?
+
+
+LineBreakElement:
+	{LineBreakElement}
+	'line-break'
+	;
+
+
+/*
+ * +------------+
+ * | statements |
+ * +------------+
+ */
+
+StatementBlock:
+	{StatementBlock}
+	'{'
+		statements+=Statement*
+	'}'
+	;
+	/*
+	 * validation:	warning if #statements == 0			[√]
+	 * 
+	 * A StatementBlock is contained by the following features:
+	 * 		MethodDefinition.statementBlock
+	 * 		CallbackExpression.statementBlock
+	 * 		IfStatement.thenBlock
+	 * 		IfStatement.elseBlock
+	 */
+
+Statement:	// (synthetic type)
+	  NonExitingStatement
+	| ExitingStatement
+	;
+	// A Statement is always contained in a StatementBlock.
+
+ExitingStatement:
+	  GotoScreenStatement
+	| GotoModuleStatement
+	;
+
+NonExitingStatement:
+	  AssignmentOrExpressionStatement
+	| ShowModalStatement
+	| ExitModalStatement
+	| IfStatement
+	| LocalValueDeclarationStatement
+	| ListRemoveStatement
+	| ForStatement
+	;
+
+
+ForStatement:
+	'for' '('
+		'(' indexVariable=ListVariable '->' valueVariable=ListVariable ')' 'in'
+		listExpression=Expression
+	')' thenBlock=StatementBlock
+	;
+
+ListRemoveStatement:
+	"remove" "from" listExpr=Expression (("where" feature=[struct::Feature] '==' valueExpr=Expression) | ("at" indexVariable=Expression))
+	;
+	/*
+	 * scoping: feature in listExpr.type.listItemType.structure.features			[√]
+	 * validation:
+	 * 		1-  listExpr.type = [Structure]											[√]
+	 * 		2-  if feature != null: feature.type.isAssignableFrom(valueExpr.type)	[√]
+	 */
+
+AssignmentOrExpressionStatement:
+	lhs=Expression ( operator=AssignmentOperator rhs=Expression )?
+	;
+	// TODO  split out specification according to whether rhs is null and again for != null according to operator (assignment vs. the others)
+	/*
+	 * validation:
+	 * 		1-  lhs must be a valid left-hand side		[?]
+	 * 		2-  lhs.type.isAssignableFrom(rhs.type)		[?]
+	 * TODO  rework
+	 */
+	/*
+	 * This beasty has wildly differing semantics depending on whether it represents
+	 * 		*) a assigment			<=> rhs != null		(can also be a sum assignment)
+	 * 		*) a lone expression 	<=> rhs == null		(with some restrictions on the exact expression type)
+	 */
+	// TODO  consider making this into an operator as sub type of Expression again - however, during last experiment this caused a lot of non-LL(*)-ness
+
+
+enum AssignmentOperator:
+	  assign='='
+	| add='+='
+	| sub='-='
+	;
+
+
+ShowModalStatement:
+	'show-modal' viewable=[Viewable] argumentList=ArgumentList
+		persistent?='persistent'?
+	;
+
+ExitModalStatement:
+	{ExitModalStatement}
+	'exit-modal'
+	;
+
+
+GotoScreenStatement:
+	( 'goto' | 'goto-screen' ) viewable=[Viewable] => argumentList=ArgumentList
+	;
+	// scoping: viewable == all(Viewable)-in-this-resource.filter[screen]	[√]
+	/*
+	 * Call syntax is now aligned with declaration syntax because '(..)' are required.
+	 */
+
+GotoModuleStatement:
+	'goto-module' targetModule=[UiModule] args=ArgumentList
+	/*
+	 * (I'd rather use 'argumentList' instead 'args' but that triggers
+	 * the duplicate feature validation of Xtext - whether that's incorrect or not.)
+	 */
+	(
+		authenticate?='after-authentication-by' authOption=[backend::AuthenticationDeclaration]
+		'(' principal=PrincipalArgument ',' credential=CredentialArgument ')'
+		'@error:' errorCallback=CallbackExpression
+	)?
+	;
+	/*
+	 * validation:
+	 * 		1-  principals contains all principals of authOption.principals		[V]
+	 * 		2-	credentials contains all credentials of authOption.credentials	[V]
+	 */
+
+PrincipalArgument :
+	principal=[backend::AuthenticationParameter] '=' valueExpr=Expression  
+	;
+	/*
+	 * validation:
+	 * 		principal.type.isAssignableFrom(valueExpr.type)						[V]
+	 * 
+	 * scoping:
+	 * 		principal in containerHaving(typeof GotoModuleStatement).authOption.principals
+	 */
+	
+CredentialArgument :
+	credential=[backend::AuthenticationParameter] '=' valueExpr=Expression
+	;
+	/*
+	 * validation:
+	 * 		credential.type.isAssignableFrom(valueExpr.type)					[V]
+	 * 
+	 * scoping:
+	 * 		credential in containerHaving(typeof GotoModuleStatement).authOption.credentials
+	 */
+
+
+IfStatement:
+	'if' '(' condition=Expression ')' thenBlock=StatementBlock ('else' elseBlock=StatementBlock)?
+	;
+	/*
+	 * validation:
+	 *		1-  condition must be boolean-typed								[√]
+	 * 		2-  thenBlock.type.isAssignableFrom(elseBlock.type)				[√]
+	 */
+
+
+LocalValueDeclarationStatement:
+	=> 'val' value=Value ( ':' declaredType=TypeLiteral )? '=' valueExpr=Expression
+	;
+
+ViewableCallSite:	// (synthetic type)
+	GotoScreenStatement | ComponentInvocation | TabDeclaration | ShowModalStatement
+	;
+	// validation: arguments are checked against viewable.parameters for unmapped and duplicately-mapped parameters		[√]
+
+
+/*
+ * +-------------+
+ * | expressions |
+ * +-------------+
+ */
+
+Expression:
+	TernaryExpression
+	;
+
+TernaryExpression returns Expression:
+	OrExpression ({TernaryExpression.guard=current} '?' thenExpr=OrExpression ':' elseExpr=OrExpression)?
+	;
+	/* 
+	 * validation:
+	 * 		1-  guard must be boolean-typed						[√]
+	 * 		2-  thenExpr and elseExpr must be type-compatible	[√]
+	 */
+
+OrExpression returns Expression:
+	AndExpression ({OrExpression.leftOperand=current} '||' rightOperand=AndExpression)*	// left-associative infix binary operator
+	;
+	// validation: leftOperand, rightOperand are Boolean-typed	[√]
+
+AndExpression returns Expression:
+	ComparisonExpression ({AndExpression.leftOperand=current} '&&' rightOperand=ComparisonExpression)*	// left-associative infix binary operator
+	;
+	// validation: leftOperand, rightOperand are Boolean-typed	[√]
+
+ComparisonExpression returns Expression:
+	AdditiveExpression ({ComparisonExpression.leftOperand=current} comparator=Comparator rightOperand=AdditiveExpression)*	// left-associative infix binary operator
+	;
+	// validation: leftOperand.type == rightOperand.type		[√]
+
+enum Comparator:
+	  equals="=="
+	| notEquals="!="
+	| bigger=">"
+	| biggerEquals=">="
+	| smaller="<"
+	| smallerEquals="<="
+	| isIn="in"
+	;
+
+AdditiveExpression returns Expression:
+	MultiplicativeExpression ({AdditiveExpression.leftOperand=current} operator=AdditiveOperators rightOperand=MultiplicativeExpression)*	// left-associative infix binary operator
+	;
+	// validation: leftOperand, rightOperand must be numerically-typed	[√]
+
+enum AdditiveOperators:
+	plus='+' | minus='-'
+	;
+	// TODO  overload the + to handle array types as well
+
+MultiplicativeExpression returns Expression:
+	NotExpression ({MultiplicativeExpression.leftOperand=current} operator=MultiplicativeOperators rightOperand=NotExpression)*	// left-associative infix binary operator
+	;
+	// validation: leftOperand, rightOperand must be numerically-typed	[√]
+
+enum MultiplicativeOperators:
+	mult='*' | div='/' | mod='%'
+	;
+
+NotExpression returns Expression:
+	InterfaceCallExpression | ({NotExpression} '!' operand=NotExpression)
+	;
+	// validation: operand.type.booleanTyped							[√]
+
+
+InterfaceCallExpression returns Expression:
+	FeatureAccessExpression | (
+		{InterfaceCallExpression} 'call' serviceId=ServiceIdentification '(' ( 'observe' '[' observeSites+=Expression* ']' )? input=Expression? ')'
+		( '=>' callback=CallbackExpression ('@error:' errorCallback=CallbackExpression)? )?
+	)
+	;
+	/*
+	 * validation:
+	 * 		1-  serviceId.inputType.isAssignableFrom(input.type)																		[√]
+	 * 		2-  InterfaceCallExpression can only be a lone expression as a statement or the initialisation of a value declaration		[√]
+	 */
+	// TODO  more validation? e.g. callback and observeSites are "often" illegal
+
+ServiceIdentification:
+	  {NamedServiceReference} service=[backend::NamedService]
+	| {CrudServiceIdentification} crudType=CrudTypes structure=[struct::Structure]
+	;
+	// validation: check that a used CrudService(Identification) is actually declared somewhere		[ ]
+	/*
+	 * Note: that condition is (somewhat) hard to check since .sim_back only have outgoing references
+	 * and no incoming ones, so that they don't end up in the same ResourceSet as .sim_ui - at least,
+	 * during normal editor usage.
+	 */
+	// validation: serviceId."interface".inputType.isAssignableFrom(input.type)		[√]
+
+// copied from SimScript-Backend DSL grammar:
+enum CrudTypes:
+	  create
+	| getById = 'get-by-id'
+	| update
+	| delete
+	;
+
+
+FeatureAccessExpression returns Expression hidden():
+	PrimaryExpression ({FeatureAccessExpression.previous=current} '.' feature=[struct::Feature])*	// left-associative infix binary operator
+	;
+	// scoping: feature in previous.type.features												[√]
+	// validation: previous must be a FeatureAccessExpression or a ValueReferenceExpression		[√]
+	// TODO  add invocation of member methods and such
+
+// TODO  use an enum BuiltinMemberFunctions to add "member calls" to FeatureAccessExpression (and add a ton of validation)
+
+
+PrimaryExpression returns Expression hidden(WS, ML_COMMENT, SL_COMMENT):	// (undo cascade of FeatureAccessExpression's hidden())
+	  '(' Expression ')'
+	| LiteralExpression
+	| CallbackExpressions
+	| StructureCreationExpression
+	| ValueReferenceOrMethodCallExpression
+	| DateExpression
+	| BuiltinFunctionExpression
+	| {SelectionExpression} 'selection'
+	;
+	// validation: SelectionExpression may only be used within CalendarStatement.onSelect		[?]
+
+DateExpression:
+	  {DateNowExpression} 'now'
+	| {DateTodayExpression} 'today'
+	;
+
+BuiltinFunctionExpression:
+	function=BuiltinFunctions '(' argument=Expression ('on' sortFeature=[struct::Feature])? ')'
+	;
+
+enum BuiltinFunctions:
+	  isSet
+	| alert
+	| confirm
+	| copyOf	// copy an object									Note: used for Blaasfunctie.nl!
+	| toMillis	// convert a Date to milliseconds, for calculation
+	| round		// rounds a Number to an Integer
+	| sort      // sort a list
+	| isValid	// validates some simple-typed lhs'es
+	| id		// retrieves the (internal, generated) id of a structure as String
+	;
+	// TODO  consider adding a `bind` function which has the intent of making the value bound...
+	/*
+	 * scoping: sortFeature in argument.type.features
+	 * validation:
+	 * 		1-  value.type.textuallyTyped if function is 'alert' or 'confirm'								[√]
+	 * 		2-  argument.type.dateTyped if function is 'toMillis'											[√]
+	 * 		3-  argument.type.numberTyped if function is 'round'											[√]
+	 * 		4-	!value.type.structureTyped if function is 'isSet' (warning)									[√]
+	 * 		5-  argument.type.emailTyped if function is 'isValid'											[√]
+	 * 		6-  argument.type.listTyped && argument.type.listItemType.structureTyped if function is 'sort'	[ ]
+	 * 		7-  sortFeature != null iff function is 'sort'													[√]
+	 * 		8-  value.type.structureTyped if function is 'id'												[√]
+	 */
+	// TODO  replace keyword-style expression(s) with implicitly imported functions
+
+LiteralExpression:
+	  {StringLiteralExpression} value=STRING
+	| {BooleanLiteralExpression} literal=BooleanLiterals
+	| {IntegerLiteralExpression} value=INT
+	| {NumberLiteralExpression} value=NumberLiteral
+	| ListLiteralExpression
+	| EnumerationLiteralExpression
+	| DecisionExpression
+	;
+	// TODO  add a literal expression for strings that require HTML escaping?
+
+ListLiteralExpression:
+	{ListLiteralExpression}
+	'[' members+=Expression* ']'
+	;
+	// validation: members (if any) must be compatible with each other - for now this means that everything must be compatible with the first member	[√]
+
+EnumerationLiteralExpression hidden():
+	enumeration=[struct::Enumeration] '::' literal=[struct::EnumerationLiteral|EnumerationName]
+	;
+	// scoping: literal in enumeration.literals		[√]
+	// TODO  make enumeration optional if it can be derived from (lhs) context? (seems to easily cause non-LL(*) behavior...)
+
+
+// (re-def. of INT)
+terminal INT returns ecore::EInt: '-'? ('0'..'9')+;
+
+// (datatype rule)
+NumberLiteral returns ecore::EBigDecimal hidden(): INT '.' INT;
+	// Note that the decimal part is required.
+	// TODO  fix problem with "negative" decimal part
+
+
+enum BooleanLiterals:
+	false /* default */ | true
+	;
+
+
+DecisionExpression:
+	{DecisionExpression}
+	'decide' '{'
+		cases+=DecisionCase*
+		( 'default' ':' defaultValueExpr=Expression )?
+	'}'
+	;
+	/*
+	 * type: cases.head.valueExpr.type or defaultValueExpr.type							[√]
+	 * validation:
+	 * 		1-  !cases.empty (warning)													[√]
+	 * 		2-  type.isAssignableFrom(defaultValueExpr.type)							[√]
+	 */
+
+DecisionCase:
+	'case' guardExpr=Expression ':' valueExpr=Expression
+	;
+	/*
+	 * validation:
+	 * 		1-  guardExpr.type.booleanTyped												[√]
+	 * 		2-  containing(DecisionExpression).type.isAssignableFrom(guardExpr.type)	[√]
+	 */
+
+
+CallbackExpressions:
+	  CallbackExpression
+	| {CallbackResponseExpression} 'response'		// validation: only useable within callbacks	[√]
+	| {CallbackErrorResponseExpression} 'error'		// validation: only useable within callbacks	[√]
+	;
+
+CallbackExpression:
+	statementBlock=StatementBlock
+	;
+
+
+StructureCreationExpression:
+	'new' structure=[struct::Structure] '(' assignments+=FeatureAssignment* ')'
+	;
+	// validation: features may not be duplicately assigned						[√]
+
+FeatureAssignment:
+	feature=[struct::Feature] '=' valueExpr=Expression
+	;
+	// scoping: feature in containing(StructureCreationExpression).features		[√]
+	// validation: feature.type.isAssignableFrom(valueExpr.type)				[√]
+
+
+ValueReferenceOrMethodCallExpression:
+	ReferenceExpression ( {MethodCallExpression.methodRef=current} => argumentList=ArgumentList )?
+	;
+	/*
+	 * validation (on MethodCallExpression):
+	 * 		1-  methodRef.ref must be a Method										[√]
+	 * 		2-  all parameters of methodRef.ref are covered and no more than once	[√]
+	 */
+	// TODO  harden type calculation to deal with recursive call chains (+ validation?)
+
+
+ReferenceExpression:
+	ref=[Referable]
+	;
+	// validation: ref cannot be a method if eContainer is not a MethodCallExpression	[√]
+
+/*
+ * TODO  consider adding a ValidID datatype rule and use that everywhere (including in cross-references: |ValidID)
+ * 			instead of ID to allow certain keywords (such as password, email and when) as valid identifiers.
+ */
+
+
+Referable:	// (synthetic type)
+	Value | Parameter | ListVariable | Method
+	;
+	/*
+	 * scoping: referables must come from local context
+	 * 
+	 * locality:
+	 * 		- within ListElement: 			index-variables + (outer:) values + parameters + top-level methods	[√]
+	 * 		- within DefinedViewable:		values + parameters + top-level methods								[√]
+	 * 		- within Method(Definition):	parameters + top-level methods										[√]
+	 * 		- within Statement:				preceding local values + scope from Method(Definition)				[√]		TODO  fix bug w.r.t. nested statement blocks? (not due to async block...)
+	 * 		- within CallbackExpression:	preceding local values + scope from Element							[ ]		TODO  implement
+	 */
+

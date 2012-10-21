@@ -1,0 +1,223 @@
+/*Default BlockElement styling*/
+.sim-ui-block {
+	background:#F0F0F0;
+	margin:10px 6px;
+}
+
+.sim-ui-block-body {
+	padding: 8px;
+}
+
+.sim-ui-block-title {
+	font-size:16pt;
+	font-weight:bold;
+	color:#2A3D55;
+	background:#E4E4E4;
+	padding:8px;
+}
+
+/*Default InputTable styling*/
+.sim-ui-table {
+	display: table;
+	border-spacing: 10px;
+}
+
+.sim-ui-table-row {
+	display: table-row;
+}
+
+.sim-ui-table-label-container {
+	display: table-cell;
+}
+
+.sim-ui-table-label-container label {
+	color:#003A5A;
+	font-size: 12px;
+	font-weight:bold;
+}
+
+.sim-ui-table-elements-container {
+	display: table-cell;
+}
+
+.sim-ui-table-elements-container input[type!="radio"] {
+	border: 1px solid #003A5A;
+	width: 205px;
+	background: #F0F0F0;
+}
+
+.sim-ui-table-elements-container input[type="radio"] {
+	width: 2em;
+}
+
+/* Default slider styling */
+.sim-ui-slider {
+    height:.7em;
+    -webkit-border-radius: 4px;
+    -moz-border-radios: 4px;
+    background: #EEE;
+    color: #333;
+    border: 1px solid #DDD;
+    position:relative;
+}
+
+.sim-ui-slider .ui-slider-handle{
+    border: 1px solid #CCC;
+    -webkit-border-radius: 4px;
+    -mozilla-border-radius: 4px;
+    background: #F6F6F6;
+    position:absolute;
+    width:1em;
+    height:20px !important;
+    margin-left:-0.5em;
+    margin-top:-.3em;
+}
+
+/*Custom dashboard styling TODO: move this to another file*/
+body {
+	font-family: arial;
+	font-size: 12pt;
+}
+
+.deal-title {
+    background:#EFEFEF;
+    border-right:1px solid #F9F9F9;
+    border-top:1px solid #F9F9F9;
+    display:block;
+    padding:10px;
+    font-size:24px;
+    color:#313131;
+}
+
+.pickerTable, .sim-ui-dayselection-daytable {
+    border-spacing:8px;
+    font-size:11px;
+    table-layout:fixed;
+}
+            .pickerTable td, .sim-ui-dayselection-daytable td{
+                width:70px;
+                height:18px;
+                text-align:center;
+                position:relative;
+            }
+
+            .sim-ui-dayselection-daytable td {
+                width:72px;
+            }
+
+            .pickerCellNO {
+                background: #B2B2B2;
+                border: 1px solid #b2b2b2;
+            }
+
+            .pickerCell0 {
+                background: #E5E5E5;
+                border: 1px solid #E5E5E5;
+            }
+
+            .pickerCell20 {
+                background: #FFFFCD;
+                border: 1px solid #FFFFCD;
+            }
+
+            .pickerCell40 {
+                background: #FFE1CC;
+                border: 1px solid #FFE1CC;
+            }
+
+            .pickerCell60 {
+                background: #fed9bf;
+                border: 1px solid #fed9bf;
+            }
+
+            .pickerCell80 {
+                background: #FFD0C4;
+                border: 1px solid #FFD0C4;
+            }
+
+            .pickerCell100 {
+                background: #F0B2B3;
+                border: 1px solid #F0B2B3;
+            }
+
+            .pickerCellDeal {
+                background: orange;
+                border: 1px solid orange;
+            }
+
+    .sim-ui-pickertable-activeslot {
+        border:1px solid #cc0001 !important;
+    }
+
+    .sim-ui-pickertable-attendees {
+        border:1px solid #00cbff;
+    }
+
+    .sim-ui-pickertable-infoslot {
+    }
+
+    .sim-ui-pickertable-timeslot {
+        width: 50px !important;
+    }
+
+    #sim-ui-slider-curstep {
+        position:relative;
+    }
+
+    #sim-ui-slider-curstep-val {
+        position:relative;
+    }
+
+
+.sim-ui-slider-step {
+    border: 1px solid transparent;
+    position: absolute;
+    width: 1.2em;
+    margin-left: -.6em;
+    text-align: center;
+}
+    
+    .sim-ui-slider-tooltip-inner {
+    
+    }
+
+.tooltip {
+    position:absolute;
+    text-align:left; 
+    width:100px;
+    top:0px;
+    z-index: 3;
+    left:110px;
+    background:orange;
+    border:3px solid black;
+    padding:5px;
+}
+
+.sim-ui-weekswitch-button {
+    display:inline-block;
+    margin:10px;
+    cursor: hand;
+}
+
+.sim-ui-week-left {
+    float:left;
+}
+
+.sim-ui-week-right {
+    float:right;
+}
+
+.sim-ui-weekswitch-container {
+    width:100%;
+    background:#d9d9d9;
+    height:43px;
+    text-align:center;
+}
+
+.sim-ui-day-with-slots {
+	background-color: green;
+}
+
+.sim-ui-day-with-slots a {
+	background: #BBFFBB !important;
+}

@@ -1,0 +1,34 @@
+ui-module
+
+screen root() {
+
+	values {
+		a : Number = 1
+		i : Boolean <- ( a <= 37 )
+		j = new WrappedBool()
+		stuff = new WrappedStuff(date=today)
+		comp1 <- ( stuff.num > 0 )
+		comp2 <- ( isSet(stuff.num) )
+		l : Integer
+		s = ""
+	}
+
+	table {
+		"a:"			{ input(a hint="some Integer") }
+		"i:"			{ bind(i) }
+		"j:"			{ input(j.bool radio={"yes"/"no"}) }
+		"w(n):"			{ input(stuff.num hint="(wrapped Number)") }
+		"w(d):"			{ input(stuff.date) }
+		"w(n) > 0"		{ bind(comp1) " Note: comparison to initially-undefined value yields <tt>false</tt>." }
+		"w(n) is set"	{ bind(comp2) " Note: actually reflects whether w(n) is set" }
+		"l:"			{ input(l) }
+		"l is set"		{ bind(isSet(l)) }
+		"s:"			{ input(s hint="(a hint)") }
+	}
+
+	method doSomething() {
+		val b = a
+		b == a
+	}
+
+}

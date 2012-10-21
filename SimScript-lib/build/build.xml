@@ -1,0 +1,50 @@
+<!--
+	Assumes the following structure for widgets:
+	- the widget is contained in its own folder
+	- the folder is located in the same directory as this build file
+	- the folder contains a js folder with all required js-files (may be in subdirectories)
+	- the folder contains a css folder with all required css-files (may be in subdirectories)
+	- the css and js does not conflict with other widgets!
+	
+	Depends on
+	- ant 1.6 or higher for the concat fixlastline
+	- ant 1.6.3 or higher for the handledirsep in the mapper in build
+-->
+<project name="SimScript-JS-runtime" default="build-all" basedir=".">
+
+	<property name="builddir" value="../sim-lib"/>
+
+	<condition property="antversionok">
+		<antversion atleast="1.6.3"/>
+	</condition>
+
+	<target name="clean">
+		<!-- TODO  ensure this doesn't destroy Git state before having build-all depend on it -->
+		<delete dir="${builddir}"/>
+		<mkdir dir="${builddir}"/>
+	</target>
+
+	<target name="build-all" depends="build-widgets,build-js-type-system" />
+
+	<target name="build-widgets">
+		<fail unless="antversionok" message="ANT version is too old."/>
+		<concat destfile="${builddir}/widgets.js" fixlastline="true">
+			<fileset dir="widgets/" includes="*/js/**/*.js"/>
+		</concat>
+		<concat destfile="${builddir}/widgets.css">
+			<!--<fileset dir="widgets/" includes="*/css/**/*.css"/>-->
+			<fileset dir="widgets/" includes="*/css/*.css"/>	<!-- (don't remove) -->
+		</concat>
+		<copy todir="${builddir}">
+			<regexpmapper from=".*css/(.*)$" to="\1" handledirsep="true"/>
+			<fileset dir="widgets/" includes="*/css/**" excludes="**/*.css, *.css"/>
+		</copy>
+	</target>
+
+	<target name="build-js-type-system">
+		<concat destfile="${builddir}/js-type-system.js">
+			<fileset dir="jsTypeSystem/" includes="**/*.js" excludes="js-type-system.js"/>
+		</concat>
+	</target>
+
+</project>

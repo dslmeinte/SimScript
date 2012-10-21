@@ -1,0 +1,14 @@
+structure WrappedBool {
+
+	bool : Boolean	// initially null
+
+}
+
+
+structure WrappedStuff {
+
+	num : Number	// initially null
+	date : Date
+
+}
+

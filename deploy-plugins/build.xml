@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DSL plugins deployment, and standalone generation" default="deploy-plugins" >
+
+	<property name="modeldriven.base.path" value="${project.path}/../.." />
+
+	<property name="project.path" value="${modeldriven.base.path}/deploy-plugins" />
+	<property name="plugins.dest.path" value="${project.path}/gen" />
+
+	<property name="eclipse.plugins.path" value="${project.path}/eclipse-plugins" />
+
+	
+	<target name="clean">
+		<delete dir="${plugins.dest.path}" />
+	</target>
+
+	<target name="export-plugins" depends="clean">
+		<pde.exportPlugins
+			destination="${plugins.dest.path}"
+			exportSource="true"
+			exportType="directory"
+			plugins="com.simlike.simscript.structure,com.simlike.simscript.structure.ui,com.simlike.simscript.backend,com.simlike.simscript.backend.ui,com.simlike.simscript.ui,com.simlike.simscript.ui.ui,com.simlike.simscript.application,com.simlike.simscript.application.ui,com.simlike.simscript.generator,com.simlike.simscript.generator.ui,nl.dslmeinte.xtext.simpleDb,nl.dslmeinte.xtext.simpleDb.ui,nl.dslmeinte.xtext.mappings,nl.dslmeinte.xtext.mappings.ui"
+			useJARFormat="true"
+		/>
+		<echo message="Exporting plugins is an asynchronous process, so please wait for the CPU usage to go down again and then refresh this project." />
+	</target>
+
+	<!-- Used to depend on eclipse.home, but I copied all dependencies to the deploy-plugins/eclipse-plugins directory -->
+	<target name="create-standalone-generator" >
+        <jar destfile="${plugins.dest.path}/standaloneGenerator.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader" />
+                <attribute name="Rsrc-Main-Class" value="com.simlike.simscript.generator.standalone.GenerateStandalone" />
+                <attribute name="Class-Path" value="." />
+                <attribute name="Rsrc-Class-Path" value="./ 
+                	org.eclipse.xtext_2.2.1.v201112130541.jar 
+                	org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar 
+                	org.eclipse.emf.ecore_2.7.0.v20110912-0920.jar 
+                	org.eclipse.emf.common_2.7.0.v20110912-0920.jar
+                	org.eclipse.xtext.util_2.2.1.v201112130541.jar 
+                	com.google.guava_10.0.1.1.jar
+                	com.google.inject_3.0.0.no_aop.jar 
+                	javax.inject_1.0.0.v20091030.jar 
+                	org.antlr.runtime_3.2.0.v201101311130.jar
+                	org.eclipse.emf.mwe.core_1.2.1.v201112070431.jar 
+                	org.apache.commons.cli_1.2.0.v201105210650.jar 
+                	org.eclipse.emf.mwe2.runtime_2.2.0.v201112070431.jar 
+                	org.eclipse.emf.mwe.utils_1.2.1.v201112070431.jar 
+                	org.eclipse.xtext.xbase_2.2.1.v201112130541.jar 
+                	org.eclipse.xtext.common.types_2.2.1.v201112130541.jar 
+                	org.apache.log4j_1.2.15.v201012070815.jar 
+                	org.apache.commons.logging_1.0.4.v201101211617.jar 
+                	org.eclipse.xtext.generator_2.2.1.v201112130541.jar 
+                	org.eclipse.xtend_1.1.0.v201108020519.jar 
+                	com.ibm.icu_4.4.2.v20110208.jar 
+                	org.eclipse.xpand_1.1.0.v201108020519.jar 
+                	org.eclipse.xtend.typesystem.emf_1.0.1.v201108020519.jar 
+                	org.eclipse.emf.codegen.ecore_2.7.0.v20110913-1156.jar 
+                	org.eclipse.emf.codegen_2.6.0.v20110913-1156.jar 
+                	de.itemis.xtext.antlr_2.0.0.v201108011202.jar 
+                	org.antlr.generator_3.2.0.v201108011202.jar 
+                	org.eclipse.emf.mwe2.lib_2.2.0.v201112070431.jar 
+                	org.eclipse.xtext.xbase.lib_2.2.1.v201112130541.jar 
+                	org.eclipse.xtend2.lib_2.2.1.v201112130541.jar 
+                	org.eclipse.emf.mwe2.launch_2.2.0.v201112071250.jar 
+                	org.eclipse.emf.mwe2.language_2.2.0.v201112071250.jar" />
+            </manifest>
+            <zipfileset src="lib/jar-in-jar-loader.zip" />
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xtext_2.2.1.v201112130541.jar" />
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar" />
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.ecore_2.7.0.v20110912-0920.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.common_2.7.0.v20110912-0920.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xtext.util_2.2.1.v201112130541.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="com.google.guava_10.0.1.1.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="com.google.inject_3.0.0.no_aop.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="javax.inject_1.0.0.v20091030.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.antlr.runtime_3.2.0.v201101311130.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.mwe.core_1.2.1.v201112070431.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.apache.commons.cli_1.2.0.v201105210650.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.mwe2.runtime_2.2.0.v201112070431.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.mwe.utils_1.2.1.v201112070431.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xtext.xbase_2.2.1.v201112130541.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xtext.common.types_2.2.1.v201112130541.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.apache.log4j_1.2.15.v201012070815.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.apache.commons.logging_1.0.4.v201101211617.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xtext.generator_2.2.1.v201112130541.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xtend_1.1.0.v201108020519.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="com.ibm.icu_4.4.2.v20110208.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xpand_1.1.0.v201108020519.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xtend.typesystem.emf_1.0.1.v201108020519.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.codegen.ecore_2.7.0.v20110913-1156.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.codegen_2.6.0.v20110913-1156.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="de.itemis.xtext.antlr_2.0.0.v201108011202.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.antlr.generator_3.2.0.v201108011202.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.mwe2.lib_2.2.0.v201112070431.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xtext.xbase.lib_2.2.1.v201112130541.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xtend2.lib_2.2.1.v201112130541.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.mwe2.launch_2.2.0.v201112071250.jar"/>
+            <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.mwe2.language_2.2.0.v201112071250.jar"/>
+            <fileset dir="${modeldriven.base.path}/com.simlike.simscript.structure/bin"/>
+            <fileset dir="${modeldriven.base.path}/com.simlike.simscript.backend/bin"/>
+            <fileset dir="${modeldriven.base.path}/com.simlike.simscript.ui/bin"/>
+            <fileset dir="${modeldriven.base.path}/com.simlike.simscript.generator/bin"/>
+            <fileset dir="${modeldriven.base.path}/nl.dslmeinte.xtext.simpleDb/bin"/>
+            <fileset dir="${modeldriven.base.path}/nl.dslmeinte.xtext.mappings/bin"/>
+        </jar>
+    </target>
+
+	<target name="checkJRE" unless="eclipse.home">
+		<echo message="Property {eclipse.home} not set. Run this ANT script inside the same JRE as Eclipse" />
+		<echo message="		- this is a setting on the JRE tab of the 'External Tool Configuration'/'ANT Build...' settings." />
+		<fail />
+	</target>
+
+	<target name="deploy-plugins" depends="export-plugins, checkJRE" if="eclipse.home">
+		<echo message="Deploying plugin JARs to Eclipse installation (${eclipse.home})" />
+		<copy todir="${eclipse.home}/dropins">
+			<fileset dir="${basedir}/gen/plugins" />
+		</copy>
+  		<echo message="Please restart Eclipse to activate/update the plugins." />
+	</target>
+
+</project>
