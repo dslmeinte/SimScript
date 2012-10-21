@@ -7,7 +7,6 @@ import com.simlike.simscript.structure.structureDsl.TypeLiteral
 import com.simlike.simscript.structure.types.TypeExtensions
 import com.simlike.simscript.ui.extensions.ExpressionExtensions
 import com.simlike.simscript.ui.extensions.MethodExtensions
-import com.simlike.simscript.ui.extensions.ReferableExtensions
 import com.simlike.simscript.ui.extensions.ServiceExtensions
 import com.simlike.simscript.ui.extensions.StatementExtensions
 import com.simlike.simscript.ui.simUiDsl.AdditiveExpression
@@ -53,6 +52,7 @@ import org.eclipse.xtext.scoping.IScopeProvider
 
 import static com.simlike.simscript.structure.structureDsl.BuiltinTypes.*
 import static com.simlike.simscript.ui.simUiDsl.BuiltinFunctions.*
+import com.simlike.simscript.ui.extensions.impl.ReferableExtensionsImpl
 
 /**
  * This class computes types of {@link Expression expressions} and other
@@ -73,7 +73,7 @@ import static com.simlike.simscript.ui.simUiDsl.BuiltinFunctions.*
 class TypeCalculatorImpl implements TypeCalculator {
 
 	@Inject extension TypeExtensions
-	@Inject extension ReferableExtensions
+	@Inject extension ReferableExtensionsImpl
 	@Inject extension ExpressionExtensions
 	@Inject extension StatementExtensions
 	@Inject extension MethodExtensions
