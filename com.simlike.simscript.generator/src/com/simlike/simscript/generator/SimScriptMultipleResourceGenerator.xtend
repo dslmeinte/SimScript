@@ -5,6 +5,7 @@ import com.simlike.simscript.backend.simBackendDsl.BackendModel
 import com.simlike.simscript.generator.backend.AuthenticationGenerator
 import com.simlike.simscript.generator.backend.WebXmlGenerator
 import com.simlike.simscript.generator.ui.CommunicationParseGenerator
+import com.simlike.simscript.generator.ui.js.CommunicationsGenerator
 import com.simlike.simscript.generator.util.IMultipleResourceGenerator
 import com.simlike.simscript.structure.structureDsl.Structure
 import com.simlike.simscript.structure.structureDsl.StructureModel
@@ -27,6 +28,7 @@ class SimScriptMultipleResourceGenerator implements IMultipleResourceGenerator {
 	@Inject private WebXmlGenerator webXmlGenerator
 	@Inject private AuthenticationGenerator authenticationGenerator
 	@Inject private CommunicationParseGenerator communicationParseGenerator
+	@Inject private CommunicationsGenerator communicationsGenerator
 
 	@Inject extension ResourceUtil
 
@@ -59,6 +61,8 @@ class SimScriptMultipleResourceGenerator implements IMultipleResourceGenerator {
 		fsa.generateFile("../src/gen/javascript/structureMapper.js", communicationParseGenerator.generateParseFunctions(allStructures))
 			// TODO  remove assumptions on location (Maven and such)
 			// Note: the structure mapper source should end up next to the other JS sources.
+
+		fsa.generateFile("../src/gen/javascript/API.js", communicationsGenerator.generateDeclarations(allDeclarations))
 
 		println("\t(ran generation)")
 	}

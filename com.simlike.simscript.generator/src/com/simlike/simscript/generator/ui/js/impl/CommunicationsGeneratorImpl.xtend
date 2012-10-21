@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.simlike.simscript.backend.SimBackendDslExtensions
 import com.simlike.simscript.backend.simBackendDsl.Interface
+import com.simlike.simscript.backend.simBackendDsl.Service
 import com.simlike.simscript.generator.ui.js.CommunicationsGenerator
 import com.simlike.simscript.structure.structureDsl.Structure
 import com.simlike.simscript.structure.types.TypeExtensions
@@ -26,11 +27,11 @@ class CommunicationsGeneratorImpl implements CommunicationsGenerator {
 	override interfaceFunctions(UiModule it)
 		'''
 		«FOR interface_ : referredInterfaces»
-			«interface_.function»
+			«interface_.function(true)»
 
 		«ENDFOR»
 		«FOR crud : referredCruds»
-			«crud.function»
+			«crud.function(true)»
 
 		«ENDFOR»
 		'''
@@ -47,10 +48,10 @@ class CommunicationsGeneratorImpl implements CommunicationsGenerator {
 	 * TODO:
 	 * 1.)	Generalize the url?
 	 */
-	def private function(Interface it)
+	def private function(Interface it, boolean withName)
 		'''
 		// interface «name»:
-		function «name»(«IF inputType != null»input, «ENDIF»auth, callback, errCallback) {
+		function «IF withName»«name»«ENDIF»(«IF inputType != null»input, «ENDIF»auth, callback, errCallback) {
 			var data = {«IF !notAuthenticated»authenticationInfo : auth.unwrap()«ENDIF»};
 			«IF inputType != null»data = $.extend(data, { '«inputType.structure.name.toFirstLower»' : ItemSerializer.serialize(input) });«ENDIF»
 			$.ajax({
@@ -93,10 +94,10 @@ class CommunicationsGeneratorImpl implements CommunicationsGenerator {
 	 * 
 	 * TODO create a function to check if a CRUD service has an output
 	 */
-	def private function(CrudServiceIdentification it) 
+	def private function(CrudServiceIdentification it, boolean withName) 
 		'''
 		// interface «crudType.literal»«structure.name»:
-		function «crudType.literal»«structure.name»(input, auth, callback, errCallback) {
+		function «IF withName»«crudType.literal»«structure.name»«ENDIF»(input, auth, callback, errCallback) {
 			var data = $.extend({}, auth.unwrap());
 			data['«structure.name.toFirstLower»'] = ItemSerializer.serialize(input);
 			$.ajax({
@@ -142,4 +143,40 @@ class CommunicationsGeneratorImpl implements CommunicationsGenerator {
 		}
 	}
 
+
+	override generateDeclarations(Iterable<Service> services) {
+		'''
+		var API = {};
+		// callback(exactResponse)
+		// errCallback(errorString)
+		API.authenticate = function (input, callback, errCallback) {
+			$.ajax({
+				url : 'https://fb.simlike.com/api/authenticate',
+				data : {authenticationInfo:input},
+				dataType : 'json',
+				type : 'POST',
+				cache : false,
+				success : callback,
+				error : function() {
+					if(arguments[2]) {
+						errCallback(arguments[2]);
+					} else {
+						errCallback('Unknown Failure!');
+					}
+				}
+			});
+		};
+			«FOR it : services.filter(typeof(Interface))»
+				API.«name» =
+					«it.function(false)»
+				;
+
+			«ENDFOR»
+			«FOR it : services.filter(typeof(CrudServiceIdentification))»
+				API.«crudType.literal»«structure.name» =
+					«it.function(false)»
+				;
+			«ENDFOR»
+		'''
+	}
 }
