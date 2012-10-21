@@ -1,38 +1,67 @@
+// Accepts a list of slots: {day:Date}
 function ActivityList(parent, list) {
-    this.list = list;
-    
     this.container = $("<div>");
     parent.append(this.container);
 
     this.weekDays = ["zondag", "maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag"];
     this.months = ["januari", "februari", "maart", "april", "mei", "juni",
                    "juli", "augustus", "september", "oktober", "november", "december"];
-    
-    this.draw();
+    this.setList(list);
 }
 
 ActivityList.prototype.setList = function(list) {
-    this.list = list;
-    this.list.sort(function(date){
-        return date; 
-    });
+	this.list = list;
+	this.sortList();
+	this.observeList();
     this.draw();
+};
+
+ActivityList.prototype.sortList = function() {
+	this.list.incognito = true;
+	this.list.sort(function(slot){
+        return slot.getDay(); 
+    });
+	this.list.incognito = false;
+};
+
+ActivityList.prototype.observeList = function() {
+	var self = this;
+	this.list.addObserver(function(){
+		self.sortList();
+		self.draw();
+	});
+};
+
+ActivityList.prototype.setAfterDelete = function(func) {
+    this.afterDelete = func;
 };
 
 ActivityList.prototype.draw = function() {
     this.container.html("");
-
+    var self = this;
     for(var i = 0; i < this.list.size(); i++) {
-        var block = $('<div class="sim-ui-dayselect-activity">');
-        this.container.append(block);
+        (function(i, container, list, weekDays, months, addLeadingZero) {
+        	var slot = list.get(i);
+        	var startTime = slot.getStart_time().unwrap();
+        	var date = slot.getDay().get();
+            var block = $('<div class="sim-ui-dayselect-activity">');
+            container.append(block);
         
-        var text = this.weekDays[this.list.get(i).get().getDay()];
-        text = text + " " + this.list.get(i).get().getDate();
-        text = text + " " + this.months[this.list.get(i).get().getMonth()];
-        text = text + "<br />" + this.list.get(i).get().getHours();
-        text = text + ":" + this.addLeadingZero(this.list.get(i).get().getMinutes());
+            var text = weekDays[date.getDay()];
+            text = text + " " + date.getDate();
+            text = text + " " + months[date.getMonth()];
+            text = text + "<br />" + startTime.hours;
+            text = text + ":" + addLeadingZero(startTime.minutes);
 
-        block.html(text);
+            block.html(text);
+            var delButton = ($('<input type="button" class="delete_button" value="x" />'));
+            delButton.click(function(){
+                list.removeAt(i);
+                self.draw();
+                self.afterDelete(slot);
+            });
+            block.append(delButton);
+        })(i, this.container, this.list, this.weekDays, this.months, this.addLeadingZero);
     }
 };
 

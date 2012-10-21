@@ -302,7 +302,7 @@ function List(initialObjectArray) {
      */
     this.indexOf = function(element) {
     	for (var i = 0; i < array.length; i++) {
-    		if (array[i] === element) {
+    		if (array[i].compareTo(element) == 0) {
     			return i;
     		}
     	}
@@ -355,7 +355,7 @@ function List(initialObjectArray) {
     /**
      * Removes the first occurrence in this list of the specified element
      * 
-     * Uses the '===' operator for comparison.
+     * Uses the compareTo function for comparison.
      * 
      * @returns true iff the list contained the element.
      */
@@ -459,12 +459,18 @@ function List(initialObjectArray) {
 	 * Executes the given function for all items in this List.
 	 * The argFunction should accept an Item as argument.
 	 * Any modifications made to the Item in argFunction will be reflected in this List.
+	 * If the argFuntion returns true for an Item, the other Items won't be checked anymore.
+	 * 
+	 * Returns true if the function was executed for all items (i.e. if it was not stopped prematurely by the argFunction returning true);
 	 */
 	this.forAll = function(argFunction) {
 		if (!$.isFunction(argFunction)) { throw "List.forAll called with an argument that is not a function."; }
 		for (var i = 0; i < array.length; i++) {
-			argFunction(array[i]);
+			if (argFunction(array[i]) === true) {
+				return false;
+			}
 		}
+		return true;
 	};
 	
 	/**
@@ -549,11 +555,16 @@ function List(initialObjectArray) {
 			throw "Equals method of a List should only be passed Observables which can be unwrapped.";
 		}
 		var other = item.unwrap();
-		if (!$.isArray(other) || other.length != array.length) { return other.length>array.length?-1:1; }
+		// since we need to cope with Meinte's change to represent optional attributes as null,
+		// a null value will now be considered equal to an empty list. (GROSS)
+		if (other == null && array.length == 0) {return 0;}
+		if (!$.isArray(other)) {return 2;}
+		if (other.length != array.length) { return other.length>array.length?-1:1; }
+		var otherList = new List(other);
 		for (var i = 0; i < array.length; i++) {
 			// ensures that items can't be matched by the same element:
 			// array: [1,2,2]  other: [1,2,3] should not match
-			if (!other.remove(array[i].unwrap())) { return 2; }
+			if (!otherList.remove(array[i])) { return 2; }
 		}
 		return 0;
 	};
@@ -10279,7 +10290,12 @@ self.show();};});jQuery(window).mousedown(function(event){if(tooltip.css('displa
 				updateWrapped( options, options.wrapped );
 			}
 			ret = jQuery.isArray( data ) ? 
-				jQuery.map( data, function( dataItem ) {
+				//jQuery.map( data, function( dataItem ) {
+				jQuery.map( data, function( dataItem, index ) {
+					if(dataItem){
+						dataItem.$index = index;
+						dataItem.$odd = index % 2 === 1;
+					}
 					return dataItem ? newTmplItem( options, parentItem, tmpl, dataItem ) : null;
 				}) :
 				[ newTmplItem( options, parentItem, tmpl, data ) ];
@@ -10618,7 +10634,22 @@ self.show();};});jQuery(window).mousedown(function(event){if(tooltip.css('displa
 		jQuery( coll ).remove();
 	}
 })( jQuery );
-DateUtil = {
+//$(window).on('beforeunload', function() {
+//	if( preventUserFromExiting != null && preventUserFromExiting() ) {
+//		return "Weet je zeker dat je deze applicatie wilt verlaten?";
+//	}
+//});
+// IE proof logging function, which can be used during debugging, without the risk of ruining stuff when you forget about it.
+function LOG(a, b) {
+	if (window.console && console.log) {
+		if (a) {
+			console.log(a);
+		}
+		if (b) {
+			console.log(b);
+		}
+	}
+}DateUtil = {
 	apiDateFormat	: "dayOfMonth(2 digits):monthInYear(2 digits):yearAD(4 digits):hoursInDay(2 digits):minutesInHour(2 digits):secondsInMinute(2 digits)", 
 	format			: function(date) {
 			if (!isDate(date)) { throw "DateUtil.format won't format something that isn't a date: "+typeof date; }
@@ -10639,11 +10670,18 @@ DateUtil = {
 			return date;
 		},
 	dateEquals : function(date1, date2) {
-		return date1.getDate() == date2.getDate()
+		return (date1 == null && date2 == null) ||
+			(date1.getDate() == date2.getDate()
 			&& date1.getMonth() == date2.getMonth()
-			&& date1.getFullYear() == date2.getFullYear();
+			&& date1.getFullYear() == date2.getFullYear());
 		},
 	compare : function(date1, date2) {
+		if (date1 == null && date2 == null) {
+			return 0;
+		}
+		if (date1 == null || date2 == null) {
+			return 2;
+		}
 		if (date1.getTime() < date2.getTime()) {
 			return -1;
 		} else if (date1.getTime() === date2.getTime()) {
@@ -10850,6 +10888,8 @@ function Item(obj) {
 		}
 		var other = item.unwrap();
 		var myvalue = self.unwrap();
+		if ( (myvalue == null && other != null) || (other == null && myvalue != null) ) { return 2; }
+		if (myvalue == null && other == null) { return 0; }
 		for (var i in myvalue) {
 			if (myvalue.hasOwnProperty(i)) {
 				if (!other.hasOwnProperty(i) || !propsMatch(myvalue[i], other[i])) { return 2; }

@@ -10,7 +10,7 @@
  * @param timelineStartHour the hour at which the timeline should start. Defaults to 0.
  * @param timelineEndHour the hour at which the timeline should end. Defaults to 24.
  */
-function timeList(slotList, container, product, day, timelineStartHour, timelineEndHour) {
+function clientTimeList(slotList, container, product, day, timelineStartHour, timelineEndHour) {
 	// constants
 	var emptySlotHeight = 82; // Note: this should include borders!
 	var emptySlotWidth = 100; // Note: this should include borders!

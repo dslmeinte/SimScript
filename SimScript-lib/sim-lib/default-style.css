@@ -105,6 +105,10 @@ body {
                 width:72px;
             }
 
+			.pickerCellNo {
+                background: #B2B2B2;
+                border: 1px solid #b2b2b2;
+            }
             .pickerCellNO {
                 background: #B2B2B2;
                 border: 1px solid #b2b2b2;
@@ -146,10 +150,12 @@ body {
             }
 
     .sim-ui-pickertable-activeslot {
+    	cursor: pointer;
         border:1px solid #cc0001 !important;
     }
 
     .sim-ui-pickertable-attendees {
+    	cursor:pointer;
         border:1px solid #00cbff;
     }
 

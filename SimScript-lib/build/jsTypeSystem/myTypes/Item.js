@@ -123,6 +123,8 @@ function Item(obj) {
 		}
 		var other = item.unwrap();
 		var myvalue = self.unwrap();
+		if ( (myvalue == null && other != null) || (other == null && myvalue != null) ) { return 2; }
+		if (myvalue == null && other == null) { return 0; }
 		for (var i in myvalue) {
 			if (myvalue.hasOwnProperty(i)) {
 				if (!other.hasOwnProperty(i) || !propsMatch(myvalue[i], other[i])) { return 2; }

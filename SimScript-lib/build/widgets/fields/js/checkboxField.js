@@ -20,7 +20,9 @@ var checkboxField = function(bindItem, container, label) {
 	}
 	
 	// function to update the checked state of the checkbox, based on the bindItem's value
-	function setChecked() { box.prop('checked', bindItem.get() === true? true : false); }
+	function setChecked() {
+		box.prop('checked', bindItem.get() == true? true : false);
+	}
 	
 	// make the checkbox update when the bindItem changes
 	bindItem.addObserver(function(x) { setChecked(); });
@@ -28,7 +30,7 @@ var checkboxField = function(bindItem, container, label) {
 	box.change(function(){ bindItem.set(box.prop('checked')); });
 	
 	// initialize the bindItem's value (to disallow null)
-	bindItem.set(bindItem.get() === true? true : false);
+	bindItem.set(bindItem.get() ? true : false);
 	// initialize the checkbox
-	box.prop('checked', setChecked());
+	setChecked();
 };

@@ -1,3 +1,19 @@
+/**
+ * Draws a date picker where the user can select slots of slotSize minutes from the startTime until the endTime.
+ * 
+ * @param container the jQuery DOM element where the picker will be added to.
+ * @param slotSize the size of the blocks (slots) that can be selected (in minutes).
+ * @param maxPeople the maximum amount of people who can join on 1 slot.
+ * @param startTime the start time where the drawing of slots should begin.
+ * @param endTime the end time where the drawing of slots should end.
+ * @param day a Date, which determines which week should be displayed in the picker.
+ * @param data a list of activities organized by day (type [AZactivitiesByDay] from AZ.sim_struct).
+ * 	Used to determine how many people are already attending activities planned on the slots.
+ * @param onClick onclick which is called when a slot is clicked. It will be given the following arguments:
+ * 	1.	a List of ExtendedActivities (see AZ.sim_struct) on the selected slots.
+ * 	2.	the date representing the start time of the slot (both day and time).
+ * 	3.	the AZslot that just got clicked.
+ */
 function datePicker2(container, slotSize, maxPeople, startTime, endTime, day, data, onClick) {
     this.container = container;
     this.slotSize = slotSize;
@@ -16,7 +32,8 @@ function datePicker2(container, slotSize, maxPeople, startTime, endTime, day, da
     this.onClick = onClick;
 
     //retrieve from global var
-    this.activeSlots = yourSimData.selectedDays.cells;//new List();
+    // FIXME get rid of this, it really destroys any generality.
+    this.activeSlots = yourSimData && yourSimData.selectedDays && yourSimData.selectedDays.cells ? yourSimData.selectedDays.cells : new List();
     this.selectableAZslots = new Array(7);
 
     this.loopLimit = Math.floor((this.endTime * 60 - this.startTime * 60) / this.slotSize);
@@ -24,26 +41,32 @@ function datePicker2(container, slotSize, maxPeople, startTime, endTime, day, da
     this.draw();
 }
 
+// setter for the list of slots that should be loaded into the picker.
 datePicker2.prototype.setSlotList = function(slotList) {
     this.slotList = slotList;
     this.draw();
 };
 
+// setter to determine which week should be displayed. Will use the week of the date.
 datePicker2.prototype.setDate = function (date, data) {
     this.today = date;
     this.draw();
 };
 
+// setter for the amount of attendees that want to pick a slot.
+// if there is not enough space left on the slot for all attendees to attend, it will no longer be selectable.
 datePicker2.prototype.setAttendees = function(attendees) {
     this.attendees = attendees;
     this.draw();
 };
 
+// setter for the list of activities by day (see constructor docs for details).
 datePicker2.prototype.setData = function(data) {
     this.data = data;
     this.draw();
 };
 
+// draws the actual picker
 datePicker2.prototype.draw = function() {
     this.dContainer.html('');
     var tableContainer = $('<div class="sim-ui-dayselection-container">');
@@ -61,6 +84,7 @@ datePicker2.prototype.draw = function() {
     var preTR = $("<tr>");
     dayTable.append(preTR);
 
+    // determine which week to display
     var daysSinceMonday = eval((this.today.getDay() + 6) % 7);
     var weekDay = new Date();
     weekDay.setTime(Date.parse(this.today) - daysSinceMonday * 86400000);
@@ -81,11 +105,17 @@ datePicker2.prototype.draw = function() {
             cel.addClass("sim-ui-pickertable-timeslot");
         }
     }
-//create test array and fill it
+    
+    // matrix representing the amount of people attending activities on the slots
     var test = Array(7);
+    // matrix representing whether a slot is selected (true, otherwise false);
     var selectedCells = Array(7);
+    // matrix representing whether a slot can be selected (0 if not, 1 if selectable, 2 if selectable and has deals)
     var activeCells = Array(7);
+    // matrix representing the deals (as string) on the selectable slots
     var deals = Array(7);
+    
+    // initialize all matrices
     // y and x are reversed!
     for(var y = 0; y < 7; y++) {
         test[y] = Array(this.loopLimit);
@@ -104,25 +134,26 @@ datePicker2.prototype.draw = function() {
         }
     }
 
+    // process the the given slots to properly fill the matrices.
     for(var i = 0; i < this.slotList.size(); i++) {
-        var time = this.slotList.get(i).getStart_time();
+        var time = this.slotList.get(i).getSlot().getStart_time();
         var index = parseInt(time.getHours().get(), 10) * 60 - this.startTime * 60;
         index += parseInt(time.getMinutes().get(), 10);
         index = Math.floor(index / this.slotSize);
 
-        var weekDay = (this.slotList.get(i).getDay().get().getDay() + 6) % 7;
+        var weekDay = (this.slotList.get(i).getSlot().getDay().get().getDay() + 6) % 7;
         
         this.selectableAZslots[weekDay][index] = this.slotList.get(i);
-        
-        if(this.slotList.get(i).getDeals().size() > 0) {
+        if(this.slotList.get(i).getDiscount().get() != null) {
         	// 2 means deal present
             activeCells[weekDay][index] = 2;
-            deals[weekDay][index] = this.slotList.get(i).getDeals().get(0).get();
+            deals[weekDay][index] = this.slotList.get(i).getDiscount().get();
          } else
         	// 1 means normal cell (default = 0)
             activeCells[weekDay][index] = 1;
     }
 
+    // select any slots that were previously selected FIXME part of a quick and dirty workaround to make a backbutton work
     for(var i = 0; i < this.activeSlots.size(); i++) {
         if(this.activeSlots.get(i).get().getTime() >= monday.getTime() && this.activeSlots.get(i).get().getTime() < nextMonday.getTime()){
         
@@ -135,7 +166,7 @@ datePicker2.prototype.draw = function() {
         }
     }
 
-
+    // process the data variable with all activities ordered by day to determine the amount of people who already planned something on the slots.   
     for(var i = 0; i < this.data.size(); i++) {
         for(var j = 0; j < this.data.get(i).getActivities().size(); j++) {
             var index = parseInt(this.data.get(i).getActivities().get(j).getStartTime().getHours().get(), 10) * 60 - this.startTime * 60;
@@ -161,12 +192,14 @@ datePicker2.prototype.draw = function() {
             celNBSP.html('&nbsp;');
             cel.append(celNBSP);
 
+            // first column is empty for styling purposes
             if(col != 0){
+            	// if the cell is selectable
                 if(activeCells[col - 1][x] > 0) {
                     var percentage = test[col - 1][x] / this.maxPeople;
                     celSpan.html(test[col - 1][x] + "/" + this.maxPeople);
                     
-                
+                    // if no one is attending at that slot yet
                     if(test[col - 1][x] == 0) {
                         cel.addClass("pickerCell0");
                         celSpan.css("display", "none");  
@@ -185,29 +218,34 @@ datePicker2.prototype.draw = function() {
                         cel.addClass("pickerCell100");
                     }
 
+                    // if there is also a deal on the slot
                     if(activeCells[col -1][x] > 1) {
                         cel.addClass("pickerCellDeal");
                         cel.qtip({
                             content: {
                                 prerender : true,
-                                text: deals[col - 1][x]
+                                text: deals[col - 1][x] + "% korting"
                             }
                         });
                         
                     }
 
+                    // if there is still room for the attendees that want to join
                     if(this.maxPeople - test[col - 1][x] >= this.attendees)
                         cel.addClass("sim-ui-pickertable-attendees");
                     else
                         cel.removeClass("sim-ui-pickertable-attendees");
 
+                    // display selected slots with some special styling
                     if(selectedCells[col -1][x])
                         cel.addClass("sim-ui-pickertable-activeslot");
 
+                    // trigger the onclick when a slot is clicked
                     if(this.onClick != undefined) { 
                         (function (col, row, data, slotSize, startTime, monday, activeSlots, selectableAZslots) {
                             cel.click(function(){
                                 if($(this).hasClass("sim-ui-pickertable-attendees")){
+                                	// will be filled with extended activities on the clicked slot
                                     var returnList = new List();
                                     var date;
                                     // data contains extendedActivities
@@ -274,3 +312,10 @@ datePicker2.prototype.addLeadingZero = function(int) {
     return int > 9 ? int : "0" + int;
 };
 
+datePicker2.prototype.deselect= function(slot) {
+	var startTime = slot.getStart_time().unwrap();
+	var date = slot.getDay().get();
+	date.setMinutes(startTime.hours * 60 + parseInt(startTime.minutes));
+    this.activeSlots.remove(new Item(date));
+    this.draw();
+};

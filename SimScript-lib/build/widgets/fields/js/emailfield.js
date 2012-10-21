@@ -11,10 +11,13 @@ function emailField(bindItem, container, options) {
 	// precondition check:
 	if ( bindItem == undefined ) { throw "The bindItem parameter is NOT optional for an emailField."; }
 	if ( container == undefined ) { throw "The container parameter is NOT optional for an emailField."; }
-
+	
     // the input field
     var field = $(document.createElement('input'));
     field.attr("type", "text");
+    if (options.name != undefined) {
+    	field.attr('name', options.name);
+    }
     if( options.length != undefined ) {
     	field.attr("maxlength", options.length);
     }

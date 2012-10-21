@@ -30,10 +30,10 @@ function selectField(bindItem, container, sources, displayFunction, placeholder)
     	// add the new options
     	field.html('');
     	if (placeholder != undefined) {
-    		var placeholderOption = $(document.createElement('option'));
+    		var option = $(document.createElement('option'));
     		option.attr('value', -1);
     		option.text(placeholder);
-    		field.append(placeholderOption);
+    		field.append(option);
     	}
     	for (var i = 0; i < optionStructures.length; i++) {
     		var option = $(document.createElement('option'));

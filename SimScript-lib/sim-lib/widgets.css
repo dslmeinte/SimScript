@@ -599,7 +599,13 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 	border-color: Green;
 }
 
-#_modalBackground {
+.free-cell {
+	background: blue;
+}
+
+.discount-cell {
+	background: orange;
+}#_modalBackground {
     position:fixed;
     left:0px;
     top:0px;

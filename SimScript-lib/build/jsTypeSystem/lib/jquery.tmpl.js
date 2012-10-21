@@ -145,7 +145,12 @@
 				updateWrapped( options, options.wrapped );
 			}
 			ret = jQuery.isArray( data ) ? 
-				jQuery.map( data, function( dataItem ) {
+				//jQuery.map( data, function( dataItem ) {
+				jQuery.map( data, function( dataItem, index ) {
+					if(dataItem){
+						dataItem.$index = index;
+						dataItem.$odd = index % 2 === 1;
+					}
 					return dataItem ? newTmplItem( options, parentItem, tmpl, dataItem ) : null;
 				}) :
 				[ newTmplItem( options, parentItem, tmpl, data ) ];

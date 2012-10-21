@@ -188,7 +188,7 @@ function List(initialObjectArray) {
      */
     this.indexOf = function(element) {
     	for (var i = 0; i < array.length; i++) {
-    		if (array[i] === element) {
+    		if (array[i].compareTo(element) == 0) {
     			return i;
     		}
     	}
@@ -241,7 +241,7 @@ function List(initialObjectArray) {
     /**
      * Removes the first occurrence in this list of the specified element
      * 
-     * Uses the '===' operator for comparison.
+     * Uses the compareTo function for comparison.
      * 
      * @returns true iff the list contained the element.
      */
@@ -345,12 +345,18 @@ function List(initialObjectArray) {
 	 * Executes the given function for all items in this List.
 	 * The argFunction should accept an Item as argument.
 	 * Any modifications made to the Item in argFunction will be reflected in this List.
+	 * If the argFuntion returns true for an Item, the other Items won't be checked anymore.
+	 * 
+	 * Returns true if the function was executed for all items (i.e. if it was not stopped prematurely by the argFunction returning true);
 	 */
 	this.forAll = function(argFunction) {
 		if (!$.isFunction(argFunction)) { throw "List.forAll called with an argument that is not a function."; }
 		for (var i = 0; i < array.length; i++) {
-			argFunction(array[i]);
+			if (argFunction(array[i]) === true) {
+				return false;
+			}
 		}
+		return true;
 	};
 	
 	/**
@@ -435,11 +441,16 @@ function List(initialObjectArray) {
 			throw "Equals method of a List should only be passed Observables which can be unwrapped.";
 		}
 		var other = item.unwrap();
-		if (!$.isArray(other) || other.length != array.length) { return other.length>array.length?-1:1; }
+		// since we need to cope with Meinte's change to represent optional attributes as null,
+		// a null value will now be considered equal to an empty list. (GROSS)
+		if (other == null && array.length == 0) {return 0;}
+		if (!$.isArray(other)) {return 2;}
+		if (other.length != array.length) { return other.length>array.length?-1:1; }
+		var otherList = new List(other);
 		for (var i = 0; i < array.length; i++) {
 			// ensures that items can't be matched by the same element:
 			// array: [1,2,2]  other: [1,2,3] should not match
-			if (!other.remove(array[i].unwrap())) { return 2; }
+			if (!otherList.remove(array[i])) { return 2; }
 		}
 		return 0;
 	};
