@@ -133,10 +133,24 @@ class PojoGenerator {
 		public boolean isValid() {
 			«FOR f : features»
 				«IF !f.optional»
-					if («f.name» == null«IF f.type.structureTyped» || !«f.name».isValid()«ENDIF») {
-						LOGGER.warn("Mandatory feature «f.name» missing (or invalid) from this «name» ({}).", getId());
-						return false;
-					}
+					«IF f.type.listTyped»
+						if («f.name» == null) {
+							LOGGER.warn("Mandatory feature «f.name» missing from this «name» ({}).", getId());
+							return false;
+						} else {
+							for («f.type.listItemType.asJavaTypeLiteral» item : «f.name») {
+								if (item == null«IF f.type.listItemType.structureTyped» || !item.isValid()«ENDIF») {
+									LOGGER.warn("Mandatory feature «f.name» invalid for this «name» ({}).", getId());
+									return false;
+								}
+							}
+						}
+					«ELSE»
+						if («f.name» == null«IF f.type.structureTyped» || !«f.name».isValid()«ENDIF») {
+							LOGGER.warn("Mandatory feature «f.name» missing (or invalid) from this «name» ({}).", getId());
+							return false;
+						}
+					«ENDIF»
 				«ENDIF»
 			«ENDFOR»
 			return true;
