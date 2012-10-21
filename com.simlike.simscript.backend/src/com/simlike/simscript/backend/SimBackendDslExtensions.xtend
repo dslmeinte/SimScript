@@ -64,7 +64,7 @@ class SimBackendDslExtensions {
 		if( !model.baseUrl.nullOrEmpty ) {
 			model.baseUrl
 		} else {
-			"http://fb.simlike.com/api/"
+			"https://fb.simlike.com/api/"
 		}
 	}
 
