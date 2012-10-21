@@ -14,6 +14,8 @@ ApplicationModel:
 		'included-modules' includedModules+=[ui::UiModule]*
 		'entry-module' '=' entryModule=[ui::UiModule]
 		('include-custom-JavaScript' includeCustomJS+=STRING*)?
+		('custom-html-head-additions' '=' cHtmlHead = STRING)?
+		('custom-html-body' '=' cHtmlBody = STRING)?
 		genericBackButtonPrevention?='with-generic-back-button-prevention'?
 	;
 	// scoping: entryModule in [containing(ApplicationModel)].modules	[√]

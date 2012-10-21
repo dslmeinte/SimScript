@@ -11,7 +11,7 @@ class ApplicationGenerator {
 	@Inject extension SimApplicationDslExtensions
 
 
-	def generateHtml(ApplicationModel it)
+	def generateHtml(ApplicationModel it) {
 		'''
 		<!DOCTYPE html>
 		<html>
@@ -58,21 +58,41 @@ class ApplicationGenerator {
 					});
 				«ENDIF»
 				</script>
+				
+				«IF CHtmlHead != null»
+					«CHtmlHead»
+				«ENDIF»
+				
 			</head>
-			<body>
+			
+			«IF CHtmlBody == null»
+				<body>
 
-				<div id="_menu"></div>
+					<div id="_menu"></div>
 
-				<div id="_modalBackground"></div>
-				<div id="_modal">
-					<div id="_modalContent">
+					<div id="_modalBackground"></div>
+					<div id="_modal">
+						<div id="_modalContent">
+						</div>
 					</div>
-				</div>
 
-				<div id="_content"></div>
+					<div id="_content"></div>
 
-			</body>
+				</body>
+			«ELSE»
+				<body>
+					<div id="_menu"></div>
+
+					<div id="_modalBackground"></div>
+					<div id="_modal">
+						<div id="_modalContent">
+					</div>
+					
+					«CHtmlBody»
+				</body>
+				«CHtmlBody»
+			«ENDIF»
 		</html>
 		'''
-
+	}
 }
