@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: nl.dslmeinte.simscript.generator
+Bundle-Vendor: DSLConsultancy.com
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: nl.dslmeinte.simscript.generator; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: nl.dslmeinte.simscript.backend;bundle-version="1.0.0",
+ nl.dslmeinte.simscript.structure;bundle-version="1.0.0",
+ nl.dslmeinte.simscript.ui;bundle-version="1.0.0",
+ nl.dslmeinte.simscript.application;bundle-version="1.0.0",
+ org.apache.commons.lang;bundle-version="2.4.0"
+Import-Package: org.apache.log4j,
+ org.apache.commons.logging,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend2.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: nl.dslmeinte.simscript.generator,
+ nl.dslmeinte.simscript.generator.backend,
+ nl.dslmeinte.simscript.generator.standalone,
+ nl.dslmeinte.simscript.generator.ui;x-friends:="nl.dslmeinte.simscript.tests",
+ nl.dslmeinte.simscript.generator.util;x-friends:="nl.dslmeinte.simscript.generator.ui"

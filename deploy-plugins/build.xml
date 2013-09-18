@@ -18,7 +18,7 @@
 			destination="${plugins.dest.path}"
 			exportSource="true"
 			exportType="directory"
-			plugins="com.simlike.simscript.structure,com.simlike.simscript.structure.ui,com.simlike.simscript.backend,com.simlike.simscript.backend.ui,com.simlike.simscript.ui,com.simlike.simscript.ui.ui,com.simlike.simscript.application,com.simlike.simscript.application.ui,com.simlike.simscript.generator,com.simlike.simscript.generator.ui,nl.dslmeinte.xtext.simpleDb,nl.dslmeinte.xtext.simpleDb.ui,nl.dslmeinte.xtext.mappings,nl.dslmeinte.xtext.mappings.ui"
+			plugins="nl.dslmeinte.simscript.structure,nl.dslmeinte.simscript.structure.ui,nl.dslmeinte.simscript.backend,nl.dslmeinte.simscript.backend.ui,nl.dslmeinte.simscript.ui,nl.dslmeinte.simscript.ui.ui,nl.dslmeinte.simscript.application,nl.dslmeinte.simscript.application.ui,nl.dslmeinte.simscript.generator,nl.dslmeinte.simscript.generator.ui,nl.dslmeinte.simscript.simpleDb,nl.dslmeinte.simscript.simpleDb.ui,nl.dslmeinte.simscript.mappings,nl.dslmeinte.simscript.mappings.ui"
 			useJARFormat="true"
 		/>
 		<echo message="Exporting plugins is an asynchronous process, so please wait for the CPU usage to go down again and then refresh this project." />
@@ -29,7 +29,7 @@
         <jar destfile="${plugins.dest.path}/standaloneGenerator.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader" />
-                <attribute name="Rsrc-Main-Class" value="com.simlike.simscript.generator.standalone.GenerateStandalone" />
+                <attribute name="Rsrc-Main-Class" value="nl.dslmeinte.simscript.generator.standalone.GenerateStandalone" />
                 <attribute name="Class-Path" value="." />
                 <attribute name="Rsrc-Class-Path" value="./ 
                 	org.eclipse.xtext_2.2.1.v201112130541.jar 
@@ -96,12 +96,12 @@
             <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.xtend2.lib_2.2.1.v201112130541.jar"/>
             <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.mwe2.launch_2.2.0.v201112071250.jar"/>
             <zipfileset dir="${eclipse.plugins.path}" includes="org.eclipse.emf.mwe2.language_2.2.0.v201112071250.jar"/>
-            <fileset dir="${modeldriven.base.path}/com.simlike.simscript.structure/bin"/>
-            <fileset dir="${modeldriven.base.path}/com.simlike.simscript.backend/bin"/>
-            <fileset dir="${modeldriven.base.path}/com.simlike.simscript.ui/bin"/>
-            <fileset dir="${modeldriven.base.path}/com.simlike.simscript.generator/bin"/>
-            <fileset dir="${modeldriven.base.path}/nl.dslmeinte.xtext.simpleDb/bin"/>
-            <fileset dir="${modeldriven.base.path}/nl.dslmeinte.xtext.mappings/bin"/>
+            <fileset dir="${modeldriven.base.path}/nl.dslmeinte.simscript.structure/bin"/>
+            <fileset dir="${modeldriven.base.path}/nl.dslmeinte.simscript.backend/bin"/>
+            <fileset dir="${modeldriven.base.path}/nl.dslmeinte.simscript.ui/bin"/>
+            <fileset dir="${modeldriven.base.path}/nl.dslmeinte.simscript.generator/bin"/>
+            <fileset dir="${modeldriven.base.path}/nl.dslmeinte.simscript.simpleDb/bin"/>
+            <fileset dir="${modeldriven.base.path}/nl.dslmeinte.simscript.mappings/bin"/>
         </jar>
     </target>
 

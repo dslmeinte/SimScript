@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/nl.dslmeinte.simscript.structure/src-gen" editDirectory="/nl.dslmeinte.simscript.structure.edit/src"
+    editorDirectory="/nl.dslmeinte.simscript.structure.editor/src" modelPluginID="nl.dslmeinte.simscript.structure"
+    forceOverwrite="true" modelName="SimStructureDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="nl.dslmeinte.simscript.structure.edit"
+    editorPluginID="nl.dslmeinte.simscript.structure.editor" runtimeVersion="2.9">
+  <genPackages prefix="StructureDsl" basePackage="nl.dslmeinte.simscript.structure"
+      disposableProviderFactory="true" ecorePackage="SimStructureDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SimStructureDsl.ecore#//BuiltinTypes">
+      <genEnumLiterals ecoreEnumLiteral="SimStructureDsl.ecore#//BuiltinTypes/string"/>
+      <genEnumLiterals ecoreEnumLiteral="SimStructureDsl.ecore#//BuiltinTypes/boolean"/>
+      <genEnumLiterals ecoreEnumLiteral="SimStructureDsl.ecore#//BuiltinTypes/integer"/>
+      <genEnumLiterals ecoreEnumLiteral="SimStructureDsl.ecore#//BuiltinTypes/url"/>
+      <genEnumLiterals ecoreEnumLiteral="SimStructureDsl.ecore#//BuiltinTypes/text"/>
+      <genEnumLiterals ecoreEnumLiteral="SimStructureDsl.ecore#//BuiltinTypes/number"/>
+      <genEnumLiterals ecoreEnumLiteral="SimStructureDsl.ecore#//BuiltinTypes/email"/>
+      <genEnumLiterals ecoreEnumLiteral="SimStructureDsl.ecore#//BuiltinTypes/phone"/>
+      <genEnumLiterals ecoreEnumLiteral="SimStructureDsl.ecore#//BuiltinTypes/date"/>
+      <genEnumLiterals ecoreEnumLiteral="SimStructureDsl.ecore#//BuiltinTypes/password"/>
+    </genEnums>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//StructureModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimStructureDsl.ecore#//StructureModel/typeDefinitions"/>
+    </genClasses>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//DefinedType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimStructureDsl.ecore#//DefinedType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//Structure">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimStructureDsl.ecore#//Structure/persistent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimStructureDsl.ecore#//Structure/features"/>
+    </genClasses>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//Feature">
+      <genTypeParameters ecoreTypeParameter="SimStructureDsl.ecore#//Feature/T"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimStructureDsl.ecore#//Feature/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimStructureDsl.ecore#//Feature/optional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimStructureDsl.ecore#//Feature/type"/>
+    </genClasses>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//Enumeration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimStructureDsl.ecore#//Enumeration/literals"/>
+    </genClasses>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//EnumerationLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimStructureDsl.ecore#//EnumerationLiteral/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimStructureDsl.ecore#//EnumerationLiteral/displayName"/>
+    </genClasses>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//TypeLiteral"/>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//BuiltinTypeLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimStructureDsl.ecore#//BuiltinTypeLiteral/builtin"/>
+    </genClasses>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//DefinedTypeLiteral">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimStructureDsl.ecore#//DefinedTypeLiteral/type"/>
+    </genClasses>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//ListTypeLiteral">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimStructureDsl.ecore#//ListTypeLiteral/itemType"/>
+    </genClasses>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//SyntheticTypeLiteral"/>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//CallbackLiteral"/>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//CallbackErrorResponseLiteral"/>
+    <genClasses ecoreClass="SimStructureDsl.ecore#//VoidLiteral"/>
+  </genPackages>
+</genmodel:GenModel>

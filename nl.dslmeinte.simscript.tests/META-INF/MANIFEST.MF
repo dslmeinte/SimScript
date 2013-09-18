@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SImScript-wide tests
+Bundle-SymbolicName: nl.dslmeinte.simscript.tests
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: DSLConsultancy.com
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: nl.dslmeinte.simscript.application;bundle-version="1.0.0",
+ nl.dslmeinte.simscript.backend;bundle-version="1.0.0",
+ nl.dslmeinte.simscript.generator;bundle-version="1.0.0",
+ nl.dslmeinte.simscript.structure;bundle-version="1.0.0",
+ nl.dslmeinte.simscript.ui;bundle-version="1.0.0",
+ org.junit,
+ org.eclipse.xtend2.lib,
+ com.google.inject,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtext.junit;bundle-version="2.2.1"
+Import-Package: nl.dslmeinte.simscript.generator.ui
+

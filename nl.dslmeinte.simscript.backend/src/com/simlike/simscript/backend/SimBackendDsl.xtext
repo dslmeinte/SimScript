@@ -1,0 +1,95 @@
+grammar nl.dslmeinte.simscript.backend.SimBackendDsl with nl.dslmeinte.simscript.structure.SimStructureDsl
+
+import "http://www.DSLConsultancy.com/simscript/structure/StructureDsl" as struct
+
+generate simBackendDsl "http://www.DSLConsultancy.com/simscript/backend/SimBackendDsl"
+
+
+BackendModel:
+	{BackendModel}
+	(
+		'config' '{'
+			  ('baseURL' '=' baseUrl=STRING)?	// base URL, prepended to all (?) URLs in AJAX calls (default="http://fb.DSLConsultancy.com/")
+			& ('flavor' '=' flavor=Flavors)?	// determines flavor, e.g. use a '.php' suffix when flavor == PHP
+		'}'
+	)?
+	authOpts+=AuthenticationDeclaration*
+	declarations+=Service*
+	;
+
+enum Flavors:
+	java='Java' /* default */ | php='PHP'
+	;
+
+AuthenticationDeclaration:
+	'authentication-option' name=ID '{'
+		'principal' principal=AuthenticationParameter
+		'credentials' credential=AuthenticationParameter
+	'}'
+	;
+
+AuthenticationParameter :
+	name = ID ':' type=TypeLiteral
+	;
+
+Service:
+	NamedService | CrudService
+	;
+
+NamedService:
+	Interface | LegacyServlet
+	;
+
+
+// regular interfaces:
+
+Interface:
+	'interface' name=ID
+		method=HttpMethods
+		inputType=DefinedTypeLiteral?
+		( '->' outputType=TypeLiteral )?
+		(notAuthenticated?='not-authenticated')?
+		('implemented-by' legacyServlet=[LegacyServlet])?
+		documentation=STRING?
+	;
+	/*
+	 * validation:
+	 * 		1-  outputType is either a DefinedTypeLiteral or an ListTypeLiteral		[√]
+	 * 		2-  inputType != null if method == POST									[√]
+	 * 		3-  !(inputType == null && outputType == null)							[√]
+	 */
+
+enum HttpMethods:
+	get='GET' | post='POST'
+	;
+
+
+// legacy servlets:
+
+LegacyServlet:
+	'legacy-servlet' name=ID ':' urlPattern=URL '->' fqClassName=QualifiedName
+	;
+
+QualifiedName: ID ('.' ID)*;
+
+
+// CRUD services:
+
+CrudService:
+	'crud-service' structure=[struct::Structure] ':' services+=CrudTypes*
+	;
+	// TODO  consider ditching this and just picking up what CRUD services are required from the .sim_ui models;
+	// on the other hand: it might be wise to be able to restrict the available CRUD services for security reasons.
+
+enum CrudTypes:
+	  create
+	| getById = 'get-by-id'
+	| update
+	| delete
+	;
+
+
+// custom terminal:
+
+terminal URL:  '/' ( 'a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '/' | '.' )+ ;
+
