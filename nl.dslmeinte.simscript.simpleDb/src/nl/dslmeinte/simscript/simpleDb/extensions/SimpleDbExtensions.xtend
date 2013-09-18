@@ -2,7 +2,6 @@ package nl.dslmeinte.simscript.simpleDb.extensions
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.util.XtextUtil
 import java.util.Collections
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.BooleanLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.Column
@@ -20,6 +19,7 @@ import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SqlTypeLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.Table
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.TextLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.VarCharLiteral
+import nl.dslmeinte.simscript.util.XtextUtil
 
 @Singleton
 class SimpleDbExtensions {
@@ -80,12 +80,13 @@ class SimpleDbExtensions {
 
 	private SimpleDbDslFactory eFactory = SimpleDbDslFactory.eINSTANCE
 
-	def nativeSqlType(SqlTypeLiteral it) {
+	def SqlTypeLiteral nativeSqlType(SqlTypeLiteral it) {
 		switch it {
 			DataTypeReference:		it.datatype.type.nativeSqlType as NativeSqlTypeLiteral
 			EnumerationReference:	{
-				val varCharLiteral = eFactory.createVarCharLiteral
-				varCharLiteral.size = Collections.max(it.enumeration.literals.map[it.name.length])
+				eFactory.createVarCharLiteral => [ newLit |
+					newLit.size = Collections.max(it.enumeration.literals.map[it.name.length])
+				]
 			}
 			NativeSqlTypeLiteral:	it
 		}

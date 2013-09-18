@@ -72,7 +72,7 @@ class SimpleDbDslGenerator implements IGenerator {
 	}
 
 
-	def private toSql(SqlTypeLiteral it) {
+	def private CharSequence toSql(SqlTypeLiteral it) {
 		switch it {
 			BooleanLiteral:			"boolean"
 			DateLiteral:			"date"
