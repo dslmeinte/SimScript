@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/nl.dslmeinte.simscript.application/src-gen" editDirectory="/nl.dslmeinte.simscript.application.edit/src"
+    editorDirectory="/nl.dslmeinte.simscript.application.editor/src" modelPluginID="nl.dslmeinte.simscript.application"
+    forceOverwrite="true" modelName="SimApplicationDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="nl.dslmeinte.simscript.application.edit"
+    editorPluginID="nl.dslmeinte.simscript.application.editor" runtimeVersion="2.8"
+    usedGenPackages="../../../../../../nl.dslmeinte.simscript.ui/src-gen/nl/dslmeinte/simscript/ui/SimUiDsl.genmodel#//simUiDsl">
+  <genPackages prefix="SimApplicationDsl" basePackage="nl.dslmeinte.simscript.application"
+      disposableProviderFactory="true" ecorePackage="SimApplicationDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SimApplicationDsl.ecore#//TargetPlatforms">
+      <genEnumLiterals ecoreEnumLiteral="SimApplicationDsl.ecore#//TargetPlatforms/html5"/>
+      <genEnumLiterals ecoreEnumLiteral="SimApplicationDsl.ecore#//TargetPlatforms/facebook"/>
+      <genEnumLiterals ecoreEnumLiteral="SimApplicationDsl.ecore#//TargetPlatforms/mobile"/>
+    </genEnums>
+    <genClasses ecoreClass="SimApplicationDsl.ecore#//ApplicationModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimApplicationDsl.ecore#//ApplicationModel/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimApplicationDsl.ecore#//ApplicationModel/targetPlatform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimApplicationDsl.ecore#//ApplicationModel/includeCSSs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimApplicationDsl.ecore#//ApplicationModel/defaultCSS"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimApplicationDsl.ecore#//ApplicationModel/includedModules"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimApplicationDsl.ecore#//ApplicationModel/entryModule"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimApplicationDsl.ecore#//ApplicationModel/includeCustomJS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimApplicationDsl.ecore#//ApplicationModel/cHtmlHead"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimApplicationDsl.ecore#//ApplicationModel/cHtmlBody"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimApplicationDsl.ecore#//ApplicationModel/genericBackButtonPrevention"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

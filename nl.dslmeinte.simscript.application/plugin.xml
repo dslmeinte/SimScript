@@ -7,7 +7,7 @@
     <package 
        uri = "http://www.DSLConsultancy.com/simscript/application/SimApplicationDsl" 
        class = "nl.dslmeinte.simscript.application.simApplicationDsl.SimApplicationDslPackage"
-       genModel = "com/simlike/simscript/application/SimApplicationDsl.genmodel" /> 
+       genModel = "nl/dslmeinte/simscript/application/SimApplicationDsl.genmodel" /> 
 	
   </extension>
 

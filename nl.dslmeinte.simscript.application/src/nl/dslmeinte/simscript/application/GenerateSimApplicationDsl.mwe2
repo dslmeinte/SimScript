@@ -4,7 +4,7 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/com/simlike/simscript/application/SimApplicationDsl.xtext"
+var grammarURI = "classpath:/nl/dslmeinte/simscript/application/SimApplicationDsl.xtext"
 var file.extensions = "sim_app"
 var projectName = "nl.dslmeinte.simscript.application"
 var runtimeProject = "../${projectName}"
@@ -15,7 +15,7 @@ Workflow {
         scanClassPath = true
         platformUri = "${runtimeProject}/.."
         registerGeneratedEPackage = "nl.dslmeinte.simscript.ui.simUiDsl.SimUiDslPackage"
-        registerGenModelFile = "platform:/resource/nl.dslmeinte.simscript.ui/src-gen/com/simlike/simscript/ui/SimUiDsl.genmodel"
+        registerGenModelFile = "platform:/resource/nl.dslmeinte.simscript.ui/src-gen/nl/dslmeinte/simscript/ui/SimUiDsl.genmodel"
     }
 
     component = DirectoryCleaner {

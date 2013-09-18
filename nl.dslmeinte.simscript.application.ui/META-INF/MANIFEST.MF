@@ -19,5 +19,6 @@ Import-Package: org.apache.log4j,
  org.apache.commons.logging
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: nl.dslmeinte.simscript.application.ui.contentassist.antlr,
- nl.dslmeinte.simscript.application.ui.contentassist
+ nl.dslmeinte.simscript.application.ui.contentassist,
+ nl.dslmeinte.simscript.application.ui.quickfix
 Bundle-Activator: nl.dslmeinte.simscript.application.ui.internal.SimApplicationDslActivator
