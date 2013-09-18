@@ -224,7 +224,7 @@ class PhpGenerator {
 		)
 	}
 
-	def private asPhp(ToDbExpression it) {
+	def private CharSequence asPhp(ToDbExpression it) {
 		switch it {
 			FeatureExpressionHead:		'''«IF feature?.optional»isset(«it.asPhpAccessor») ? «it.asPhpAccessor» : null«ELSE»«it.asPhpAccessor»«ENDIF»'''		// assumption: this gets surrounded by parentheses
 											// TODO  all the sub paths have to be checked as well
@@ -233,13 +233,14 @@ class PhpGenerator {
 			BooleanLiteralExpression:	'''"«it.literal.literal»"'''
 			default: {
 				logProblem("unhandled (sub) type " + eClass.name + " (of ToDbExpression) in PhpGenerator#asPhp")
+				""
 			}
 		}
 	}
 
 	def private asPhpAccessor(FeatureExpressionHead it)	'''$«it.parameter.name»«IF it.tail != null»«it.tail.tailAsPhp»«ENDIF»'''
 
-	def private tailAsPhp(FeatureExpressionTail it)		'''['«feature.name»']«tail?.tailAsPhp»'''
+	def private CharSequence tailAsPhp(FeatureExpressionTail it)		'''['«feature.name»']«tail?.tailAsPhp»'''
 
 
 	def private dispatch phpFunction(DeleteQuery it, String name) {

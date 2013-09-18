@@ -72,7 +72,7 @@ class InterpolateableSqlGenerator {
 		new ParametrizedInterpolation("WHERE ").appendJoined(subClauses.map[it.asSubISql], " AND ")
 	}
 
-	def private dispatch asSubISql(SimpleEqualitySubClause it) {
+	def private dispatch ParametrizedInterpolation asSubISql(SimpleEqualitySubClause it) {
 		if( parameter != null ) {
 			new ParametrizedInterpolation('''«column.name»='%s' ''', <Object>newArrayList(parameter))		// extra space in template is required for parsing Xtend's rich strings...
 		} else {
@@ -80,11 +80,11 @@ class InterpolateableSqlGenerator {
 		}
 	}
 
-	def private dispatch asSubISql(SimpleRangeSubClause it) {
+	def private dispatch ParametrizedInterpolation asSubISql(SimpleRangeSubClause it) {
 		new ParametrizedInterpolation('''('%s' «leftDelimiter.asSql» «column.name» AND «column.name» «rightDelimiter.asSql» '%s')''', <Object>newArrayList(leftParameter, rightParameter))
 	}
 
-	def private dispatch asSubISql(OrSubClause it) {
+	def private dispatch ParametrizedInterpolation asSubISql(OrSubClause it) {
 		new ParametrizedInterpolation("(").appendJoined(subClauses.map[asSubISql], " OR ").append(")")
 	}
 

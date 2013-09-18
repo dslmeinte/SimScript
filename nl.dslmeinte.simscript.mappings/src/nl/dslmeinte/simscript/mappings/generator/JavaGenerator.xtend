@@ -184,7 +184,7 @@ class JavaGenerator {
 		}
 	}
 
-	def private convertingGetterExpr(SqlTypeLiteral type, String columnName) {
+	def private CharSequence convertingGetterExpr(SqlTypeLiteral type, String columnName) {
 		switch type {
 			BooleanLiteral:			sqlGetter("Boolean", columnName)
 			DateLiteral:			sqlGetter("Date", columnName)
@@ -294,7 +294,7 @@ class JavaGenerator {
 	 * +-------------+
 	 */
 
-	def private asJava(ToDbExpression it) {
+	def private CharSequence asJava(ToDbExpression it) {
 		switch it {
 			FeatureExpressionHead:		'''escapeSql(«it.parameter.name»«it.tail?.asJava».toString())'''
 			EncryptExpression:			'''encrypt(«it.operand.asJava»)'''
@@ -304,7 +304,7 @@ class JavaGenerator {
 		}
 	}
 
-	def private asJava(FeatureExpressionTail it) {
+	def private CharSequence asJava(FeatureExpressionTail it) {
 		'''.get«feature.name.toFirstUpper»()«tail?.asJava»'''
 	}
 	

@@ -1,9 +1,6 @@
 package nl.dslmeinte.simscript.mappings.validation
 
 import com.google.inject.Inject
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
-import nl.dslmeinte.simscript.util.XtextUtil
 import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ColumnOrderSpecification
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ColumnsSpecification
@@ -25,6 +22,9 @@ import nl.dslmeinte.simscript.mappings.mappingsDsl.UpdateMatchingClause
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UpdateQuery
 import nl.dslmeinte.simscript.simpleDb.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SimpleColumn
+import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
+import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.xtext.validation.Check
 
 class MappingsDslXtendValidator extends AbstractMappingsDslJavaValidator {
@@ -126,9 +126,9 @@ class MappingsDslXtendValidator extends AbstractMappingsDslJavaValidator {
 
 	@Check
 	def check_password_are_always_encrypted(ToDbMappingSpecification it) {
-		switch expr {
+		switch e: it.expr {
 			FeatureExpressionHead:
-				if( expr.effectiveType.passwordTyped ) {
+				if( e.effectiveType.passwordTyped ) {
 					error("a password-typed value cannot be persisted in the database un-encrypted", ePackage.toDbMappingSpecification_Expr)
 				}
 		}

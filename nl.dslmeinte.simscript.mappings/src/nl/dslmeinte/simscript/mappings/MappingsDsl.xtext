@@ -5,9 +5,9 @@
 
 grammar nl.dslmeinte.simscript.mappings.MappingsDsl with nl.dslmeinte.simscript.structure.SimStructureDsl
 
-generate mappingsDsl "http://www.dslconsultancy.com/xtext/mappings/MappingsDsl"
+generate mappingsDsl "http://www.dslconsultancy.com/simscript/mappings/MappingsDsl"
 
-import "http://www.dslconsultancy.com/xtext/simpleDb/SimpleDbDsl" as db
+import "http://www.dslconsultancy.com/simscript/simpleDb/SimpleDbDsl" as db
 import "http://www.dslconsultancy.com/simscript/structure/StructureDsl" as struct
 
 

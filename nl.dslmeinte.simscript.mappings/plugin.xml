@@ -5,7 +5,7 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "http://www.dslconsultancy.com/xtext/mappings/MappingsDsl" 
+       uri = "http://www.dslconsultancy.com/simscript/mappings/MappingsDsl" 
        class = "nl.dslmeinte.simscript.mappings.mappingsDsl.MappingsDslPackage"
        genModel = "nl/dslmeinte/simscript/mappings/MappingsDsl.genmodel" /> 
 	
