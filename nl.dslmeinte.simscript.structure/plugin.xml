@@ -7,7 +7,7 @@
     <package 
        uri = "http://www.dslconsultancy.com/simscript/structure/StructureDsl" 
        class = "nl.dslmeinte.simscript.structure.structureDsl.StructureDslPackage"
-       genModel = "com/simlike/simscript/structure/SimStructureDsl.genmodel" /> 
+       genModel = "nl/dslmeinte/simscript/structure/SimStructureDsl.genmodel" /> 
 	
   </extension>
 

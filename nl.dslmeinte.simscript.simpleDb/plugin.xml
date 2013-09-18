@@ -5,9 +5,9 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "http://www.dslmeinte.nl/xtext/simpleDb/SimpleDbDsl" 
+       uri = "http://www.dslconsultancy.com/xtext/simpleDb/SimpleDbDsl" 
        class = "nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SimpleDbDslPackage"
-       genModel = "nl/dslmeinte/xtext/simpleDb/SimpleDbDsl.genmodel" /> 
+       genModel = "nl/dslmeinte/simscript/simpleDb/SimpleDbDsl.genmodel" /> 
 	
   </extension>
 

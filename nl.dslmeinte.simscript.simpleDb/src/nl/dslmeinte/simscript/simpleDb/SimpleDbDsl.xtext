@@ -1,0 +1,83 @@
+grammar nl.dslmeinte.simscript.simpleDb.SimpleDbDsl with nl.dslmeinte.simscript.structure.SimStructureDsl
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+import "http://www.dslconsultancy.com/simscript/structure/StructureDsl" as struct
+
+generate simpleDbDsl "http://www.dslconsultancy.com/xtext/simpleDb/SimpleDbDsl"
+
+
+DatabaseModel:
+	{DatabaseModel}
+	'database'
+	definitions+=Definition*
+	;
+	// TODO  consider adding database modules to modularize the database definition
+
+Definition:
+	TableDefinition | DataTypeDefinition
+	;
+
+
+/*
+ * +--------+
+ * | tables |
+ * +--------+
+ */
+
+TableDefinition returns Table:
+	'table' name=ID '{'
+		columns+=ColumnDefinition*
+	'}' ( timestamped?='timestamped' (timestampIndexed?='with-index')? )?
+	;
+	// validation: !columns.empty		[√]
+
+ColumnDefinition returns Column:
+	SimpleColumnDefinition | ForeignKeyColumnDefinition
+	;
+
+SimpleColumnDefinition returns SimpleColumn:
+	name=ID ':' type=SqlTypeLiteral
+		( autoIncrement?='auto-increment'? & index?='index'? & primary?='primary'? & unique?='unique'? & nullable?='nullable'? )	// <== modifiers
+	;
+	/* validation:
+	 * 		1-  some of the modifiers are mutually exclusive	[ ]
+	 * 		2-  auto-increment implies int-type					[√]
+	 */
+
+ForeignKeyColumnDefinition returns ForeignKeyColumn:
+	name=ID '->' primaryId=TablePrimaryIdentification
+		( nullable?='nullable'? )	// <== modifier
+	;
+
+TablePrimaryIdentification hidden():
+	table=[Table] '.' primary=[SimpleColumn]
+	;
+	// scoping: column in primary table.columns		[√]
+
+
+/*
+ * +-------+
+ * | types |
+ * +-------+
+ */
+
+SqlTypeLiteral:
+	  NativeSqlTypeLiteral
+	| {DataTypeReference} datatype=[DataType]
+	| {EnumerationReference} 'enum' enumeration=[struct::Enumeration]
+	;
+
+NativeSqlTypeLiteral:
+	  {BooleanLiteral} 'boolean'
+	| {DateLiteral} 'date'
+	| {IntLiteral} 'int' '(' size=INT ')'
+	| {FloatLiteral} 'float' '(' digits=INT ',' decimals=INT ')'
+	| {TextLiteral} 'text'
+	| {VarCharLiteral} 'varchar' '(' size=INT ')'
+	;
+
+DataTypeDefinition returns DataType:
+	'datatype' name=ID ':' type=SqlTypeLiteral
+	;
+

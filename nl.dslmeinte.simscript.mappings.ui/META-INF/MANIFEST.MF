@@ -22,5 +22,6 @@ Import-Package: org.apache.commons.logging,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: nl.dslmeinte.simscript.mappings.ui.contentassist,
  nl.dslmeinte.simscript.mappings.ui.contentassist.antlr,
- nl.dslmeinte.simscript.mappings.ui.internal
+ nl.dslmeinte.simscript.mappings.ui.internal,
+ nl.dslmeinte.simscript.mappings.ui.quickfix
 Bundle-Activator: nl.dslmeinte.simscript.mappings.ui.internal.MappingsDslActivator

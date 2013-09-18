@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/nl.dslmeinte.simscript.backend/src-gen" editDirectory="/nl.dslmeinte.simscript.backend.edit/src"
+    editorDirectory="/nl.dslmeinte.simscript.backend.editor/src" modelPluginID="nl.dslmeinte.simscript.backend"
+    forceOverwrite="true" modelName="SimBackendDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="nl.dslmeinte.simscript.backend.edit"
+    editorPluginID="nl.dslmeinte.simscript.backend.editor" runtimeVersion="2.8" usedGenPackages="../../../../../../nl.dslmeinte.simscript.structure/src-gen/nl/dslmeinte/simscript/structure/SimStructureDsl.genmodel#//structureDsl">
+  <genPackages prefix="SimBackendDsl" basePackage="nl.dslmeinte.simscript.backend"
+      disposableProviderFactory="true" ecorePackage="SimBackendDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SimBackendDsl.ecore#//Flavors">
+      <genEnumLiterals ecoreEnumLiteral="SimBackendDsl.ecore#//Flavors/java"/>
+      <genEnumLiterals ecoreEnumLiteral="SimBackendDsl.ecore#//Flavors/php"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SimBackendDsl.ecore#//HttpMethods">
+      <genEnumLiterals ecoreEnumLiteral="SimBackendDsl.ecore#//HttpMethods/get"/>
+      <genEnumLiterals ecoreEnumLiteral="SimBackendDsl.ecore#//HttpMethods/post"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SimBackendDsl.ecore#//CrudTypes">
+      <genEnumLiterals ecoreEnumLiteral="SimBackendDsl.ecore#//CrudTypes/create"/>
+      <genEnumLiterals ecoreEnumLiteral="SimBackendDsl.ecore#//CrudTypes/getById"/>
+      <genEnumLiterals ecoreEnumLiteral="SimBackendDsl.ecore#//CrudTypes/update"/>
+      <genEnumLiterals ecoreEnumLiteral="SimBackendDsl.ecore#//CrudTypes/delete"/>
+    </genEnums>
+    <genClasses ecoreClass="SimBackendDsl.ecore#//BackendModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//BackendModel/baseUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//BackendModel/flavor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimBackendDsl.ecore#//BackendModel/authOpts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimBackendDsl.ecore#//BackendModel/declarations"/>
+    </genClasses>
+    <genClasses ecoreClass="SimBackendDsl.ecore#//AuthenticationDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//AuthenticationDeclaration/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimBackendDsl.ecore#//AuthenticationDeclaration/principal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimBackendDsl.ecore#//AuthenticationDeclaration/credential"/>
+    </genClasses>
+    <genClasses ecoreClass="SimBackendDsl.ecore#//AuthenticationParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//AuthenticationParameter/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimBackendDsl.ecore#//AuthenticationParameter/type"/>
+    </genClasses>
+    <genClasses ecoreClass="SimBackendDsl.ecore#//Service"/>
+    <genClasses ecoreClass="SimBackendDsl.ecore#//NamedService">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//NamedService/name"/>
+    </genClasses>
+    <genClasses ecoreClass="SimBackendDsl.ecore#//Interface">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//Interface/method"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimBackendDsl.ecore#//Interface/inputType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimBackendDsl.ecore#//Interface/outputType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//Interface/notAuthenticated"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimBackendDsl.ecore#//Interface/legacyServlet"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//Interface/documentation"/>
+    </genClasses>
+    <genClasses ecoreClass="SimBackendDsl.ecore#//LegacyServlet">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//LegacyServlet/urlPattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//LegacyServlet/fqClassName"/>
+    </genClasses>
+    <genClasses ecoreClass="SimBackendDsl.ecore#//CrudService">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimBackendDsl.ecore#//CrudService/structure"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimBackendDsl.ecore#//CrudService/services"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

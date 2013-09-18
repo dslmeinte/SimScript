@@ -5,9 +5,9 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "http://www.DSLConsultancy.com/simscript/backend/SimBackendDsl" 
+       uri = "http://www.dslconsultancy.com/simscript/backend/SimBackendDsl" 
        class = "nl.dslmeinte.simscript.backend.simBackendDsl.SimBackendDslPackage"
-       genModel = "com/simlike/simscript/backend/SimBackendDsl.genmodel" /> 
+       genModel = "nl/dslmeinte/simscript/backend/SimBackendDsl.genmodel" /> 
 	
   </extension>
 
