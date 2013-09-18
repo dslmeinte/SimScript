@@ -1,4 +1,7 @@
 SimScript
 =========
 
-The parts of simlike/simlike relevant for Blaasfunctie.nl and such.
+A set of cohesive Xtext DSLs for application development.
+
+License == MIT, so provided "as-is" without warranty whatsoever.
+
