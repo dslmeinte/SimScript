@@ -17,7 +17,7 @@ class ReferenceGenerationTest extends XtextTestsSupport {
 		val instance = new ReferenceGenerationTest()
 		instance.setUp
 		instance.test_parse_and_generate_reference_test_
-		instance.tearDown
+//		instance.tearDown
 	}
 
 }
