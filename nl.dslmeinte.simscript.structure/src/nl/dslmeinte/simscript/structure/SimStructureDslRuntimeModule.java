@@ -13,4 +13,8 @@ public class SimStructureDslRuntimeModule extends AbstractSimStructureDslRuntime
 		return SimStructureResourceDescriptionStrategy.class;
 	}
 
+	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
+		return nl.dslmeinte.simscript.structure.scoping.SimStructureDslScopeProvider.class;
+	}
+
 }

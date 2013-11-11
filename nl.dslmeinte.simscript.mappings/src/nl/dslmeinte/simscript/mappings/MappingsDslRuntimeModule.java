@@ -13,4 +13,8 @@ public class MappingsDslRuntimeModule extends nl.dslmeinte.simscript.mappings.Ab
 		return MappingsResourceDescriptionStrategy.class;
 	}
 
+	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
+		return nl.dslmeinte.simscript.mappings.scoping.MappingsDslScopeProvider.class;
+	}
+
 }
