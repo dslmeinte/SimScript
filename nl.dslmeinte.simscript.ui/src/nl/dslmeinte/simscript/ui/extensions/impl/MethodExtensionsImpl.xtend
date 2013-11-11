@@ -2,6 +2,7 @@ package nl.dslmeinte.simscript.ui.extensions.impl
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import java.util.Set
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions
 import nl.dslmeinte.simscript.ui.extensions.StatementExtensions
@@ -12,7 +13,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.MethodCallExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.MethodDefinition
 import nl.dslmeinte.simscript.ui.simUiDsl.UiModule
 import nl.dslmeinte.simscript.util.XtextUtil
-import java.util.Set
 
 @Singleton
 class MethodExtensionsImpl implements MethodExtensions {
@@ -32,7 +32,8 @@ class MethodExtensionsImpl implements MethodExtensions {
 	}
 
 	override isFunction(Method it) {
-		definition.statementBlock.statements.last?.hasResultValue
+		val last = definition.statementBlock.statements.last
+		if( last == null ) false else last.hasResultValue
 	}
 
 	override arguments(MethodCallExpression it) {

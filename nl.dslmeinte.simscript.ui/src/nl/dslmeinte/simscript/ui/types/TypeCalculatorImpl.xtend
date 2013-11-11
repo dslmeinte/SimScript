@@ -182,7 +182,7 @@ class TypeCalculatorImpl implements TypeCalculator {
 	def private dispatch type_(StructureCreationExpression it)		{ structure.createDefinedTypeLiteral }
 
 	def private dispatch type_(ReferenceExpression it) {
-		if( ref?.eIsProxy ) null else ref.refType
+		return if( ref == null || ref.eIsProxy ) null else ref.refType
 	}
 
 	def private dispatch type_(DateExpression it)					{ DATE.createBuiltinTypeLiteral }

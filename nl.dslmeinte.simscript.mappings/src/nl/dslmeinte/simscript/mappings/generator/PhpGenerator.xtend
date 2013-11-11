@@ -226,7 +226,7 @@ class PhpGenerator {
 
 	def private CharSequence asPhp(ToDbExpression it) {
 		switch it {
-			FeatureExpressionHead:		'''«IF feature?.optional»isset(«it.asPhpAccessor») ? «it.asPhpAccessor» : null«ELSE»«it.asPhpAccessor»«ENDIF»'''		// assumption: this gets surrounded by parentheses
+			FeatureExpressionHead:		'''«IF feature == null || feature.optional»isset(«it.asPhpAccessor») ? «it.asPhpAccessor» : null«ELSE»«it.asPhpAccessor»«ENDIF»'''		// assumption: this gets surrounded by parentheses
 											// TODO  all the sub paths have to be checked as well
 			MonthRoundExpression:		'''roundToMonth(«it.operand.asPhp»)'''
 			EncryptExpression:			'''encryptPassword(«it.operand.asPhp»)'''

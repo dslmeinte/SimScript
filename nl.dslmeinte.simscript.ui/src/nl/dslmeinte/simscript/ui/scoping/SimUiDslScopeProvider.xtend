@@ -145,7 +145,7 @@ public class SimUiDslScopeProvider extends SimStructureDslScopeProvider {
 			scopeFor(listVariables, scope_Referable(containerHaving(typeof(DefinedViewable)), eRef))
 		}
 	}
-	
+
 	def IScope scope_Referable(ForStatement it, EReference eRef) {
         val listVariables = newArrayList(it.indexVariable, it.valueVariable)
         val containingListElement = eContainer.containerHaving(typeof(ForStatement))
