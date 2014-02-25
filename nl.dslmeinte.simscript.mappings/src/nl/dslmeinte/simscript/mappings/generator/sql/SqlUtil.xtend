@@ -45,7 +45,7 @@ class SqlUtil {
 
 
 	def asSql(OrderClause it)
-		'''ORDER BY «FOR spec : columnSpecifications SEPARATOR ', '»«IF spec.timestamp»timestamp«ELSE»«spec.column.name»«ENDIF» «spec.direction.name»«ENDFOR»'''
+		'''ORDER BY «FOR spec : columnSpecifications SEPARATOR ', '»«IF spec.timestamp»timestamp«ELSE»«spec.column.name»«ENDIF» «spec.direction.getName()»«ENDFOR»'''
 
 
 	def interpolationString(ToDbMappingSpecification it) {

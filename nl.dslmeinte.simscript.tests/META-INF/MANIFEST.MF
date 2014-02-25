@@ -4,7 +4,7 @@ Bundle-Name: SImScript-wide tests
 Bundle-SymbolicName: nl.dslmeinte.simscript.tests
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: DSLConsultancy.com
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: nl.dslmeinte.simscript.application;bundle-version="1.0.0",
  nl.dslmeinte.simscript.backend;bundle-version="1.0.0",
  nl.dslmeinte.simscript.generator;bundle-version="1.0.0",

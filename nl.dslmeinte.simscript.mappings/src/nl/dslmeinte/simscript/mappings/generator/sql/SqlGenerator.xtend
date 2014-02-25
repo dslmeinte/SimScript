@@ -47,10 +47,10 @@ class SqlGenerator {
 		'''WHERE «FOR subClause : subClauses SEPARATOR ' AND '»«subClause.column.name»='%s'«ENDFOR»'''
 
 
-	def private dispatch asSubSql(OrSubClause it)
+	def private dispatch CharSequence asSubSql(OrSubClause it)
 		'''(«FOR subClause : subClauses SEPARATOR ' OR '»«subClause.asSubSql»«ENDFOR»)'''
 
-	def private dispatch asSubSql(SimpleEqualitySubClause it)		'''«column.name»='%s' '''		// extra space in template is required for parsing Xtend's rich strings...
-	def private dispatch asSubSql(SimpleRangeSubClause it)			'''('%s' «leftDelimiter.asSql» «column.name» AND «column.name» «rightDelimiter.asSql» '%s')'''
+	def private dispatch CharSequence asSubSql(SimpleEqualitySubClause it)		'''«column.name»='%s' '''		// extra space in template is required for parsing Xtend's rich strings...
+	def private dispatch CharSequence asSubSql(SimpleRangeSubClause it)			'''('%s' «leftDelimiter.asSql» «column.name» AND «column.name» «rightDelimiter.asSql» '%s')'''
 
 }

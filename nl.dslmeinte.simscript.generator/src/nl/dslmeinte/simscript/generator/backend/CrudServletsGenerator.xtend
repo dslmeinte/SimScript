@@ -124,8 +124,8 @@ class CrudServletsGenerator {
 		out.write("{\"success\": \"true\"}");
 		'''
 
-	def servletName(Structure it, CrudTypes service) {
-		service.name.toLowerCase.toFirstUpper + name.toFirstUpper + "Servlet"
+	def servletName(Structure it, CrudTypes crudType) {
+		crudType.getName().toLowerCase.toFirstUpper + name.toFirstUpper + "Servlet"
 	}
 
 }

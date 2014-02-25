@@ -5,8 +5,8 @@ Bundle-Vendor: DSLConsultancy.com
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: nl.dslmeinte.simscript.application; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.4.3";visibility:=reexport,
- org.eclipse.xtext.xbase;bundle-version="2.4.3";resolution:=optional;visibility:=reexport,
+Require-Bundle: org.eclipse.xtext;bundle-version="2.5.2";visibility:=reexport,
+ org.eclipse.xtext.xbase;bundle-version="2.5.2";resolution:=optional;visibility:=reexport,
  org.apache.log4j;bundle-version="1.2.15";visibility:=reexport,
  org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional;visibility:=reexport,
  org.eclipse.xtext.generator;resolution:=optional,
@@ -23,7 +23,7 @@ Import-Package: nl.dslmeinte.simscript.util,
  org.apache.log4j,
  org.eclipse.xtend2.lib,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: nl.dslmeinte.simscript.application.simApplicationDsl,
  nl.dslmeinte.simscript.application.simApplicationDsl.impl,
  nl.dslmeinte.simscript.application.simApplicationDsl.util,

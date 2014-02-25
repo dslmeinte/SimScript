@@ -35,7 +35,7 @@ class JavaGeneratorHelper {
 			case BuiltinTypes.EMAIL		: "String"
 			case BuiltinTypes.PASSWORD		: "String"
 			default: {
-				println("warning: mapping built-in type " + name + " to String")
+				println("warning: mapping built-in type " + getName() + " to String")
 				"String"
 			}
 		}

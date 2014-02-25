@@ -30,7 +30,7 @@ class SimStructureDslXtendValidator extends AbstractSimStructureDslJavaValidator
 	}
 
 	@Check
-	def persistent_structure_only_refers_persistents(Feature it) {
+	def persistent_structure_only_refers_persistents(Feature<?> it) {
 		if( (eContainer as Structure).persistent && type.structureTyped ) {
 			val reffedStructure = (type as DefinedTypeLiteral).type as Structure
 			if( !reffedStructure.persistent ) {
@@ -48,7 +48,7 @@ class SimStructureDslXtendValidator extends AbstractSimStructureDslJavaValidator
 
 	// TODO  remove when 'id' is not generated in POJOs anymore
 	@Check
-	def feature_name_is_not_id(Feature it) {
+	def feature_name_is_not_id(Feature<?> it) {
 		if( name == "id" ) {
 			error( "feature cannot be named 'id' (reserved keyword)", ePackage.feature_Name )
 		}
@@ -62,7 +62,7 @@ class SimStructureDslXtendValidator extends AbstractSimStructureDslJavaValidator
 	}
 
 	@Check
-	def feature_name_starts_with_lower_capital(Feature it) {
+	def feature_name_starts_with_lower_capital(Feature<?> it) {
 		if( !it.uncapitalized ) {
 			warning( "the name of a feature should start with a lower case character", ePackage.feature_Name )
 		}
@@ -92,7 +92,7 @@ class SimStructureDslXtendValidator extends AbstractSimStructureDslJavaValidator
 		Character.isUpperCase(name.charAt(0))
 	}
 
-	def private isUncapitalized(Feature it) {
+	def private isUncapitalized(Feature<?> it) {
 		Character.isLowerCase(name.charAt(0))
 	}
 

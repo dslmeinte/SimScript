@@ -14,7 +14,7 @@ Import-Package: org.apache.log4j,
  org.apache.commons.logging,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend2.lib
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: nl.dslmeinte.simscript.generator,
  nl.dslmeinte.simscript.generator.backend,
  nl.dslmeinte.simscript.generator.standalone,

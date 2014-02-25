@@ -5,7 +5,7 @@ Bundle-SymbolicName: nl.dslmeinte.simscript.generator.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: nl.dslmeinte.simscript.generator.ui.internal.Activator
 Bundle-Vendor: DSLConsultancy.com
-Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.2.1",
+Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.5.2",
  nl.dslmeinte.simscript.backend;bundle-version="1.0.0",
  nl.dslmeinte.simscript.backend.ui;bundle-version="1.0.0",
  nl.dslmeinte.simscript.generator;bundle-version="1.0.0",
@@ -24,6 +24,6 @@ Import-Package: org.apache.commons.logging,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.osgi.framework;version="1.6.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: nl.dslmeinte.simscript.generator.ui
