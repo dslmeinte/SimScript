@@ -1,9 +1,32 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: nl.dslmeinte.simscript.xcore
+Bundle-Name: SimScript-core
 Bundle-SymbolicName: nl.dslmeinte.simscript.core;singleton:=true
-Bundle-Version: 0.1.0.qualifier
-Require-Bundle: org.eclipse.emf.ecore,
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: DSLConsultancy.com
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib
+Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: nl.dslmeinte.simscript.application.simApplicationDsl,
+ nl.dslmeinte.simscript.application.simApplicationDsl.impl,
+ nl.dslmeinte.simscript.application.simApplicationDsl.util,
+ nl.dslmeinte.simscript.backend.simBackendDsl,
+ nl.dslmeinte.simscript.backend.simBackendDsl.impl,
+ nl.dslmeinte.simscript.backend.simBackendDsl.util,
+ nl.dslmeinte.simscript.mappings.mappingsDsl,
+ nl.dslmeinte.simscript.mappings.mappingsDsl.impl,
+ nl.dslmeinte.simscript.mappings.mappingsDsl.util,
+ nl.dslmeinte.simscript.simpleDb.simpleDbDsl,
+ nl.dslmeinte.simscript.simpleDb.simpleDbDsl.impl,
+ nl.dslmeinte.simscript.simpleDb.simpleDbDsl.util,
+ nl.dslmeinte.simscript.structure.structureDsl,
+ nl.dslmeinte.simscript.structure.structureDsl.impl,
+ nl.dslmeinte.simscript.structure.structureDsl.util,
+ nl.dslmeinte.simscript.ui.simUiDsl,
+ nl.dslmeinte.simscript.ui.simUiDsl.impl,
+ nl.dslmeinte.simscript.ui.simUiDsl.util

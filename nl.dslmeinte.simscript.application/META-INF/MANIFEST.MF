@@ -17,23 +17,21 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.5.2";visibility:=reexport,
  org.eclipse.xtext.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
- org.antlr.runtime
+ org.antlr.runtime,
+ nl.dslmeinte.simscript.core;bundle-version="1.0.0"
 Import-Package: nl.dslmeinte.simscript.util,
  org.apache.commons.logging,
  org.apache.log4j,
  org.eclipse.xtend2.lib,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: nl.dslmeinte.simscript.application.simApplicationDsl,
- nl.dslmeinte.simscript.application.simApplicationDsl.impl,
- nl.dslmeinte.simscript.application.simApplicationDsl.util,
- nl.dslmeinte.simscript.application,
- nl.dslmeinte.simscript.application.services,
+Export-Package: nl.dslmeinte.simscript.application,
+ nl.dslmeinte.simscript.application.formatting,
+ nl.dslmeinte.simscript.application.generator,
  nl.dslmeinte.simscript.application.parser.antlr,
  nl.dslmeinte.simscript.application.parser.antlr.internal,
  nl.dslmeinte.simscript.application.scoping,
- nl.dslmeinte.simscript.application.validation,
- nl.dslmeinte.simscript.application.generator,
- nl.dslmeinte.simscript.application.formatting,
- nl.dslmeinte.simscript.application.serializer
+ nl.dslmeinte.simscript.application.serializer,
+ nl.dslmeinte.simscript.application.services,
+ nl.dslmeinte.simscript.application.validation
 

@@ -17,22 +17,20 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.5.2";visibility:=reexport,
  org.eclipse.xtext.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
- org.antlr.runtime
+ org.antlr.runtime,
+ nl.dslmeinte.simscript.core;bundle-version="1.0.0"
 Import-Package: org.apache.log4j,
  org.apache.commons.logging,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend2.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: nl.dslmeinte.simscript.backend,
- nl.dslmeinte.simscript.backend.services,
- nl.dslmeinte.simscript.backend.simBackendDsl,
- nl.dslmeinte.simscript.backend.simBackendDsl.impl,
- nl.dslmeinte.simscript.backend.simBackendDsl.util,
- nl.dslmeinte.simscript.backend.serializer,
+ nl.dslmeinte.simscript.backend.formatting,
+ nl.dslmeinte.simscript.backend.generator,
  nl.dslmeinte.simscript.backend.parser.antlr,
  nl.dslmeinte.simscript.backend.parser.antlr.internal,
- nl.dslmeinte.simscript.backend.validation,
- nl.dslmeinte.simscript.backend.formatting,
  nl.dslmeinte.simscript.backend.scoping,
- nl.dslmeinte.simscript.backend.generator
+ nl.dslmeinte.simscript.backend.serializer,
+ nl.dslmeinte.simscript.backend.services,
+ nl.dslmeinte.simscript.backend.validation
 

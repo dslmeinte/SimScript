@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.5.2";visibility:=reexport,
  org.antlr.runtime,
  nl.dslmeinte.simscript.simpleDb;bundle-version="1.0.0",
  nl.dslmeinte.simscript.backend;bundle-version="1.0.0",
- nl.dslmeinte.simscript.structure;bundle-version="1.0.0"
+ nl.dslmeinte.simscript.structure;bundle-version="1.0.0",
+ nl.dslmeinte.simscript.core;bundle-version="1.0.0"
 Import-Package: nl.dslmeinte.simscript.generator,
  nl.dslmeinte.simscript.generator.backend,
  org.apache.commons.logging,
@@ -27,16 +28,13 @@ Import-Package: nl.dslmeinte.simscript.generator,
  org.eclipse.xtend2.lib,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: nl.dslmeinte.simscript.mappings.mappingsDsl,
- nl.dslmeinte.simscript.mappings.mappingsDsl.impl,
- nl.dslmeinte.simscript.mappings.mappingsDsl.util,
- nl.dslmeinte.simscript.mappings,
- nl.dslmeinte.simscript.mappings.services,
+Export-Package: nl.dslmeinte.simscript.mappings,
+ nl.dslmeinte.simscript.mappings.formatting,
+ nl.dslmeinte.simscript.mappings.generator,
  nl.dslmeinte.simscript.mappings.parser.antlr,
  nl.dslmeinte.simscript.mappings.parser.antlr.internal,
  nl.dslmeinte.simscript.mappings.scoping,
- nl.dslmeinte.simscript.mappings.validation,
- nl.dslmeinte.simscript.mappings.formatting,
  nl.dslmeinte.simscript.mappings.serializer,
- nl.dslmeinte.simscript.mappings.generator
+ nl.dslmeinte.simscript.mappings.services,
+ nl.dslmeinte.simscript.mappings.validation
 
