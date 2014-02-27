@@ -1,0 +1,68 @@
+@Ecore(nsURI="http://www.dslconsultancy.com/simscript/backend/SimBackendDsl")
+@GenModel(forceOverwrite="true", updateClasspath="false", complianceLevel="5.0")
+package nl.dslmeinte.simscript.backend.simBackendDsl
+
+import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral
+import nl.dslmeinte.simscript.structure.structureDsl.Structure
+import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
+
+class BackendModel {
+	String baseUrl
+	Flavors flavor
+	contains AuthenticationDeclaration[] authOpts
+	contains Service[] declarations
+}
+
+enum Flavors {
+	java as "Java"
+	php as "PHP" = 1
+}
+
+class AuthenticationDeclaration {
+	String name
+	contains AuthenticationParameter principal
+	contains AuthenticationParameter credential
+}
+
+class AuthenticationParameter {
+	String name
+	contains TypeLiteral ^type
+}
+
+class Service {
+}
+
+class NamedService extends Service {
+	String name
+}
+
+class Interface extends NamedService {
+	HttpMethods method
+	contains DefinedTypeLiteral inputType
+	contains TypeLiteral outputType
+	boolean notAuthenticated
+	refers LegacyServlet legacyServlet
+	String documentation
+}
+
+enum HttpMethods {
+	^get as "GET"
+	post as "POST" = 1
+}
+
+class LegacyServlet extends NamedService {
+	String urlPattern
+	String fqClassName
+}
+
+class CrudService extends Service {
+	refers Structure structure
+	CrudTypes[] services
+}
+
+enum CrudTypes {
+	^create
+	getById as "get-by-id" = 1
+	update = 2
+	delete = 3
+}

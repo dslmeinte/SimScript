@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated StructureDsl -->
+      <package
+            uri="http://www.dslconsultancy.com/simscript/structure/StructureDsl"
+            class="nl.dslmeinte.simscript.structure.structureDsl.StructureDslPackage"
+            genModel="model/StructureDsl.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated SimBackendDsl -->
+      <package
+            uri="http://www.dslconsultancy.com/simscript/backend/SimBackendDsl"
+            class="nl.dslmeinte.simscript.backend.simBackendDsl.SimBackendDslPackage"
+            genModel="model/SimBackendDsl.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated SimUiDsl -->
+      <package
+            uri="http://www.dslconsultancy.com/simscript/ui/SimUiDsl"
+            class="nl.dslmeinte.simscript.ui.simUiDsl.SimUiDslPackage"
+            genModel="model/SimUiDsl.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated SimpleDbDsl -->
+      <package
+            uri="http://www.dslconsultancy.com/simscript/simpleDb/SimpleDbDsl"
+            class="nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SimpleDbDslPackage"
+            genModel="model/SimpleDbDsl.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated MappingsDsl -->
+      <package
+            uri="http://www.dslconsultancy.com/simscript/mappings/MappingsDsl"
+            class="nl.dslmeinte.simscript.mappings.mappingsDsl.MappingsDslPackage"
+            genModel="model/MappingsDsl.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated SimApplicationDsl -->
+      <package
+            uri="http://www.dslconsultancy.com/simscript/application/SimApplicationDsl"
+            class="nl.dslmeinte.simscript.application.simApplicationDsl.SimApplicationDslPackage"
+            genModel="model/SimApplicationDsl.xcore"/>
+   </extension>
+
+</plugin>

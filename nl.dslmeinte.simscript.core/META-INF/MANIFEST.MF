@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: nl.dslmeinte.simscript.xcore
+Bundle-SymbolicName: nl.dslmeinte.simscript.core;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Require-Bundle: org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.emf.ecore.xcore.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

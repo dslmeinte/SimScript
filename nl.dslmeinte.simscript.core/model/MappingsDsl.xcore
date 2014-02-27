@@ -1,0 +1,209 @@
+@Ecore(nsURI="http://www.dslconsultancy.com/simscript/mappings/MappingsDsl")
+@GenModel(forceOverwrite="true", updateClasspath="false", complianceLevel="5.0")
+package nl.dslmeinte.simscript.mappings.mappingsDsl
+
+import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.Column
+import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.Table
+import nl.dslmeinte.simscript.structure.structureDsl.Feature
+import nl.dslmeinte.simscript.structure.structureDsl.Structure
+import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
+
+class MappingsModel {
+	BackendTargets backendTarget
+	contains NamedQueryDefinition[] definitions
+}
+
+enum BackendTargets {
+	php as "PHP"
+	java as "Java" = 1
+}
+
+class NamedQueryDefinition {
+	String name
+	contains Query queryExpr
+}
+
+class Query {
+	refers Table table
+}
+
+class FromDbQuery extends Query {
+	contains UntypedParameter[] parameters
+	contains MatchingClause whereClause
+}
+
+class ToDbQuery extends Query {
+	contains TypedParameter[] parameters
+	contains ToDbMappingSpecification[] mappingSpecifications
+}
+
+class QueryHavingResult extends FromDbQuery {
+}
+
+class SelectQuery extends QueryHavingResult {
+	boolean nonEmpty
+	contains OrderClause orderClause
+	boolean atMost1
+	refers Structure structure
+	refers Column[] sameNamedColumns
+	contains FromDbMappingSpecification[] mappingSpecifications
+}
+
+class FromDbMappingSpecification {
+	refers Feature<?> feature
+}
+
+class Argument {
+	refers UntypedParameter parameter
+	refers Column column
+}
+
+class CountQuery extends QueryHavingResult {
+	contains ResultExpression resultExpr
+}
+
+class ResultExpression {
+}
+
+class ColumnsSpecification extends ResultExpression {
+	refers Column[] columns
+}
+
+class AllColumnsExpression extends ResultExpression {
+}
+
+class MatchingClause {
+	contains MatchingSubClause[] subClauses
+}
+
+class MatchingSubClause {
+}
+
+class SimpleSubClause extends MatchingSubClause {
+	refers Column column
+}
+
+class SimpleEqualitySubClause extends SimpleSubClause {
+	refers UntypedParameter parameter
+	contains LiteralExpression literal
+}
+
+class SimpleRangeSubClause extends SimpleSubClause {
+	LeftRangeDelimiters leftDelimiter
+	refers UntypedParameter leftParameter
+	refers UntypedParameter rightParameter
+	RightRangeDelimiters rightDelimiter
+}
+
+class OrSubClause extends MatchingSubClause {
+	contains SimpleSubClause[] subClauses
+}
+
+enum LeftRangeDelimiters {
+	closed as "["
+	open as "<" = 1
+}
+
+enum RightRangeDelimiters {
+	closed as "]"
+	open as ">" = 1
+}
+
+class OrderClause {
+	contains ColumnOrderSpecification[] columnSpecifications
+}
+
+class ColumnOrderSpecification {
+	refers Column column
+	boolean timestamp
+	OrderDirections direction
+}
+
+enum OrderDirections {
+	asc as "ascending"
+	desc as "descending" = 1
+}
+
+class InsertQuery extends ToDbQuery {
+	refers Column returnAutoIncrementColumn
+}
+
+class ToDbMappingSpecification {
+	refers Column column
+	contains ToDbExpression expr
+}
+
+class UpdateQuery extends ToDbQuery {
+	contains UpdateMatchingClause whereClause
+}
+
+class UpdateMatchingClause {
+	contains ExpressionEqualitySubClause[] subClauses
+}
+
+class ExpressionEqualitySubClause {
+	refers Column column
+	contains ToDbExpression expr
+}
+
+class DeleteQuery extends FromDbQuery {
+}
+
+class ToDbExpression {
+}
+
+class MonthRoundExpression extends ToDbExpression {
+	contains FeatureExpressionHead operand
+}
+
+class EncryptExpression extends ToDbExpression {
+	contains FeatureExpressionHead operand
+}
+
+class FeatureExpressionHead extends ToDbExpression , FeatureExpressionElement {
+	refers TypedParameter parameter
+}
+
+class FeatureExpressionTail extends FeatureExpressionElement {
+	refers Feature<?> feature
+}
+
+class FeatureExpressionElement {
+	contains FeatureExpressionTail tail
+}
+
+class LiteralExpression extends ToDbExpression {
+}
+
+enum BooleanLiterals {
+	^false
+	^true = 1
+}
+
+class TypedParameter {
+	String name
+	contains TypeLiteral ^type
+}
+
+class UntypedParameter {
+	String name
+}
+
+class SimpleColumnMappingSpecification extends FromDbMappingSpecification {
+	refers Column column
+}
+
+class NestedMappingSpecification extends FromDbMappingSpecification {
+	refers NamedQueryDefinition query
+	contains Argument[] arguments
+}
+
+class DeferedMappingSpecification extends FromDbMappingSpecification {
+}
+
+class TimestampColumnMappingSpecification extends FromDbMappingSpecification {
+}
+
+class BooleanLiteralExpression extends LiteralExpression {
+	BooleanLiterals literal
+}

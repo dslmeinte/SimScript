@@ -1,0 +1,81 @@
+@Ecore(nsURI="http://www.dslconsultancy.com/simscript/simpleDb/SimpleDbDsl")
+@GenModel(forceOverwrite="true", updateClasspath="false", complianceLevel="5.0")
+package nl.dslmeinte.simscript.simpleDb.simpleDbDsl
+
+import nl.dslmeinte.simscript.structure.structureDsl.Enumeration
+
+class DatabaseModel {
+	contains Definition[] definitions
+}
+
+class Definition {
+	String name
+}
+
+class Table extends Definition {
+	contains Column[] columns
+	boolean timestamped
+	boolean timestampIndexed
+}
+
+class Column {
+	String name
+	boolean nullable
+}
+
+class SimpleColumn extends Column {
+	contains SqlTypeLiteral ^type
+	boolean autoIncrement
+	boolean index
+	boolean primary
+	boolean ^unique
+}
+
+class ForeignKeyColumn extends Column {
+	contains TablePrimaryIdentification primaryId
+}
+
+class TablePrimaryIdentification {
+	refers Table table
+	refers SimpleColumn primary
+}
+
+class SqlTypeLiteral {
+}
+
+class NativeSqlTypeLiteral extends SqlTypeLiteral {
+}
+
+class DataType extends Definition {
+	contains SqlTypeLiteral ^type
+}
+
+class DataTypeReference extends SqlTypeLiteral {
+	refers DataType datatype
+}
+
+class EnumerationReference extends SqlTypeLiteral {
+	refers Enumeration enumeration
+}
+
+class BooleanLiteral extends NativeSqlTypeLiteral {
+}
+
+class DateLiteral extends NativeSqlTypeLiteral {
+}
+
+class IntLiteral extends NativeSqlTypeLiteral {
+	int size
+}
+
+class FloatLiteral extends NativeSqlTypeLiteral {
+	int digits
+	int decimals
+}
+
+class TextLiteral extends NativeSqlTypeLiteral {
+}
+
+class VarCharLiteral extends NativeSqlTypeLiteral {
+	int size
+}

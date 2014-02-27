@@ -1,0 +1,24 @@
+@Ecore(nsURI="http://www.dslconsultancy.com/simscript/application/SimApplicationDsl")
+@GenModel(forceOverwrite="true", updateClasspath="false", complianceLevel="5.0")
+package nl.dslmeinte.simscript.application.simApplicationDsl
+
+import nl.dslmeinte.simscript.ui.simUiDsl.UiModule
+
+class ApplicationModel {
+	String title
+	TargetPlatforms targetPlatform
+	String[] includeCSSs
+	boolean defaultCSS
+	refers UiModule[] includedModules
+	refers UiModule entryModule
+	String[] includeCustomJS
+	String cHtmlHead
+	String cHtmlBody
+	boolean genericBackButtonPrevention
+}
+
+enum TargetPlatforms {
+	html5
+	facebook = 1
+	mobile = 2
+}

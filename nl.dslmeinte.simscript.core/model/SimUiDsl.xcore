@@ -1,0 +1,560 @@
+@Ecore(nsURI="http://www.dslconsultancy.com/simscript/ui/SimUiDsl")
+@GenModel(forceOverwrite="true", updateClasspath="false", complianceLevel="5.0")
+package nl.dslmeinte.simscript.ui.simUiDsl
+
+import nl.dslmeinte.simscript.backend.simBackendDsl.AuthenticationDeclaration
+import nl.dslmeinte.simscript.backend.simBackendDsl.AuthenticationParameter
+import nl.dslmeinte.simscript.backend.simBackendDsl.NamedService
+import nl.dslmeinte.simscript.structure.structureDsl.Enumeration
+import nl.dslmeinte.simscript.structure.structureDsl.EnumerationLiteral
+import nl.dslmeinte.simscript.structure.structureDsl.Feature
+import nl.dslmeinte.simscript.structure.structureDsl.Structure
+import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
+
+class UiModule {
+	boolean notAuthenticated
+	contains TopLevelDefinition[] definitions
+}
+
+class TopLevelDefinition {
+	contains ParameterList parameterList
+}
+
+class TableRowsDefinition extends TopLevelDefinition {
+	String name
+	contains TableRow[] rows
+}
+
+class Viewable extends TopLevelDefinition {
+	ViewableTypes ^type
+	String name
+}
+
+class DefinedViewable extends Viewable {
+	contains ValuesBlock valuesBlock
+	contains LocalViewableDefinition[] definitions
+}
+
+class ManualViewable extends Viewable {
+	String namespace
+}
+
+class LocalViewableDefinition {
+}
+
+enum ViewableTypes {
+	screen
+	component = 1
+}
+
+class ValuesBlock {
+	contains ValueDeclaration[] declarations
+}
+
+class ValueDeclaration extends AbstractValueDeclaration {
+	ValueTypes valueType
+}
+
+enum ValueTypes {
+	variable as "="
+	^derived as "<-" = 1
+}
+
+class Value extends Referable {
+}
+
+class AbstractValueDeclaration {
+	contains Value value
+	contains TypeLiteral declaredType
+	contains Expression valueExpr
+}
+
+class Parameter extends Referable {
+	contains TypeLiteral ^type
+}
+
+class ParameterList {
+	contains Parameter[] parameters
+}
+
+class MethodDefinition extends TopLevelDefinition , LocalViewableDefinition {
+	contains Method method
+	contains StatementBlock statementBlock
+}
+
+class Method extends Referable {
+}
+
+class Element extends LocalViewableDefinition {
+}
+
+class Quotation extends Element {
+	contains Expression path
+}
+
+class Binding extends Element {
+	contains Expression bindSite
+}
+
+class ElementBody {
+	contains Element[] elements
+}
+
+class ComponentInvocation extends Element , ViewableCallSite {
+}
+
+class Argument {
+	refers Parameter parameter
+	contains Expression valueExpr
+}
+
+class ArgumentList {
+	contains Argument[] arguments
+}
+
+class InputElement extends Element {
+	contains Expression bindSite
+	String hint
+	contains Expression minValue
+	contains Expression maxValue
+	contains RadioOption radioOption
+	contains Expression onChange
+	contains Expression onSubmit
+	contains StructureOption structureOption
+}
+
+class RadioOption {
+	String ^true
+	String ^false
+}
+
+class StructureOption {
+	contains Expression sourceExpr
+	refers Method displayFunction
+}
+
+class ButtonElement extends Element {
+	String text
+	contains Expression action
+	String cssClass
+}
+
+class BlockElement extends Element {
+	contains Expression onClick
+	String cssClass
+	String bodyCssClass
+	String style
+	contains ElementBody header
+	String headerCssClass
+	boolean noCss
+	contains ElementBody body
+}
+
+class ListElement extends Element {
+	contains ListVariable indexVariable
+	contains ListVariable valueVariable
+	contains Expression listExpression
+	contains ElementBody body
+}
+
+class ListVariable extends Referable {
+}
+
+class TableElement extends Element {
+	contains TableBodyElement[] subElements
+}
+
+class TableBodyElement {
+}
+
+class TableRowsInvocation extends TableBodyElement {
+	refers TableRowsDefinition definition
+	contains ArgumentList argumentList
+}
+
+class TableRow extends TableBodyElement {
+	contains Expression label
+	contains ElementBody body
+}
+
+class LabeledTableElement extends Element {
+	contains ElementBody body
+}
+
+class LabeledTableRow extends Element {
+	contains Expression label
+	contains ElementBody body
+}
+
+class ProgressBarTabSet extends Element {
+	contains TabDeclaration[] tabs
+}
+
+class TabDeclaration extends ViewableCallSite {
+	contains ElementBody header
+	contains CallbackExpression previousCallback
+	contains CallbackExpression nextCallback
+}
+
+class GroupElement extends Element {
+	GroupOrientations orientation
+	VerticalAlignment v_align
+	contains GroupElement[] nestedGroups
+	contains ElementBody[] leafGroups
+}
+
+enum GroupOrientations {
+	vertical
+	horizontal = 1
+}
+
+enum VerticalAlignment {
+	top
+	bottom = 1
+	middle = 2
+}
+
+class CountdownTimer extends Element {
+	boolean observed
+	contains Expression endTime
+	contains Expression onEnd
+}
+
+class ObserveElement extends Element {
+	contains Expression observeExpr
+	contains StatementBlock statementBlock
+}
+
+class CalendarElement extends Element {
+	contains Expression date
+	contains Expression onSelect
+	contains Expression allowFrom
+	String dateFormat
+	contains Expression days
+	String cssClass
+}
+
+class TimeSlotListElement extends Element {
+	contains Expression slots
+	contains Expression onSelect
+	contains Expression onDelete
+}
+
+class SlotAddElement extends Element {
+	contains Expression product
+	contains Expression day
+	contains Expression slots
+	contains Expression startHour
+	contains Expression endHour
+}
+
+class WhenElement extends Element {
+	contains Expression condition
+	contains ElementBody body
+}
+
+class ImageElement extends Element {
+	boolean observed
+	contains Expression sourceUrl
+	contains Expression width
+	contains Expression height
+}
+
+class FrameElement extends Element {
+	contains Expression sourceUrl
+	contains Expression width
+	contains Expression height
+}
+
+class LineBreakElement extends Element {
+}
+
+class StatementBlock {
+	contains Statement[] statements
+}
+
+class Statement {
+}
+
+class ExitingStatement extends Statement {
+}
+
+class NonExitingStatement extends Statement {
+}
+
+class ForStatement extends NonExitingStatement {
+	contains ListVariable indexVariable
+	contains ListVariable valueVariable
+	contains Expression listExpression
+	contains StatementBlock thenBlock
+}
+
+class ListRemoveStatement extends NonExitingStatement {
+	contains Expression listExpr
+	refers Feature<?> feature
+	contains Expression valueExpr
+	contains Expression indexVariable
+}
+
+class AssignmentOrExpressionStatement extends NonExitingStatement {
+	contains Expression lhs
+	AssignmentOperator operator
+	contains Expression rhs
+}
+
+enum AssignmentOperator {
+	assign as "="
+	add as "+=" = 1
+	sub as "-=" = 2
+}
+
+class ShowModalStatement extends NonExitingStatement , ViewableCallSite {
+	boolean persistent
+}
+
+class ExitModalStatement extends NonExitingStatement {
+}
+
+class GotoScreenStatement extends ExitingStatement , ViewableCallSite {
+}
+
+class GotoModuleStatement extends ExitingStatement {
+	refers UiModule targetModule
+	contains ArgumentList args
+	boolean authenticate
+	refers AuthenticationDeclaration authOption
+	contains PrincipalArgument principal
+	contains CredentialArgument credential
+	contains CallbackExpression errorCallback
+}
+
+class PrincipalArgument {
+	refers AuthenticationParameter principal
+	contains Expression valueExpr
+}
+
+class CredentialArgument {
+	refers AuthenticationParameter credential
+	contains Expression valueExpr
+}
+
+class IfStatement extends NonExitingStatement {
+	contains Expression condition
+	contains StatementBlock thenBlock
+	contains StatementBlock elseBlock
+}
+
+class LocalValueDeclarationStatement extends AbstractValueDeclaration , NonExitingStatement {
+}
+
+class ViewableCallSite {
+	refers Viewable viewable
+	contains ArgumentList argumentList
+}
+
+class Expression {
+}
+
+enum Comparator {
+	equals as "=="
+	notEquals as "!=" = 1
+	bigger as ">" = 2
+	biggerEquals as ">=" = 3
+	smaller as "<" = 4
+	smallerEquals as "<=" = 5
+	isIn as "in" = 6
+}
+
+enum AdditiveOperators {
+	plus as "+"
+	minus as "-" = 1
+}
+
+enum MultiplicativeOperators {
+	mult as "*"
+	div as "/" = 1
+	mod as "%" = 2
+}
+
+class ServiceIdentification {
+}
+
+enum CrudTypes {
+	^create
+	getById as "get-by-id" = 1
+	update = 2
+	delete = 3
+}
+
+class DateExpression extends Expression {
+}
+
+class BuiltinFunctionExpression extends Expression {
+	BuiltinFunctions function
+	contains Expression argument
+	refers Feature<?> sortFeature
+}
+
+enum BuiltinFunctions {
+	^isSet
+	alert = 1
+	confirm = 2
+	copyOf = 3
+	toMillis = 4
+	round = 5
+	sort = 6
+	isValid = 7
+	^id = 8
+}
+
+class LiteralExpression extends Expression {
+}
+
+class ListLiteralExpression extends LiteralExpression {
+	contains Expression[] members
+}
+
+class EnumerationLiteralExpression extends LiteralExpression {
+	refers Enumeration enumeration
+	refers EnumerationLiteral literal
+}
+
+enum BooleanLiterals {
+	^false
+	^true = 1
+}
+
+class DecisionExpression extends LiteralExpression {
+	contains DecisionCase[] cases
+	contains Expression defaultValueExpr
+}
+
+class DecisionCase {
+	contains Expression guardExpr
+	contains Expression valueExpr
+}
+
+class CallbackExpressions extends Expression {
+}
+
+class CallbackExpression extends CallbackExpressions {
+	contains StatementBlock statementBlock
+}
+
+class StructureCreationExpression extends Expression {
+	refers Structure structure
+	contains FeatureAssignment[] assignments
+}
+
+class FeatureAssignment {
+	refers Feature<?> feature
+	contains Expression valueExpr
+}
+
+class ValueReferenceOrMethodCallExpression extends Expression {
+}
+
+class ReferenceExpression extends ValueReferenceOrMethodCallExpression {
+	refers Referable ref
+}
+
+class Referable {
+	String name
+}
+
+class TernaryExpression extends Expression {
+	contains Expression guard
+	contains Expression thenExpr
+	contains Expression elseExpr
+}
+
+class OrExpression extends BooleanBinaryOperatorExpression {
+}
+
+class AndExpression extends BooleanBinaryOperatorExpression {
+}
+
+class ComparisonExpression extends BinaryOperatorExpression {
+	Comparator comparator
+}
+
+class AdditiveExpression extends ArithmeticBinaryOperatorExpression {
+	AdditiveOperators operator
+}
+
+class MultiplicativeExpression extends ArithmeticBinaryOperatorExpression {
+	MultiplicativeOperators operator
+}
+
+class NotExpression extends Expression {
+	contains Expression operand
+}
+
+class InterfaceCallExpression extends Expression {
+	contains ServiceIdentification serviceId
+	contains Expression[] observeSites
+	contains Expression input
+	contains CallbackExpression callback
+	contains CallbackExpression errorCallback
+}
+
+class NamedServiceReference extends ServiceIdentification {
+	refers NamedService service
+}
+
+class CrudServiceIdentification extends ServiceIdentification {
+	CrudTypes crudType
+	refers Structure structure
+}
+
+class FeatureAccessExpression extends Expression {
+	contains Expression previous
+	refers Feature<?> feature
+}
+
+class SelectionExpression extends Expression {
+}
+
+class DateNowExpression extends DateExpression {
+}
+
+class DateTodayExpression extends DateExpression {
+}
+
+class StringLiteralExpression extends LiteralExpression {
+	String value
+}
+
+class BooleanLiteralExpression extends LiteralExpression {
+	BooleanLiterals literal
+}
+
+class IntegerLiteralExpression extends LiteralExpression {
+	int value
+}
+
+class NumberLiteralExpression extends LiteralExpression {
+	java.math.BigDecimal value
+}
+
+class CallbackResponseExpression extends CallbackExpressions {
+}
+
+class CallbackErrorResponseExpression extends CallbackExpressions {
+}
+
+class MethodCallExpression extends ValueReferenceOrMethodCallExpression {
+	contains ReferenceExpression methodRef
+	contains ArgumentList argumentList
+}
+
+class BooleanBinaryOperatorExpression extends BinaryOperatorExpression {
+}
+
+class ArithmeticBinaryOperatorExpression extends BinaryOperatorExpression {
+}
+
+abstract class BinaryOperatorExpression extends Expression {
+	contains Expression leftOperand
+	contains Expression rightOperand
+}
