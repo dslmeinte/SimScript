@@ -176,23 +176,4 @@ class XtextUtil {
 		URI.trimFileExtension.lastSegment
 	}
 
-	/**
-	 * Wraps the given {@code inner} between {@code before} and {@code after}.
-	 */
-	def between(CharSequence inner, String before, String after) {
-		before + inner + after
-	}
-
-	/**
-	 * Wraps the given {@code inner} between {@code before} and {@code after} precisely
-	 * if {@code wrap} is <b>true</b>.
-	 */
-	def betweenIf(CharSequence inner, String before, String after, boolean wrap) {
-		if( wrap ) {
-			inner.between(before, after)
-		} else {
-			inner
-		}
-	}
-
 }

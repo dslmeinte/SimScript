@@ -140,7 +140,7 @@ class ControllerGenerator {
 		}
 		'''
 
-	def private listAttributesHelper(TypeLiteral it, Feature feature, Structure parent) {
+	def private listAttributesHelper(TypeLiteral it, Feature<?> feature, Structure parent) {
 		switch it {
 			BuiltinTypeLiteral : {
 				// since the removal of stringmap, all builtintypes are assumed to be simple typed

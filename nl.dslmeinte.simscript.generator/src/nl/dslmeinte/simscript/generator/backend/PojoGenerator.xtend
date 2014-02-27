@@ -161,7 +161,7 @@ class PojoGenerator {
 		«ENDFOR»
 		'''
 
-	def private getterAndSetter(Feature it) {
+	def private getterAndSetter(Feature<?> it) {
 		val structureName = (eContainer as Structure).name
 
 		'''
@@ -217,7 +217,7 @@ class PojoGenerator {
 		return obj;
 		'''
 
-	def private singleFromGetParams(Feature it) {
+	def private singleFromGetParams(Feature<?> it) {
 		switch t: it.type {
 			DefinedTypeLiteral:
 				'''
@@ -236,7 +236,7 @@ class PojoGenerator {
 		}
 	}
 
-	def private manyFromGetParams(Feature it) {
+	def private manyFromGetParams(Feature<?> it) {
 		val itemType = type.listItemType 
 		switch itemType {
 			DefinedTypeLiteral:
