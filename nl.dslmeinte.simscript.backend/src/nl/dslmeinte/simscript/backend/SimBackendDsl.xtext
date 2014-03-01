@@ -1,12 +1,11 @@
 grammar nl.dslmeinte.simscript.backend.SimBackendDsl with nl.dslmeinte.simscript.structure.SimStructureDsl
 
 import "http://www.dslconsultancy.com/simscript/structure/StructureDsl" as struct
+import "http://www.dslconsultancy.com/simscript/backend/SimBackendDsl" as backend
 
-generate simBackendDsl "http://www.dslconsultancy.com/simscript/backend/SimBackendDsl"
 
-
-BackendModel:
-	{BackendModel}
+BackendModel returns backend::BackendModel:
+	{backend::BackendModel}
 	(
 		'config' '{'
 			  ('baseURL' '=' baseUrl=STRING)?	// base URL, prepended to all (?) URLs in AJAX calls (default="http://fb.DSLConsultancy.com/")
@@ -17,39 +16,39 @@ BackendModel:
 	declarations+=Service*
 	;
 
-enum Flavors:
+enum Flavors returns backend::Flavors:
 	java='Java' /* default */ | php='PHP'
 	;
 
-AuthenticationDeclaration:
+AuthenticationDeclaration returns backend::AuthenticationDeclaration:
 	'authentication-option' name=ID '{'
 		'principal' principal=AuthenticationParameter
 		'credentials' credential=AuthenticationParameter
 	'}'
 	;
 
-AuthenticationParameter :
+AuthenticationParameter returns backend::AuthenticationParameter:
 	name = ID ':' type=TypeLiteral
 	;
 
-Service:
+Service returns backend::Service:
 	NamedService | CrudService
 	;
 
-NamedService:
+NamedService returns backend::NamedService:
 	Interface | LegacyServlet
 	;
 
 
 // regular interfaces:
 
-Interface:
+Interface returns backend::Interface:
 	'interface' name=ID
 		method=HttpMethods
 		inputType=DefinedTypeLiteral?
 		( '->' outputType=TypeLiteral )?
 		(notAuthenticated?='not-authenticated')?
-		('implemented-by' legacyServlet=[LegacyServlet])?
+		('implemented-by' legacyServlet=[backend::LegacyServlet])?
 		documentation=STRING?
 	;
 	/*
@@ -59,14 +58,14 @@ Interface:
 	 * 		3-  !(inputType == null && outputType == null)							[√]
 	 */
 
-enum HttpMethods:
+enum HttpMethods returns backend::HttpMethods:
 	get='GET' | post='POST'
 	;
 
 
 // legacy servlets:
 
-LegacyServlet:
+LegacyServlet returns backend::LegacyServlet:
 	'legacy-servlet' name=ID ':' urlPattern=URL '->' fqClassName=QualifiedName
 	;
 
@@ -75,13 +74,13 @@ QualifiedName: ID ('.' ID)*;
 
 // CRUD services:
 
-CrudService:
+CrudService returns backend::CrudService:
 	'crud-service' structure=[struct::Structure] ':' services+=CrudTypes*
 	;
 	// TODO  consider ditching this and just picking up what CRUD services are required from the .sim_ui models;
 	// on the other hand: it might be wise to be able to restrict the available CRUD services for security reasons.
 
-enum CrudTypes:
+enum CrudTypes returns backend::CrudTypes:
 	  create
 	| getById = 'get-by-id'
 	| update

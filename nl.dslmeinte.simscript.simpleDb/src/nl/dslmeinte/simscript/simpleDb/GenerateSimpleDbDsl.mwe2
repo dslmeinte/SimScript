@@ -14,8 +14,7 @@ Workflow {
     bean = StandaloneSetup {
         scanClassPath = true
         platformUri = "${runtimeProject}/.."
-        registerGeneratedEPackage = "nl.dslmeinte.simscript.structure.structureDsl.StructureDslPackage"
-        registerGenModelFile = "platform:/resource/nl.dslmeinte.simscript.structure/src-gen/nl/dslmeinte/simscript/structure/SimStructureDsl.genmodel"
+        registerGeneratedEPackage = "org.eclipse.emf.ecore.EcorePackage"
     }
 
     component = DirectoryCleaner {
@@ -34,12 +33,14 @@ Workflow {
         projectNameRt = projectName
         projectNameUi = "${projectName}.ui"
 
-        language = {
+        language = auto-inject {
+         	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/StructureDsl.xcore"
+	       	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/SimpleDbDsl.xcore"
             uri = grammarURI
             fileExtensions = file.extensions
 
-            fragment = ecore.EcoreGeneratorFragment {}
             fragment = grammarAccess.GrammarAccessFragment {}
+            fragment = ecore.EMFGeneratorFragment auto-inject {}
             fragment = resourceFactory.ResourceFactoryFragment { fileExtensions = file.extensions }
             fragment = parser.antlr.XtextAntlrGeneratorFragment {}
             fragment = scoping.ImportNamespacesScopingFragment { generateStub = false }

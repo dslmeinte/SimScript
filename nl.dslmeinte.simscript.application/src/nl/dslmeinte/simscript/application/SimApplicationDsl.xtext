@@ -1,11 +1,10 @@
 grammar nl.dslmeinte.simscript.application.SimApplicationDsl with org.eclipse.xtext.common.Terminals
 
-generate simApplicationDsl "http://www.dslconsultancy.com/simscript/application/SimApplicationDsl"
-
+import "http://www.dslconsultancy.com/simscript/application/SimApplicationDsl" as app
 import "http://www.dslconsultancy.com/simscript/ui/SimUiDsl" as ui
 
 
-ApplicationModel:
+ApplicationModel returns app::ApplicationModel:
 	'application'
 		'title' '=' title=STRING
 		'target-platform' '=' targetPlatform=TargetPlatforms
@@ -21,7 +20,7 @@ ApplicationModel:
 	// scoping: entryModule in [containing(ApplicationModel)].modules	[√]
 
 
-enum TargetPlatforms:
+enum TargetPlatforms returns app::TargetPlatforms:
 	html5 | facebook | mobile
 	;
 

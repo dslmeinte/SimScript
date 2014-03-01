@@ -5,18 +5,18 @@
 
 grammar nl.dslmeinte.simscript.mappings.MappingsDsl with nl.dslmeinte.simscript.structure.SimStructureDsl
 
-generate mappingsDsl "http://www.dslconsultancy.com/simscript/mappings/MappingsDsl"
-
-import "http://www.dslconsultancy.com/simscript/simpleDb/SimpleDbDsl" as db
 import "http://www.dslconsultancy.com/simscript/structure/StructureDsl" as struct
+import "http://www.dslconsultancy.com/simscript/simpleDb/SimpleDbDsl" as db
+
+import "http://www.dslconsultancy.com/simscript/mappings/MappingsDsl" as map
 
 
-MappingsModel:
+MappingsModel returns map::MappingsModel:
 	('backend' '=' backendTarget=BackendTargets)?	// default: PHP
 	definitions+=NamedQueryDefinition*
 	;
 
-enum BackendTargets:
+enum BackendTargets returns map::BackendTargets:
 	php='PHP' /* default */ | java='Java'
 	;
 
@@ -27,12 +27,12 @@ enum BackendTargets:
  * +---------+
  */
 
-NamedQueryDefinition:
+NamedQueryDefinition returns map::NamedQueryDefinition:
 	'query' name=ID ':'
 		queryExpr=Query
 	;
 
-Query:
+Query returns map::Query:
 	FromDbQuery | ToDbQuery
 	;
 	/*
@@ -41,7 +41,7 @@ Query:
 	 * 		table	: db::Table
 	 */
 
-FromDbQuery:
+FromDbQuery returns map::FromDbQuery:
 	QueryHavingResult | DeleteQuery
 	;
 	/*
@@ -50,15 +50,15 @@ FromDbQuery:
 	 * 		whereClause	: MatchingClause
 	 */
 
-ToDbQuery:
+ToDbQuery returns map::ToDbQuery:
 	InsertQuery | UpdateQuery
 	;
 
-QueryHavingResult:
+QueryHavingResult returns map::QueryHavingResult:
 	SelectQuery | CountQuery 
 	;
 
-SelectQuery:
+SelectQuery returns map::SelectQuery:
 	('with' '(' parameters+=UntypedParameter* ')')?		// (also in CountQuery and DeleteQuery)
 	'select' nonEmpty?='non-empty'?
 	'from' table=[db::Table]							// (also in CountQuery and DeleteQuery)
@@ -84,12 +84,12 @@ SelectQuery:
 	 * 		atMost1 expresses that at most 1 result row is returned/used
 	 */
 
-FromDbMappingSpecification:
+FromDbMappingSpecification returns map::FromDbMappingSpecification:
 	(
-		  {SimpleColumnMappingSpecification}	column=[db::Column] '->'
-		| {NestedMappingSpecification}			query=[NamedQueryDefinition] '(' arguments+=Argument* ')' '->'
-		| {DeferedMappingSpecification}			'defer'
-		| {TimestampColumnMappingSpecification}	'timestamp' '->'
+		  {map::SimpleColumnMappingSpecification}		column=[db::Column] '->'
+		| {map::NestedMappingSpecification}				query=[map::NamedQueryDefinition] '(' arguments+=Argument* ')' '->'
+		| {map::DeferedMappingSpecification}			'defer'
+		| {map::TimestampColumnMappingSpecification}	'timestamp' '->'
 	)
 		feature=[struct::Feature]
 	;
@@ -107,8 +107,8 @@ FromDbMappingSpecification:
 	 * 		nestedQuery(NestedMappingSpecification) := it.query.queryExpr as QueryHavingResult						[√]
 	 */
 
-Argument:
-	parameter=[UntypedParameter] '=' column=[db::Column]
+Argument returns map::Argument:
+	parameter=[map::UntypedParameter] '=' column=[db::Column]
 	;
 	/*
 	 * scoping:
@@ -117,7 +117,7 @@ Argument:
 	 */
 
 
-CountQuery:
+CountQuery returns map::CountQuery:
 	('with' '(' parameters+=UntypedParameter* ')')?
 	'count'
 		resultExpr=ResultExpression
@@ -126,11 +126,11 @@ CountQuery:
 	;
 	// validation: warning if resultExpr yields (at most) single row	[√]
 
-ResultExpression:
+ResultExpression returns map::ResultExpression:
 	ColumnsSpecification | AllColumnsExpression
 	;
 
-ColumnsSpecification:
+ColumnsSpecification returns map::ColumnsSpecification:
 	'[' columns+=[db::Column]+ ']'
 	;
 	/*
@@ -138,22 +138,22 @@ ColumnsSpecification:
 	 * validation:	!columns.empty (warning)							[√]
 	 */
 
-AllColumnsExpression:
-	{AllColumnsExpression} '*'
+AllColumnsExpression returns map::AllColumnsExpression:
+	{map::AllColumnsExpression} '*'
 	;
 
-MatchingClause:
-	{MatchingClause}
+MatchingClause returns map::MatchingClause:
+	{map::MatchingClause}
 	'matching' '(' subClauses+=MatchingSubClause* ')'
 	;
 	// validation: !subClauses.empty 								[√]
 	// TODO  consider adding an "auto-matcher" based on column and parameter names
 
-MatchingSubClause:
+MatchingSubClause returns map::MatchingSubClause:
 	SimpleSubClause | OrSubClause
 	;
 
-SimpleSubClause:
+SimpleSubClause returns map::SimpleSubClause:
 	SimpleEqualitySubClause | SimpleRangeSubClause
 	;
 	/*
@@ -161,33 +161,33 @@ SimpleSubClause:
 	 * pulled-up feature: column : db::Column
 	 */
 
-SimpleEqualitySubClause:
-	column=[db::Column] '=' ( parameter=[UntypedParameter] | literal=LiteralExpression )
+SimpleEqualitySubClause returns map::SimpleEqualitySubClause:
+	column=[db::Column] '=' ( parameter=[map::UntypedParameter] | literal=LiteralExpression )
 	;
 	// scoping: parameter in containing(FromDbQuery).parameters		[√]
 	// TODO  use a proper expression sub language for the rhs
 
-SimpleRangeSubClause:
-	column=[db::Column] 'in' leftDelimiter=LeftRangeDelimiters leftParameter=[UntypedParameter] ',' rightParameter=[UntypedParameter] rightDelimiter=RightRangeDelimiters
+SimpleRangeSubClause returns map::SimpleRangeSubClause:
+	column=[db::Column] 'in' leftDelimiter=LeftRangeDelimiters leftParameter=[map::UntypedParameter] ',' rightParameter=[map::UntypedParameter] rightDelimiter=RightRangeDelimiters
 	;
 	// scoping: leftParameter, rightParameter in containing(FromDbQuery).parameters		[√]
 	// TODO  use a proper expression sub language for the rhs parameters
 
-OrSubClause:
+OrSubClause returns map::OrSubClause:
 	'(' subClauses+=SimpleSubClause ( '||' subClauses+=SimpleSubClause )+ ')'
 	;
 
-enum LeftRangeDelimiters:
+enum LeftRangeDelimiters returns map::LeftRangeDelimiters:
 	closed='[' | open='<'
 	;
 
-enum RightRangeDelimiters:
+enum RightRangeDelimiters returns map::RightRangeDelimiters:
 	closed=']' | open='>'
 	;
 
 
-OrderClause:
-	{OrderClause}
+OrderClause returns map::OrderClause:
+	{map::OrderClause}
 	'order-by'
 		(
 			  columnSpecifications+=ColumnOrderSpecification
@@ -196,7 +196,7 @@ OrderClause:
 	;
 	// validation: !columnSpecifications.empty (warning)			[√]
 
-ColumnOrderSpecification:
+ColumnOrderSpecification returns map::ColumnOrderSpecification:
 	( column=[db::Column] | timestamp?='timestamp' ) direction=OrderDirections?
 	;
 	/*
@@ -204,19 +204,19 @@ ColumnOrderSpecification:
 	 * validation:	timestamp can only be used in a query whose table is timestamped		[√]
 	 */
 
-enum OrderDirections:
+enum OrderDirections returns map::OrderDirections:
 	asc='ascending' /* default */ | desc='descending'
 	;
 
 
-InsertQuery:
+InsertQuery returns map::InsertQuery:
 	'insert' '(' parameters+=TypedParameter (',' parameters+=TypedParameter )* ')' 'into' table=[db::Table] '{'
 		mappingSpecifications+=ToDbMappingSpecification*
 	'}' ( '=>' returnAutoIncrementColumn=[db::Column] )?
 	;
 	// scoping: returnAutoIncrementColumn in table.columns.filter[it.autoIncrement]		[√]
 
-ToDbMappingSpecification:
+ToDbMappingSpecification returns map::ToDbMappingSpecification:
 	column=[db::Column] '<-' expr=ToDbExpression
 	;
 	/*
@@ -226,27 +226,27 @@ ToDbMappingSpecification:
 	 */
 
 
-UpdateQuery:
+UpdateQuery returns map::UpdateQuery:
 	'with' '(' parameters+=TypedParameter (',' parameters+=TypedParameter )* ')'
 	'update' table=[db::Table]
 	whereClause=UpdateMatchingClause
 	'{' mappingSpecifications+=ToDbMappingSpecification* '}'
 	;
 
-UpdateMatchingClause:
-	{UpdateMatchingClause}
+UpdateMatchingClause returns map::UpdateMatchingClause:
+	{map::UpdateMatchingClause}
 	'matching' '(' subClauses+=ExpressionEqualitySubClause* ')'
 	;
 	// validation: !subClauses.empty 											[√]
 
-ExpressionEqualitySubClause:
+ExpressionEqualitySubClause returns map::ExpressionEqualitySubClause:
 	column=[db::Column] '=' expr=ToDbExpression
 	;
 	// scoping: columns in containing(UpdateQuery).table.columns				[√]
 	// validation: !column.primary (warning)									[√]
 
 
-DeleteQuery:
+DeleteQuery returns map::DeleteQuery:
 	('with' '(' parameters+=UntypedParameter* ')')?
 	'delete' 'from' table=[db::Table]
 	whereClause=MatchingClause
@@ -259,7 +259,7 @@ DeleteQuery:
  * +-------------+
  */
 
-ToDbExpression:
+ToDbExpression returns map::ToDbExpression:
 	  FeatureExpressionHead
 	| MonthRoundExpression
 	| EncryptExpression
@@ -267,12 +267,12 @@ ToDbExpression:
 	// TODO  add other expressions (literals and such)
 	;
 
-MonthRoundExpression:
+MonthRoundExpression returns map::MonthRoundExpression:
 	'round-to-month' '(' operand=FeatureExpressionHead ')'
 	;
 	// validation: operand must be date-typed									[√]
 
-EncryptExpression:
+EncryptExpression returns map::EncryptExpression:
 	'encrypt' '(' operand=FeatureExpressionHead ')'
 	;
 	// validation: operand must be password-typed								[√]
@@ -280,17 +280,17 @@ EncryptExpression:
 
 // TODO  turn into combination of FeatureExpression + ReferenceExpression, as in SimScript (requires proper scoping)
 
-FeatureExpressionHead:
-	parameter=[TypedParameter] tail=FeatureExpressionTail?
+FeatureExpressionHead returns map::FeatureExpressionHead:
+	parameter=[map::TypedParameter] tail=FeatureExpressionTail?
 	;
 	// scoping: parameter in containing(ToDbQuery).parameters					[√]
 
-FeatureExpressionTail:
+FeatureExpressionTail returns map::FeatureExpressionTail:
 	'.' feature=[struct::Feature] tail=FeatureExpressionTail?
 	;
 	// scoping: feature in (eContainer as FeatureExpressionElement).features	[√]
 
-FeatureExpressionElement:	// convenience type with 'tail' features
+FeatureExpressionElement returns map::FeatureExpressionElement:	// convenience type with 'tail' features
 	FeatureExpressionHead | FeatureExpressionTail
 	;
 	/*
@@ -298,11 +298,11 @@ FeatureExpressionElement:	// convenience type with 'tail' features
 	 * 		tail	: FeatureExpressionTail
 	 */
 
-LiteralExpression:
-	{BooleanLiteralExpression} literal=BooleanLiterals
+LiteralExpression returns map::LiteralExpression:
+	{map::BooleanLiteralExpression} literal=BooleanLiterals
 	;
 
-enum BooleanLiterals:
+enum BooleanLiterals returns map::BooleanLiterals:
 	false /* == ord(0) */ | true /* == order(1) */
 	;
 
@@ -313,11 +313,11 @@ enum BooleanLiterals:
  * +------------+
  */
 
-TypedParameter:
+TypedParameter returns map::TypedParameter:
 	name=ID ':' type=TypeLiteral
 	;
 
-UntypedParameter:
+UntypedParameter returns map::UntypedParameter:
 	name=ID		// (no type info yet, as this isn't currently really relevant for the PHP code...)
 	;
 

@@ -14,12 +14,7 @@ Workflow {
     bean = StandaloneSetup {
         scanClassPath = true
         platformUri = "${runtimeProject}/.."
-        registerGeneratedEPackage = "nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SimpleDbDslPackage"
-        registerGenModelFile = "platform:/resource/nl.dslmeinte.simscript.simpleDb/src-gen/nl/dslmeinte/simscript/simpleDb/SimpleDbDsl.genmodel"
-        registerGeneratedEPackage = "nl.dslmeinte.simscript.structure.structureDsl.StructureDslPackage"
-        registerGenModelFile = "platform:/resource/nl.dslmeinte.simscript.structure/src-gen/nl/dslmeinte/simscript/structure/SimStructureDsl.genmodel"
-//        registerGeneratedEPackage = "nl.dslmeinte.simscript.backend.simBackendDsl.SimBackendDslPackage"
-//        registerGenModelFile = "platform:/resource/nl.dslmeinte.simscript.backend/src-gen/nl/dslmeinte/simscript/backend/SimBackendDsl.genmodel"
+        registerGeneratedEPackage = "org.eclipse.emf.ecore.EcorePackage"
     }
 
     component = DirectoryCleaner {
@@ -37,12 +32,15 @@ Workflow {
         pathTestProject = "${runtimeProject}.tests"
         projectNameRt = projectName
         projectNameUi = "${projectName}.ui"
-        language = {
+        language = auto-inject {
+         	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/StructureDsl.xcore"
+	       	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/SimpleDbDsl.xcore"
+	       	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/MappingsDsl.xcore"
             uri = grammarURI
             fileExtensions = file.extensions
 
-            fragment = ecore.EcoreGeneratorFragment {}
             fragment = grammarAccess.GrammarAccessFragment {}
+            fragment = ecore.EMFGeneratorFragment auto-inject {}
             fragment = resourceFactory.ResourceFactoryFragment { fileExtensions = file.extensions }
             fragment = parser.antlr.XtextAntlrGeneratorFragment {}
 

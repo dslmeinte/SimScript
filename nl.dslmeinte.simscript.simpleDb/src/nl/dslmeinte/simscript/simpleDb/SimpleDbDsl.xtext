@@ -3,18 +3,17 @@ grammar nl.dslmeinte.simscript.simpleDb.SimpleDbDsl with nl.dslmeinte.simscript.
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 import "http://www.dslconsultancy.com/simscript/structure/StructureDsl" as struct
+import "http://www.dslconsultancy.com/simscript/simpleDb/SimpleDbDsl" as db
 
-generate simpleDbDsl "http://www.dslconsultancy.com/simscript/simpleDb/SimpleDbDsl"
 
-
-DatabaseModel:
-	{DatabaseModel}
+DatabaseModel returns db::DatabaseModel:
+	{db::DatabaseModel}
 	'database'
 	definitions+=Definition*
 	;
 	// TODO  consider adding database modules to modularize the database definition
 
-Definition:
+Definition returns db::Definition:
 	TableDefinition | DataTypeDefinition
 	;
 
@@ -25,18 +24,18 @@ Definition:
  * +--------+
  */
 
-TableDefinition returns Table:
+TableDefinition returns db::Table:
 	'table' name=ID '{'
 		columns+=ColumnDefinition*
 	'}' ( timestamped?='timestamped' (timestampIndexed?='with-index')? )?
 	;
 	// validation: !columns.empty		[√]
 
-ColumnDefinition returns Column:
+ColumnDefinition returns db::Column:
 	SimpleColumnDefinition | ForeignKeyColumnDefinition
 	;
 
-SimpleColumnDefinition returns SimpleColumn:
+SimpleColumnDefinition returns db::SimpleColumn:
 	name=ID ':' type=SqlTypeLiteral
 		( autoIncrement?='auto-increment'? & index?='index'? & primary?='primary'? & unique?='unique'? & nullable?='nullable'? )	// <== modifiers
 	;
@@ -45,13 +44,13 @@ SimpleColumnDefinition returns SimpleColumn:
 	 * 		2-  auto-increment implies int-type					[√]
 	 */
 
-ForeignKeyColumnDefinition returns ForeignKeyColumn:
+ForeignKeyColumnDefinition returns db::ForeignKeyColumn:
 	name=ID '->' primaryId=TablePrimaryIdentification
 		( nullable?='nullable'? )	// <== modifier
 	;
 
-TablePrimaryIdentification hidden():
-	table=[Table] '.' primary=[SimpleColumn]
+TablePrimaryIdentification returns db::TablePrimaryIdentification hidden():
+	table=[db::Table] '.' primary=[db::SimpleColumn]
 	;
 	// scoping: column in primary table.columns		[√]
 
@@ -62,22 +61,22 @@ TablePrimaryIdentification hidden():
  * +-------+
  */
 
-SqlTypeLiteral:
+SqlTypeLiteral returns db::SqlTypeLiteral:
 	  NativeSqlTypeLiteral
-	| {DataTypeReference} datatype=[DataType]
-	| {EnumerationReference} 'enum' enumeration=[struct::Enumeration]
+	| {db::DataTypeReference} datatype=[db::DataType]
+	| {db::EnumerationReference} 'enum' enumeration=[struct::Enumeration]	// ignore error!
 	;
 
-NativeSqlTypeLiteral:
-	  {BooleanLiteral} 'boolean'
-	| {DateLiteral} 'date'
-	| {IntLiteral} 'int' '(' size=INT ')'
-	| {FloatLiteral} 'float' '(' digits=INT ',' decimals=INT ')'
-	| {TextLiteral} 'text'
-	| {VarCharLiteral} 'varchar' '(' size=INT ')'
+NativeSqlTypeLiteral returns db::SqlTypeLiteral:
+	  {db::BooleanLiteral} 'boolean'
+	| {db::DateLiteral} 'date'
+	| {db::IntLiteral} 'int' '(' size=INT ')'
+	| {db::FloatLiteral} 'float' '(' digits=INT ',' decimals=INT ')'
+	| {db::TextLiteral} 'text'
+	| {db::VarCharLiteral} 'varchar' '(' size=INT ')'
 	;
 
-DataTypeDefinition returns DataType:
+DataTypeDefinition returns db::DataType:
 	'datatype' name=ID ':' type=SqlTypeLiteral
 	;
 
