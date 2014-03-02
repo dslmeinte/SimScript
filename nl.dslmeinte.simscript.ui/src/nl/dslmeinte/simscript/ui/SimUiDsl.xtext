@@ -5,7 +5,7 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore		// (ignore warning!)
 import "http://www.dslconsultancy.com/simscript/structure/StructureDsl" as struct
 import "http://www.dslconsultancy.com/simscript/backend/SimBackendDsl" as backend
 
-generate simUiDsl "http://www.dslconsultancy.com/simscript/ui/SimUiDsl"	// (ignore warning!)
+import "http://www.dslconsultancy.com/simscript/ui/SimUiDsl" as ui
 
 /**
  * General Dependencies/Assumptions:
@@ -19,8 +19,8 @@ generate simUiDsl "http://www.dslconsultancy.com/simscript/ui/SimUiDsl"	// (igno
  * +------------+
  */
 
-UiModule:
-	{UiModule}
+UiModule returns ui::UiModule:
+	{ui::UiModule}
 	'ui-module'
 		notAuthenticated?='not-authenticated'?
 		definitions+=TopLevelDefinition*
@@ -31,25 +31,25 @@ UiModule:
 	 * 	the first screen of a module should not take any parameters, or the GotoModuleStatement should have arguments
 	 */
 
-TopLevelDefinition:
+TopLevelDefinition returns ui::TopLevelDefinition:
 	Viewable | TableRowsDefinition | MethodDefinition
 	;
 
 
-TableRowsDefinition:
+TableRowsDefinition returns ui::TableRowsDefinition:
 	'table-rows' name=ID parameterList=ParameterList '{'
 		rows+=TableRow*
 	'}'
 	;
 
 
-Viewable:
+Viewable returns ui::Viewable:
 	DefinedViewable | ManualViewable
 	;
 	// derived feature: =screen(Viewable it) ::= type == _screen_	[√]
 	// pulled-up features: type, name, parameterList
 
-DefinedViewable:
+DefinedViewable returns ui::DefinedViewable:
 	type=ViewableTypes name=ID parameterList=ParameterList '{'
 		valuesBlock=ValuesBlock?				// (feature's value may be null)
 		definitions+=LocalViewableDefinition*	// (feature's value is always non-null)
@@ -63,7 +63,7 @@ DefinedViewable:
 	 * choice between a few actions in a way that's quite functional - e.g., persistent dialog box.
 	 */
 
-ManualViewable:
+ManualViewable returns ui::ManualViewable:
 	'manual' type=ViewableTypes name=ID parameterList=ParameterList 'in' namespace=QualifiedName
 	;
 
@@ -72,48 +72,48 @@ QualifiedName:
 	;
 
 
-LocalViewableDefinition:
+LocalViewableDefinition returns ui::LocalViewableDefinition:
 	Element | MethodDefinition
 	;
 
-enum ViewableTypes:
+enum ViewableTypes returns ui::ViewableTypes:
 	screen | component
 	;
 
-ValuesBlock:
-	{ValuesBlock}
+ValuesBlock returns ui::ValuesBlock:
+	{ui::ValuesBlock}
 	'values' '{'
 		declarations+=ValueDeclaration*
 	'}'
 	;
 
-ValueDeclaration:
+ValueDeclaration returns ui::ValueDeclaration:
 	value=Value ( ':' declaredType=TypeLiteral)? (valueType=ValueTypes valueExpr=Expression)?
 	;
 	// validation: either the type, the value or both must be declared, must match and the value should be observable	[√]
 	// (TODO  straighten spec out)
 
-enum ValueTypes:
+enum ValueTypes returns ui::ValueTypes:
 	  variable='='
 	| derived='<-'
 	;
 
-Value:
+Value returns ui::Value:
 	name=ID
 	;
 
-AbstractValueDeclaration:	// (synthetic convenience type)
+AbstractValueDeclaration returns ui::AbstractValueDeclaration:	// (synthetic convenience type)
 	ValueDeclaration | LocalValueDeclarationStatement
 	;
 	// validation: ( declaredType == null ) || declaredType.isAssignableFrom(valueExpr.type)	[√]
 
 
-Parameter:
+Parameter returns ui::Parameter:
 	name=ID ':' type=TypeLiteral
 	;
 
-ParameterList:
-	{ParameterList}
+ParameterList returns ui::ParameterList:
+	{ui::ParameterList}
 	'(' ( parameters+=Parameter ( (','|'|') parameters+=Parameter )* )? ','? ')'
 	;
 	/*
@@ -123,7 +123,7 @@ ParameterList:
 	 */
 
 
-MethodDefinition:
+MethodDefinition returns ui::MethodDefinition:
 	'method' method=Method parameterList=ParameterList statementBlock=StatementBlock
 	;
 	/*
@@ -133,7 +133,7 @@ MethodDefinition:
 	 * 		(Note that there's no return statement which'd make the statement flow more difficult to understand and analyse.)
 	 */
 
-Method:
+Method returns ui::Method:
 	name=ID
 	;
 
@@ -144,7 +144,7 @@ Method:
  * +----------+
  */
 
-Element:
+Element returns ui::Element:
 	  Quotation | Binding													// value elements
 	| ComponentInvocation													// embedding
 	// structural elements:
@@ -164,11 +164,11 @@ Element:
 	;
 
 
-Quotation:
+Quotation returns ui::Quotation:
 	path=Expression
 	;
 
-Binding:
+Binding returns ui::Binding:
 	'bind' '(' bindSite=Expression ')'
 	;
 	/*
@@ -177,15 +177,15 @@ Binding:
 	 */ 
 
 
-ElementBody:
-	{ElementBody}
+ElementBody returns ui::ElementBody:
+	{ui::ElementBody}
 	'{' elements+=Element* '}'
 	;
 	// validation: warning if elements.empty			[√]
 
 
-ComponentInvocation:
-	'embed' viewable=[Viewable] argumentList=ArgumentList
+ComponentInvocation returns ui::ComponentInvocation:
+	'embed' viewable=[ui::Viewable] argumentList=ArgumentList
 	;
 	/*
 	 * validation:
@@ -196,8 +196,8 @@ ComponentInvocation:
 	// TODO  considering combining the previous 2 rules by creating a method call operator in the expressions language (&c.) - and get rid of 'embed'
 
 
-Argument:
-	parameter=[Parameter] '=' valueExpr=Expression
+Argument returns ui::Argument:
+	parameter=[ui::Parameter] '=' valueExpr=Expression
 	;
 	/*
 	 * scoping: parameter in containing(ComponentInvocation).viewable	[√]
@@ -206,8 +206,8 @@ Argument:
 	 * Note that arguments are named, so there's no dependency on parameter order!
 	 */
 
-ArgumentList:
-	{ArgumentList}
+ArgumentList returns ui::ArgumentList:
+	{ui::ArgumentList}
 	'(' ( arguments+=Argument ( ','? arguments+=Argument )* ','? )? ')'
 	;
 	/*
@@ -220,7 +220,7 @@ ArgumentList:
 	 */
 
 
-InputElement:
+InputElement returns ui::InputElement:
 	'input'
 	'('
 		bindSite=Expression
@@ -252,12 +252,12 @@ InputElement:
 	// semantics: corresponds to an HTML input element, with the hint being given for (at least) textually-typed fields
 	// TODO  add length option (which is supported by some of the widgets)?
 
-RadioOption:
+RadioOption returns ui::RadioOption:
 	'radio' '=' '{' true=STRING '/' false=STRING '}'
 	;
 
-StructureOption:
-	'source' '=' '{' sourceExpr=Expression '->' displayFunction=[Method] '}'
+StructureOption returns ui::StructureOption:
+	'source' '=' '{' sourceExpr=Expression '->' displayFunction=[ui::Method] '}'
 	;
 	/*
 	 * validation:
@@ -267,7 +267,7 @@ StructureOption:
 	 */
 
 
-ButtonElement:
+ButtonElement returns ui::ButtonElement:
 	'button' '(' (
 		  ( 'text' '=' text=STRING ) 
 		& ( 'onClick' '=' action=Expression ) 
@@ -280,7 +280,7 @@ ButtonElement:
 	 */
 
 
-BlockElement:
+BlockElement returns ui::BlockElement:
 	'block' '(' ( 
 		  ('onClick' '=' onClick=Expression)?
 		& ('class' '=' cssClass=STRING)?
@@ -296,7 +296,7 @@ BlockElement:
 	 */
 
 
-ListElement:
+ListElement returns ui::ListElement:
 	'list' '('
 		'(' indexVariable=ListVariable '->' valueVariable=ListVariable ')' 'in'
 		listExpression=Expression
@@ -305,47 +305,47 @@ ListElement:
 	// validation: listExpression.type.arrayTyped		[√]
 	// TODO  add element that serves as a deletion mechanism
 
-ListVariable:
+ListVariable returns ui::ListVariable:
 	name=ID
 	;
 
 
-TableElement:
-	{TableElement}
+TableElement returns ui::TableElement:
+	{ui::TableElement}
 	'table' '{'
 		subElements+=TableBodyElement*
 	'}'
 	;
 	// validation: warning if subElements.empty								[√]
 
-TableBodyElement:
+TableBodyElement returns ui::TableBodyElement:
 	TableRow | TableRowsInvocation
 	;
 
-TableRowsInvocation:
-	'embed' definition=[TableRowsDefinition] argumentList=ArgumentList
+TableRowsInvocation returns ui::TableRowsInvocation:
+	'embed' definition=[ui::TableRowsDefinition] argumentList=ArgumentList
 	;
 
-TableRow:
+TableRow returns ui::TableRow:
 	label=Expression body=ElementBody									// the implicit, quasi-non-LL(*) kind
 	;
 	// validation: label.type = STRING										[√]
 
 
-LabeledTableElement:
-	{LabeledTableElement}
+LabeledTableElement returns ui::LabeledTableElement:
+	{ui::LabeledTableElement}
 	'labeled-table' body=ElementBody
 	;
 	// validate: all directly-contained, non-structural elements are a LabeledTableRow	[√]
 
-LabeledTableRow:
+LabeledTableRow returns ui::LabeledTableRow:
 	'label' '=' label=Expression body=ElementBody 						// the explicit, LL(*) kind
 	;
 	// validation: label.type = STRING										[√]
 
 
-ProgressBarTabSet:
-	{ProgressBarTabSet}
+ProgressBarTabSet returns ui::ProgressBarTabSet:
+	{ui::ProgressBarTabSet}
 	'progressBarTabSet' '('
 		tabs+=TabDeclaration*
 	')'
@@ -353,10 +353,10 @@ ProgressBarTabSet:
 	// validation: warning if #tabs == 0				[√]
 
 
-TabDeclaration:
+TabDeclaration returns ui::TabDeclaration:
 	'{'
 		  ( 'header' '=' header=ElementBody )
-		& ( 'component' '=' viewable=[Viewable] argumentList=ArgumentList )
+		& ( 'component' '=' viewable=[ui::Viewable] argumentList=ArgumentList )
 		& ( 'previous' '=' previousCallback=CallbackExpression )?
 		& ( 'next' '=' nextCallback=CallbackExpression )?
 	'}'
@@ -369,8 +369,8 @@ TabDeclaration:
 
 
 // TODO  remove this construct as we seem to prefer using block-s with CSS
-GroupElement:
-	{GroupElement}
+GroupElement returns ui::GroupElement:
+	{ui::GroupElement}
 	'group' ('(' 'orientation' '=' orientation=GroupOrientations ('v-align''='v_align=VerticalAlignment)?')')? '{'
 		(
 			  nestedGroups+=GroupElement+
@@ -383,16 +383,16 @@ GroupElement:
 	 * (Haven't found out yet how to avoid that with a syntactic predicate...)
 	 */
 
-enum GroupOrientations:
+enum GroupOrientations returns ui::GroupOrientations:
 	vertical | horizontal	// vertical is default (1st literal)
 	;
 
-enum VerticalAlignment:
+enum VerticalAlignment returns ui::VerticalAlignment:
 	top | bottom | middle
 	;
 
 
-CountdownTimer:
+CountdownTimer returns ui::CountdownTimer:
 	'countdownTimer' '(' observed?='observe'?  endTime=Expression ( 'onEnd' '=' onEnd=Expression )? ')'
 	;
 	/*
@@ -402,13 +402,13 @@ CountdownTimer:
 	 */
 
 
-ObserveElement:
+ObserveElement returns ui::ObserveElement:
 	'observe' observeExpr=Expression statementBlock=StatementBlock
 	;
 	// TODO  document precise semantics (and how is it different from a Binding e.g.)
 
 
-CalendarElement:
+CalendarElement returns ui::CalendarElement:
 	'calendar' '(' date=Expression
 		(
 			  ( 'onSelect' '=' onSelect=Expression )?
@@ -429,7 +429,7 @@ CalendarElement:
 	 */
 
 
-TimeSlotListElement:
+TimeSlotListElement returns ui::TimeSlotListElement:
 	'timeSlotList' '(' slots=Expression 
 		(('onSelect' '=' onSelect=Expression)? & ('onDelete' '=' onDelete=Expression)?) ')'
 	;
@@ -437,19 +437,19 @@ TimeSlotListElement:
 	 * 		1-	slots.type = [Slot]						[ ]
 	 */
 
-SlotAddElement:
+SlotAddElement returns ui::SlotAddElement:
 	'slotAddList' '('
 		product=Expression day=Expression slots=Expression ( '{' startHour=Expression 'to' endHour=Expression '}' )?
 	')'
 	;
 
-WhenElement:
+WhenElement returns ui::WhenElement:
 	'when' '(' condition=Expression ')' body=ElementBody
 	;
 	// validation: condition.type.booleanTyped			[√]
 
 
-ImageElement:
+ImageElement returns ui::ImageElement:
 	'image' '(' (
 		  observed?='observe'? sourceUrl=Expression 
 		& ('width' '=' width=Expression)?
@@ -462,7 +462,7 @@ ImageElement:
 	 */
 
 
-FrameElement:	// (not called 'IFrameElement' because of possible confusion with an interface)
+FrameElement returns ui::FrameElement:	// (not called 'IFrameElement' because of possible confusion with an interface)
 	'iframe' '('
 		sourceUrl=Expression
 		(
@@ -479,8 +479,8 @@ FrameElement:	// (not called 'IFrameElement' because of possible confusion with 
 	// TODO  make source URL observable?
 
 
-LineBreakElement:
-	{LineBreakElement}
+LineBreakElement returns ui::LineBreakElement:
+	{ui::LineBreakElement}
 	'line-break'
 	;
 
@@ -491,8 +491,8 @@ LineBreakElement:
  * +------------+
  */
 
-StatementBlock:
-	{StatementBlock}
+StatementBlock returns ui::StatementBlock:
+	{ui::StatementBlock}
 	'{'
 		statements+=Statement*
 	'}'
@@ -507,18 +507,18 @@ StatementBlock:
 	 * 		IfStatement.elseBlock
 	 */
 
-Statement:	// (synthetic type)
+Statement returns ui::Statement:	// (synthetic type)
 	  NonExitingStatement
 	| ExitingStatement
 	;
 	// A Statement is always contained in a StatementBlock.
 
-ExitingStatement:
+ExitingStatement returns ui::ExitingStatement:
 	  GotoScreenStatement
 	| GotoModuleStatement
 	;
 
-NonExitingStatement:
+NonExitingStatement returns ui::NonExitingStatement:
 	  AssignmentOrExpressionStatement
 	| ShowModalStatement
 	| ExitModalStatement
@@ -529,14 +529,14 @@ NonExitingStatement:
 	;
 
 
-ForStatement:
+ForStatement returns ui::ForStatement:
 	'for' '('
 		'(' indexVariable=ListVariable '->' valueVariable=ListVariable ')' 'in'
 		listExpression=Expression
 	')' thenBlock=StatementBlock
 	;
 
-ListRemoveStatement:
+ListRemoveStatement returns ui::ListRemoveStatement:
 	"remove" "from" listExpr=Expression (("where" feature=[struct::Feature] '==' valueExpr=Expression) | ("at" indexVariable=Expression))
 	;
 	/*
@@ -546,7 +546,7 @@ ListRemoveStatement:
 	 * 		2-  if feature != null: feature.type.isAssignableFrom(valueExpr.type)	[√]
 	 */
 
-AssignmentOrExpressionStatement:
+AssignmentOrExpressionStatement returns ui::AssignmentOrExpressionStatement:
 	lhs=Expression ( operator=AssignmentOperator rhs=Expression )?
 	;
 	// TODO  split out specification according to whether rhs is null and again for != null according to operator (assignment vs. the others)
@@ -564,34 +564,34 @@ AssignmentOrExpressionStatement:
 	// TODO  consider making this into an operator as sub type of Expression again - however, during last experiment this caused a lot of non-LL(*)-ness
 
 
-enum AssignmentOperator:
+enum AssignmentOperator returns ui::AssignmentOperator:
 	  assign='='
 	| add='+='
 	| sub='-='
 	;
 
 
-ShowModalStatement:
-	'show-modal' viewable=[Viewable] argumentList=ArgumentList
+ShowModalStatement returns ui::ShowModalStatement:
+	'show-modal' viewable=[ui::Viewable] argumentList=ArgumentList
 		persistent?='persistent'?
 	;
 
-ExitModalStatement:
-	{ExitModalStatement}
+ExitModalStatement returns ui::ExitModalStatement:
+	{ui::ExitModalStatement}
 	'exit-modal'
 	;
 
 
-GotoScreenStatement:
-	( 'goto' | 'goto-screen' ) viewable=[Viewable] => argumentList=ArgumentList
+GotoScreenStatement returns ui::GotoScreenStatement:
+	( 'goto' | 'goto-screen' ) viewable=[ui::Viewable] => argumentList=ArgumentList
 	;
 	// scoping: viewable == all(Viewable)-in-this-resource.filter[screen]	[√]
 	/*
 	 * Call syntax is now aligned with declaration syntax because '(..)' are required.
 	 */
 
-GotoModuleStatement:
-	'goto-module' targetModule=[UiModule] args=ArgumentList
+GotoModuleStatement returns ui::GotoModuleStatement:
+	'goto-module' targetModule=[ui::UiModule] args=ArgumentList
 	/*
 	 * (I'd rather use 'argumentList' instead 'args' but that triggers
 	 * the duplicate feature validation of Xtext - whether that's incorrect or not.)
@@ -608,7 +608,7 @@ GotoModuleStatement:
 	 * 		2-	credentials contains all credentials of authOption.credentials	[V]
 	 */
 
-PrincipalArgument :
+PrincipalArgument  returns ui::PrincipalArgument :
 	principal=[backend::AuthenticationParameter] '=' valueExpr=Expression  
 	;
 	/*
@@ -619,7 +619,7 @@ PrincipalArgument :
 	 * 		principal in containerHaving(typeof GotoModuleStatement).authOption.principals
 	 */
 	
-CredentialArgument :
+CredentialArgument  returns ui::CredentialArgument :
 	credential=[backend::AuthenticationParameter] '=' valueExpr=Expression
 	;
 	/*
@@ -631,7 +631,7 @@ CredentialArgument :
 	 */
 
 
-IfStatement:
+IfStatement returns ui::IfStatement:
 	'if' '(' condition=Expression ')' thenBlock=StatementBlock ('else' elseBlock=StatementBlock)?
 	;
 	/*
@@ -641,11 +641,11 @@ IfStatement:
 	 */
 
 
-LocalValueDeclarationStatement:
+LocalValueDeclarationStatement returns ui::LocalValueDeclarationStatement:
 	=> 'val' value=Value ( ':' declaredType=TypeLiteral )? '=' valueExpr=Expression
 	;
 
-ViewableCallSite:	// (synthetic type)
+ViewableCallSite returns ui::ViewableCallSite:	// (synthetic type)
 	GotoScreenStatement | ComponentInvocation | TabDeclaration | ShowModalStatement
 	;
 	// validation: arguments are checked against viewable.parameters for unmapped and duplicately-mapped parameters		[√]
@@ -657,12 +657,12 @@ ViewableCallSite:	// (synthetic type)
  * +-------------+
  */
 
-Expression:
+Expression returns ui::Expression:
 	TernaryExpression
 	;
 
-TernaryExpression returns Expression:
-	OrExpression ({TernaryExpression.guard=current} '?' thenExpr=OrExpression ':' elseExpr=OrExpression)?
+TernaryExpression returns ui::Expression:
+	OrExpression ({ui::TernaryExpression.guard=current} '?' thenExpr=OrExpression ':' elseExpr=OrExpression)?
 	;
 	/* 
 	 * validation:
@@ -670,22 +670,22 @@ TernaryExpression returns Expression:
 	 * 		2-  thenExpr and elseExpr must be type-compatible	[√]
 	 */
 
-OrExpression returns Expression:
-	AndExpression ({OrExpression.leftOperand=current} '||' rightOperand=AndExpression)*	// left-associative infix binary operator
+OrExpression returns ui::Expression:
+	AndExpression ({ui::OrExpression.leftOperand=current} '||' rightOperand=AndExpression)*	// left-associative infix binary operator
 	;
 	// validation: leftOperand, rightOperand are Boolean-typed	[√]
 
-AndExpression returns Expression:
-	ComparisonExpression ({AndExpression.leftOperand=current} '&&' rightOperand=ComparisonExpression)*	// left-associative infix binary operator
+AndExpression returns ui::Expression:
+	ComparisonExpression ({ui::AndExpression.leftOperand=current} '&&' rightOperand=ComparisonExpression)*	// left-associative infix binary operator
 	;
 	// validation: leftOperand, rightOperand are Boolean-typed	[√]
 
-ComparisonExpression returns Expression:
-	AdditiveExpression ({ComparisonExpression.leftOperand=current} comparator=Comparator rightOperand=AdditiveExpression)*	// left-associative infix binary operator
+ComparisonExpression returns ui::Expression:
+	AdditiveExpression ({ui::ComparisonExpression.leftOperand=current} comparator=Comparator rightOperand=AdditiveExpression)*	// left-associative infix binary operator
 	;
 	// validation: leftOperand.type == rightOperand.type		[√]
 
-enum Comparator:
+enum Comparator returns ui::Comparator:
 	  equals="=="
 	| notEquals="!="
 	| bigger=">"
@@ -695,34 +695,34 @@ enum Comparator:
 	| isIn="in"
 	;
 
-AdditiveExpression returns Expression:
-	MultiplicativeExpression ({AdditiveExpression.leftOperand=current} operator=AdditiveOperators rightOperand=MultiplicativeExpression)*	// left-associative infix binary operator
+AdditiveExpression returns ui::Expression:
+	MultiplicativeExpression ({ui::AdditiveExpression.leftOperand=current} operator=AdditiveOperators rightOperand=MultiplicativeExpression)*	// left-associative infix binary operator
 	;
 	// validation: leftOperand, rightOperand must be numerically-typed	[√]
 
-enum AdditiveOperators:
+enum AdditiveOperators returns ui::AdditiveOperators:
 	plus='+' | minus='-'
 	;
 	// TODO  overload the + to handle array types as well
 
-MultiplicativeExpression returns Expression:
-	NotExpression ({MultiplicativeExpression.leftOperand=current} operator=MultiplicativeOperators rightOperand=NotExpression)*	// left-associative infix binary operator
+MultiplicativeExpression returns ui::Expression:
+	NotExpression ({ui::MultiplicativeExpression.leftOperand=current} operator=MultiplicativeOperators rightOperand=NotExpression)*	// left-associative infix binary operator
 	;
 	// validation: leftOperand, rightOperand must be numerically-typed	[√]
 
-enum MultiplicativeOperators:
+enum MultiplicativeOperators returns ui::MultiplicativeOperators:
 	mult='*' | div='/' | mod='%'
 	;
 
-NotExpression returns Expression:
-	InterfaceCallExpression | ({NotExpression} '!' operand=NotExpression)
+NotExpression returns ui::Expression:
+	InterfaceCallExpression | ({ui::NotExpression} '!' operand=NotExpression)
 	;
 	// validation: operand.type.booleanTyped							[√]
 
 
-InterfaceCallExpression returns Expression:
+InterfaceCallExpression returns ui::Expression:
 	FeatureAccessExpression | (
-		{InterfaceCallExpression} 'call' serviceId=ServiceIdentification '(' ( 'observe' '[' observeSites+=Expression* ']' )? input=Expression? ')'
+		{ui::InterfaceCallExpression} 'call' serviceId=ServiceIdentification '(' ( 'observe' '[' observeSites+=Expression* ']' )? input=Expression? ')'
 		( '=>' callback=CallbackExpression ('@error:' errorCallback=CallbackExpression)? )?
 	)
 	;
@@ -733,9 +733,9 @@ InterfaceCallExpression returns Expression:
 	 */
 	// TODO  more validation? e.g. callback and observeSites are "often" illegal
 
-ServiceIdentification:
-	  {NamedServiceReference} service=[backend::NamedService]
-	| {CrudServiceIdentification} crudType=CrudTypes structure=[struct::Structure]
+ServiceIdentification returns ui::ServiceIdentification:
+	  {ui::NamedServiceReference} service=[backend::NamedService]
+	| {ui::CrudServiceIdentification} crudType=CrudTypes structure=[struct::Structure]
 	;
 	// validation: check that a used CrudService(Identification) is actually declared somewhere		[ ]
 	/*
@@ -746,7 +746,7 @@ ServiceIdentification:
 	// validation: serviceId."interface".inputType.isAssignableFrom(input.type)		[√]
 
 // copied from SimScript-Backend DSL grammar:
-enum CrudTypes:
+enum CrudTypes returns ui::CrudTypes:
 	  create
 	| getById = 'get-by-id'
 	| update
@@ -754,8 +754,8 @@ enum CrudTypes:
 	;
 
 
-FeatureAccessExpression returns Expression hidden():
-	PrimaryExpression ({FeatureAccessExpression.previous=current} '.' feature=[struct::Feature])*	// left-associative infix binary operator
+FeatureAccessExpression returns ui::Expression hidden():
+	PrimaryExpression ({ui::FeatureAccessExpression.previous=current} '.' feature=[struct::Feature])*	// left-associative infix binary operator
 	;
 	// scoping: feature in previous.type.features												[√]
 	// validation: previous must be a FeatureAccessExpression or a ValueReferenceExpression		[√]
@@ -764,7 +764,7 @@ FeatureAccessExpression returns Expression hidden():
 // TODO  use an enum BuiltinMemberFunctions to add "member calls" to FeatureAccessExpression (and add a ton of validation)
 
 
-PrimaryExpression returns Expression hidden(WS, ML_COMMENT, SL_COMMENT):	// (undo cascade of FeatureAccessExpression's hidden())
+PrimaryExpression returns ui::Expression hidden(WS, ML_COMMENT, SL_COMMENT):	// (undo cascade of FeatureAccessExpression's hidden())
 	  '(' Expression ')'
 	| LiteralExpression
 	| CallbackExpressions
@@ -772,20 +772,20 @@ PrimaryExpression returns Expression hidden(WS, ML_COMMENT, SL_COMMENT):	// (und
 	| ValueReferenceOrMethodCallExpression
 	| DateExpression
 	| BuiltinFunctionExpression
-	| {SelectionExpression} 'selection'
+	| {ui::SelectionExpression} 'selection'
 	;
 	// validation: SelectionExpression may only be used within CalendarStatement.onSelect		[?]
 
-DateExpression:
-	  {DateNowExpression} 'now'
-	| {DateTodayExpression} 'today'
+DateExpression returns ui::DateExpression:
+	  {ui::DateNowExpression} 'now'
+	| {ui::DateTodayExpression} 'today'
 	;
 
-BuiltinFunctionExpression:
+BuiltinFunctionExpression returns ui::BuiltinFunctionExpression:
 	function=BuiltinFunctions '(' argument=Expression ('on' sortFeature=[struct::Feature])? ')'
 	;
 
-enum BuiltinFunctions:
+enum BuiltinFunctions returns ui::BuiltinFunctions:
 	  isSet
 	| alert
 	| confirm
@@ -811,24 +811,24 @@ enum BuiltinFunctions:
 	 */
 	// TODO  replace keyword-style expression(s) with implicitly imported functions
 
-LiteralExpression:
-	  {StringLiteralExpression} value=STRING
-	| {BooleanLiteralExpression} literal=BooleanLiterals
-	| {IntegerLiteralExpression} value=INT
-	| {NumberLiteralExpression} value=NumberLiteral
+LiteralExpression returns ui::Expression:
+	  {ui::StringLiteralExpression} value=STRING
+	| {ui::BooleanLiteralExpression} literal=BooleanLiterals
+	| {ui::IntegerLiteralExpression} value=INT
+	| {ui::NumberLiteralExpression} value=NumberLiteral
 	| ListLiteralExpression
 	| EnumerationLiteralExpression
 	| DecisionExpression
 	;
 	// TODO  add a literal expression for strings that require HTML escaping?
 
-ListLiteralExpression:
-	{ListLiteralExpression}
+ListLiteralExpression returns ui::Expression:
+	{ui::ListLiteralExpression}
 	'[' members+=Expression* ']'
 	;
 	// validation: members (if any) must be compatible with each other - for now this means that everything must be compatible with the first member	[√]
 
-EnumerationLiteralExpression hidden():
+EnumerationLiteralExpression returns ui::EnumerationLiteralExpression hidden():
 	enumeration=[struct::Enumeration] '::' literal=[struct::EnumerationLiteral|EnumerationName]
 	;
 	// scoping: literal in enumeration.literals		[√]
@@ -844,13 +844,13 @@ NumberLiteral returns ecore::EBigDecimal hidden(): INT '.' INT;
 	// TODO  fix problem with "negative" decimal part
 
 
-enum BooleanLiterals:
+enum BooleanLiterals returns ui::BooleanLiterals:
 	false /* default */ | true
 	;
 
 
-DecisionExpression:
-	{DecisionExpression}
+DecisionExpression returns ui::DecisionExpression:
+	{ui::DecisionExpression}
 	'decide' '{'
 		cases+=DecisionCase*
 		( 'default' ':' defaultValueExpr=Expression )?
@@ -863,7 +863,7 @@ DecisionExpression:
 	 * 		2-  type.isAssignableFrom(defaultValueExpr.type)							[√]
 	 */
 
-DecisionCase:
+DecisionCase returns ui::DecisionCase:
 	'case' guardExpr=Expression ':' valueExpr=Expression
 	;
 	/*
@@ -873,31 +873,31 @@ DecisionCase:
 	 */
 
 
-CallbackExpressions:
+CallbackExpressions returns ui::CallbackExpressions:
 	  CallbackExpression
-	| {CallbackResponseExpression} 'response'		// validation: only useable within callbacks	[√]
-	| {CallbackErrorResponseExpression} 'error'		// validation: only useable within callbacks	[√]
+	| {ui::CallbackResponseExpression} 'response'		// validation: only useable within callbacks	[√]
+	| {ui::CallbackErrorResponseExpression} 'error'		// validation: only useable within callbacks	[√]
 	;
 
-CallbackExpression:
+CallbackExpression returns ui::CallbackExpression:
 	statementBlock=StatementBlock
 	;
 
 
-StructureCreationExpression:
+StructureCreationExpression returns ui::StructureCreationExpression:
 	'new' structure=[struct::Structure] '(' assignments+=FeatureAssignment* ')'
 	;
 	// validation: features may not be duplicately assigned						[√]
 
-FeatureAssignment:
+FeatureAssignment returns ui::FeatureAssignment:
 	feature=[struct::Feature] '=' valueExpr=Expression
 	;
 	// scoping: feature in containing(StructureCreationExpression).features		[√]
 	// validation: feature.type.isAssignableFrom(valueExpr.type)				[√]
 
 
-ValueReferenceOrMethodCallExpression:
-	ReferenceExpression ( {MethodCallExpression.methodRef=current} => argumentList=ArgumentList )?
+ValueReferenceOrMethodCallExpression returns ui::ValueReferenceOrMethodCallExpression:
+	ReferenceExpression ( {ui::MethodCallExpression.methodRef=current} => argumentList=ArgumentList )?
 	;
 	/*
 	 * validation (on MethodCallExpression):
@@ -907,8 +907,8 @@ ValueReferenceOrMethodCallExpression:
 	// TODO  harden type calculation to deal with recursive call chains (+ validation?)
 
 
-ReferenceExpression:
-	ref=[Referable]
+ReferenceExpression returns ui::ReferenceExpression:
+	ref=[ui::Referable]
 	;
 	// validation: ref cannot be a method if eContainer is not a MethodCallExpression	[√]
 
@@ -918,7 +918,7 @@ ReferenceExpression:
  */
 
 
-Referable:	// (synthetic type)
+Referable returns ui::Referable:	// (synthetic type)
 	Value | Parameter | ListVariable | Method
 	;
 	/*

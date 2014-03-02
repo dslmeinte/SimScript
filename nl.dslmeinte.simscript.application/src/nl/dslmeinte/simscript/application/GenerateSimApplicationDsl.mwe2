@@ -15,8 +15,6 @@ Workflow {
         scanClassPath = true
         platformUri = "${runtimeProject}/.."
         registerGeneratedEPackage = "org.eclipse.emf.ecore.EcorePackage"
-        registerGeneratedEPackage = "nl.dslmeinte.simscript.ui.simUiDsl.SimUiDslPackage"
-        registerGenModelFile = "platform:/resource/nl.dslmeinte.simscript.ui/src-gen/nl/dslmeinte/simscript/ui/SimUiDsl.genmodel"
     }
 
     component = DirectoryCleaner {
@@ -35,6 +33,7 @@ Workflow {
         projectNameRt = projectName
         projectNameUi = "${projectName}.ui"
         language = {
+        	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/UiDsl.xcore"
         	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/ApplicationDsl.xcore"
             uri = grammarURI
             fileExtensions = file.extensions

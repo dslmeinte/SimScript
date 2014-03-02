@@ -18,6 +18,8 @@ import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.xtext.validation.Check
 
+import static nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOperator.*
+
 @Singleton
 class StatementsValidator extends ValidatorSupport {
 
@@ -56,8 +58,9 @@ class StatementsValidator extends ValidatorSupport {
 	def void check_lhs_is_type_compatible_with_rhs(AssignmentOrExpressionStatement it) {
 		if( rhs != null ) {
 			if( switch operator {
-					case AssignmentOperator.ASSIGN:	!lhs.type.isAssignableFrom(rhs.type)
-					case AssignmentOperator.ADD:		lhs.type.listTyped && !lhs.type.listItemType.isAssignableFrom(rhs.type)
+					case ASSIGN:	!lhs.type.isAssignableFrom(rhs.type)
+					case ADD:		lhs.type.listTyped && !lhs.type.listItemType.isAssignableFrom(rhs.type)
+					default:		throw new IllegalArgumentException("cannot handle AssignmentOperator " + operator.name())
 				} )
 			{
 				error('''lhs must be type-compatible with rhs: «lhs.type.toLiteral» (l) vs. «rhs.type.toLiteral» (r)'''.toString, ePackage.assignmentOrExpressionStatement_Rhs)

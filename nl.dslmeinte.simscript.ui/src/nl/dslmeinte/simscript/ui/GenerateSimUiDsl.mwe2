@@ -14,10 +14,7 @@ Workflow {
     bean = StandaloneSetup {
         scanClassPath = true
         platformUri = "${runtimeProject}/.."
-        registerGeneratedEPackage = "nl.dslmeinte.simscript.structure.structureDsl.StructureDslPackage"
-        registerGenModelFile = "platform:/resource/nl.dslmeinte.simscript.structure/src-gen/nl/dslmeinte/simscript/structure/SimStructureDsl.genmodel"
-        registerGeneratedEPackage = "nl.dslmeinte.simscript.backend.simBackendDsl.SimBackendDslPackage"
-        registerGenModelFile = "platform:/resource/nl.dslmeinte.simscript.backend/src-gen/nl/dslmeinte/simscript/backend/SimBackendDsl.genmodel"
+        registerGeneratedEPackage = "org.eclipse.emf.ecore.EcorePackage"
     }
 
     component = DirectoryCleaner {
@@ -35,6 +32,8 @@ Workflow {
         projectNameRt = projectName
         projectNameUi = "${projectName}.ui"
         language = auto-inject {
+         	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/StructureDsl.xcore"
+	       	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/BackendDsl.xcore"
         	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/UiDsl.xcore"
             uri = grammarURI
             fileExtensions = file.extensions

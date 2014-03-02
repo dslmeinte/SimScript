@@ -49,6 +49,7 @@ class ReferableExtensionsImpl implements ReferableExtensions {
 		switch d: it.declaration {
 			ValueDeclaration:				d.valueType == ValueTypes.VARIABLE
 			LocalValueDeclarationStatement:	false
+			default:						throw new IllegalArgumentException("cannot handle Value of sub type " + ^class.simpleName)
 		}
 	}
 
@@ -56,6 +57,7 @@ class ReferableExtensionsImpl implements ReferableExtensions {
 		switch d: it.declaration {
 			ValueDeclaration:					d.valueType == ValueTypes.DERIVED
 			LocalValueDeclarationStatement:		false
+			default:						throw new IllegalArgumentException("cannot handle Value of sub type " + ^class.simpleName)
 		}
 	}
 
