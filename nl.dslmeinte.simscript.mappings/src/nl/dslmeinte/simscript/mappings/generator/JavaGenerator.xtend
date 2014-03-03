@@ -2,6 +2,7 @@ package nl.dslmeinte.simscript.mappings.generator
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.generator.ResourceUtil
 import nl.dslmeinte.simscript.generator.backend.JavaGeneratorHelper
 import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
@@ -23,7 +24,6 @@ import nl.dslmeinte.simscript.mappings.mappingsDsl.SimpleColumnMappingSpecificat
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ToDbExpression
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ToDbQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UpdateQuery
-import nl.dslmeinte.simscript.simpleDb.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.BooleanLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.DataTypeReference
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.DateLiteral

@@ -1,4 +1,4 @@
-package nl.dslmeinte.simscript.simpleDb.extensions
+package nl.dslmeinte.simscript.extensions
 
 import com.google.inject.Inject
 import com.google.inject.Singleton

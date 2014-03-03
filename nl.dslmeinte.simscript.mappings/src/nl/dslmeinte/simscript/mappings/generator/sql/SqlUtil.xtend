@@ -2,13 +2,13 @@ package nl.dslmeinte.simscript.mappings.generator.sql
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.mappings.mappingsDsl.AllColumnsExpression
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ColumnsSpecification
 import nl.dslmeinte.simscript.mappings.mappingsDsl.LeftRangeDelimiters
 import nl.dslmeinte.simscript.mappings.mappingsDsl.OrderClause
 import nl.dslmeinte.simscript.mappings.mappingsDsl.RightRangeDelimiters
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ToDbMappingSpecification
-import nl.dslmeinte.simscript.simpleDb.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.BooleanLiteral
 
 /**

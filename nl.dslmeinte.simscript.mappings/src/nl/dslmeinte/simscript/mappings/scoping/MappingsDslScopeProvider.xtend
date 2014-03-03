@@ -2,7 +2,7 @@ package nl.dslmeinte.simscript.mappings.scoping
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.util.XtextUtil
+import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.mappings.extensions.MiscellaneousExtensions
 import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
 import nl.dslmeinte.simscript.mappings.mappingsDsl.FeatureExpressionElement
@@ -13,7 +13,7 @@ import nl.dslmeinte.simscript.mappings.mappingsDsl.NestedMappingSpecification
 import nl.dslmeinte.simscript.mappings.mappingsDsl.SelectQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ToDbQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UpdateQuery
-import nl.dslmeinte.simscript.simpleDb.extensions.SimpleDbExtensions
+import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider

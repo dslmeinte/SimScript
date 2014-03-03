@@ -2,8 +2,8 @@ package nl.dslmeinte.simscript.mappings.extensions
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.util.XtextUtil
 import java.util.Set
+import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.mappings.mappingsDsl.CountQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.FromDbQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.NestedMappingSpecification
@@ -13,9 +13,9 @@ import nl.dslmeinte.simscript.mappings.mappingsDsl.SelectQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.SimpleColumnMappingSpecification
 import nl.dslmeinte.simscript.mappings.mappingsDsl.SimpleSubClause
 import nl.dslmeinte.simscript.mappings.mappingsDsl.TimestampColumnMappingSpecification
-import nl.dslmeinte.simscript.simpleDb.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.Column
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SimpleColumn
+import nl.dslmeinte.simscript.util.XtextUtil
 
 /**
  * Extension (Xtend) class which provides computed values on everything query-like.

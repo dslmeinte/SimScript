@@ -1,7 +1,7 @@
 package nl.dslmeinte.simscript.simpleDb.generator
 
 import com.google.inject.Inject
-import nl.dslmeinte.simscript.simpleDb.extensions.SimpleDbExtensions
+import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.BooleanLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.Column
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.DataTypeReference

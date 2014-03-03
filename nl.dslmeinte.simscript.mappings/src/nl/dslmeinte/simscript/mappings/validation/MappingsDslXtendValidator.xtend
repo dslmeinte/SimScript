@@ -1,6 +1,7 @@
 package nl.dslmeinte.simscript.mappings.validation
 
 import com.google.inject.Inject
+import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ColumnOrderSpecification
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ColumnsSpecification
@@ -20,7 +21,6 @@ import nl.dslmeinte.simscript.mappings.mappingsDsl.TimestampColumnMappingSpecifi
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ToDbMappingSpecification
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UpdateMatchingClause
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UpdateQuery
-import nl.dslmeinte.simscript.simpleDb.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SimpleColumn
 import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
 import nl.dslmeinte.simscript.types.TypeExtensions

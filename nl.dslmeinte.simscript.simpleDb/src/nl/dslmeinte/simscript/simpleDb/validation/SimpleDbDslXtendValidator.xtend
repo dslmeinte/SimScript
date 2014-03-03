@@ -1,12 +1,12 @@
 package nl.dslmeinte.simscript.simpleDb.validation
 
 import com.google.inject.Inject
-import nl.dslmeinte.simscript.util.XtextUtil
-import nl.dslmeinte.simscript.simpleDb.extensions.SimpleDbExtensions
+import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.IntLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SimpleColumn
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SimpleDbDslPackage
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.Table
+import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.xtext.validation.Check
 
 class SimpleDbDslXtendValidator extends AbstractSimpleDbDslJavaValidator {

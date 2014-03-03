@@ -2,7 +2,7 @@ package nl.dslmeinte.simscript.mappings.generator
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.util.XtextUtil
+import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.mappings.extensions.MiscellaneousExtensions
 import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
 import nl.dslmeinte.simscript.mappings.generator.sql.InterpolateableSqlGenerator
@@ -27,12 +27,12 @@ import nl.dslmeinte.simscript.mappings.mappingsDsl.ToDbExpression
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ToDbMappingSpecification
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UntypedParameter
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UpdateQuery
-import nl.dslmeinte.simscript.simpleDb.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.BooleanLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.DateLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.FloatLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.IntLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SqlTypeLiteral
+import nl.dslmeinte.simscript.util.XtextUtil
 
 @Singleton
 class PhpGenerator {
