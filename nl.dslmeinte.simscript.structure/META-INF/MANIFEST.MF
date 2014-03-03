@@ -33,6 +33,5 @@ Export-Package: nl.dslmeinte.simscript.structure,
  nl.dslmeinte.simscript.structure.serializer,
  nl.dslmeinte.simscript.structure.services,
  nl.dslmeinte.simscript.structure.types,
- nl.dslmeinte.simscript.structure.validation,
- nl.dslmeinte.simscript.util
+ nl.dslmeinte.simscript.structure.validation
 

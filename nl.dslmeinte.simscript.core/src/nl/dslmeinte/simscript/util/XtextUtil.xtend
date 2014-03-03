@@ -2,17 +2,16 @@ package nl.dslmeinte.simscript.util
 
 import com.google.inject.Singleton
 import java.util.Set
-import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.resource.EObjectDescription
+import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy
 import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.scoping.IScopeProvider
 import org.eclipse.xtext.util.IAcceptor
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 
@@ -112,6 +111,7 @@ class XtextUtil {
 		val node = NodeModelUtils.findActualNodeFor(it)
 		println('''computing scope for («eRef.EReferenceType.name»-typed) reference «eRef.EContainingClass.name».«eRef.name» on «eClass.name»-typed context "«node.text»" @ L«node.totalStartLine +1»''')
 	}
+	// (keep for debugging purposes)
 
 
 	/**
@@ -127,21 +127,6 @@ class XtextUtil {
 			throw new IllegalArgumentException(message)		// might be swallowed during scope computation => log the problem anyway
 		}
 		type.cast(it)
-	}
-
-
-	/**
-	 * (For purposes of post-processing the Xtext-generated Ecore meta model.)
-	 */
-	def modifyTypeToGeneric(EStructuralFeature feature, EClassifier outerType, EClassifier innerType) {
-		val eFactory = EcoreFactory.eINSTANCE
-		val genericType = eFactory.createEGenericType
-		genericType.EClassifier = outerType
-		val typeArgument = eFactory.createEGenericType
-		typeArgument.EClassifier = innerType
-		genericType.ETypeArguments += typeArgument
-		feature.setEType(null)
-		feature.setEGenericType(genericType)
 	}
 
 

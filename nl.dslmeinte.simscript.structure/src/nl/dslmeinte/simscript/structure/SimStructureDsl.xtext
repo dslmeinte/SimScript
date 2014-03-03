@@ -105,11 +105,3 @@ SyntheticTypeLiteral returns struct::SyntheticTypeLiteral:
 	;
 	// validation: synthetic types can't be used in SimScript-Structure		[√]
 
-
-// TODO  move expressions to here
-/*
- * Challenge: the expressions sub language refers to some concepts which are not intrinsic to the SimScript-Structure DSL,
- * such as interfaces (or NamedService-s) from SimScript-Backend. It should be able to "inject" those things in SimScript-UI
- * even though they are not defined in SimScript-Structure.
- */
-
