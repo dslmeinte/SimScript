@@ -13,7 +13,7 @@ import nl.dslmeinte.simscript.structure.structureDsl.Feature
 import nl.dslmeinte.simscript.structure.structureDsl.ListTypeLiteral
 import nl.dslmeinte.simscript.structure.structureDsl.Structure
 import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
 import nl.dslmeinte.simscript.ui.simUiDsl.Argument

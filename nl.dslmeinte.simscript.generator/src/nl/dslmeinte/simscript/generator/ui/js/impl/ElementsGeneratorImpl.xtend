@@ -1,6 +1,7 @@
 package nl.dslmeinte.simscript.generator.ui.js.impl
 
 import com.google.inject.Inject
+import java.util.Set
 import nl.dslmeinte.simscript.generator.ui.js.ElementsGenerator
 import nl.dslmeinte.simscript.generator.ui.js.ExpressionsGenerator
 import nl.dslmeinte.simscript.generator.ui.js.JavaScriptUtil
@@ -8,7 +9,7 @@ import nl.dslmeinte.simscript.generator.ui.js.ReturnFlags
 import nl.dslmeinte.simscript.generator.ui.js.StatementsGenerator
 import nl.dslmeinte.simscript.generator.ui.js.ViewableInvocationTypes
 import nl.dslmeinte.simscript.structure.structureDsl.Enumeration
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
@@ -53,7 +54,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.VerticalAlignment
 import nl.dslmeinte.simscript.ui.simUiDsl.WhenElement
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
-import java.util.Set
 
 /**
  * Generates the defined layout as DOM-generating JavaScript code.

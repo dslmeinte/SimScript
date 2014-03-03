@@ -2,7 +2,7 @@ package nl.dslmeinte.simscript.ui.validation
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
 import nl.dslmeinte.simscript.ui.extensions.ViewableExtensions

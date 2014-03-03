@@ -4,11 +4,13 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import nl.dslmeinte.simscript.structure.structureDsl.Structure
 import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.structure.structureDsl.VoidLiteral
+import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions
 import nl.dslmeinte.simscript.ui.extensions.ServiceExtensions
 import nl.dslmeinte.simscript.ui.extensions.StatementExtensions
+import nl.dslmeinte.simscript.ui.extensions.impl.ReferableExtensionsImpl
 import nl.dslmeinte.simscript.ui.simUiDsl.AdditiveExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.AdditiveOperators
 import nl.dslmeinte.simscript.ui.simUiDsl.ArithmeticBinaryOperatorExpression
@@ -52,7 +54,6 @@ import org.eclipse.xtext.scoping.IScopeProvider
 
 import static nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypes.*
 import static nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctions.*
-import nl.dslmeinte.simscript.ui.extensions.impl.ReferableExtensionsImpl
 
 /**
  * This class computes types of {@link Expression expressions} and other

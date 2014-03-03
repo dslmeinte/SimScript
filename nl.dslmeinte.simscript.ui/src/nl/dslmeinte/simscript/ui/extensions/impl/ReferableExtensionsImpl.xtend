@@ -2,7 +2,7 @@ package nl.dslmeinte.simscript.ui.extensions.impl
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.ReferableExtensions
 import nl.dslmeinte.simscript.ui.simUiDsl.AbstractValueDeclaration
 import nl.dslmeinte.simscript.ui.simUiDsl.ListElement

@@ -3,7 +3,7 @@ package nl.dslmeinte.simscript.generator.ui
 import com.google.inject.Inject
 import nl.dslmeinte.simscript.generator.ui.js.JavaScriptUtil
 import nl.dslmeinte.simscript.structure.structureDsl.Structure
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 
 class CommunicationParseGenerator {
 	

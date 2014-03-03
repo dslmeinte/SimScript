@@ -10,7 +10,7 @@ import nl.dslmeinte.simscript.structure.structureDsl.StructureDslPackage
 import nl.dslmeinte.simscript.structure.structureDsl.StructureModel
 import nl.dslmeinte.simscript.structure.structureDsl.SyntheticTypeLiteral
 import nl.dslmeinte.simscript.structure.structureDsl.VoidLiteral
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.validation.Check

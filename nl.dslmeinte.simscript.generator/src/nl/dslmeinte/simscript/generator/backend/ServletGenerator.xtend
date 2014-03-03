@@ -6,7 +6,7 @@ import nl.dslmeinte.simscript.backend.SimBackendDslExtensions
 import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
 import nl.dslmeinte.simscript.generator.ResourceUtil
 import nl.dslmeinte.simscript.generator.util.GeneratorUtil
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 
 /**
  * Generator for the servlets (base + implementation class) corresponding to {@link Interface interfaces}.

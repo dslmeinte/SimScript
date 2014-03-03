@@ -10,7 +10,7 @@ import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral
 import nl.dslmeinte.simscript.structure.structureDsl.Feature
 import nl.dslmeinte.simscript.structure.structureDsl.ListTypeLiteral
 import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 
 @Singleton
 class JavaGeneratorHelper {

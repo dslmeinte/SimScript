@@ -8,7 +8,7 @@ import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypeLiteral
 import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral
 import nl.dslmeinte.simscript.structure.structureDsl.Feature
 import nl.dslmeinte.simscript.structure.structureDsl.Structure
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 
 /**
  * Generates the POJO for a {@link Structure}.

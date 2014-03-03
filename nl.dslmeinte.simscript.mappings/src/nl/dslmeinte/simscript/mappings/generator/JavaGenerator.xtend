@@ -4,8 +4,6 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import nl.dslmeinte.simscript.generator.ResourceUtil
 import nl.dslmeinte.simscript.generator.backend.JavaGeneratorHelper
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
-import nl.dslmeinte.simscript.util.XtextUtil
 import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
 import nl.dslmeinte.simscript.mappings.generator.sql.SqlGenerator
 import nl.dslmeinte.simscript.mappings.mappingsDsl.BooleanLiteralExpression
@@ -35,6 +33,8 @@ import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.IntLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SqlTypeLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.TextLiteral
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.VarCharLiteral
+import nl.dslmeinte.simscript.types.TypeExtensions
+import nl.dslmeinte.simscript.util.XtextUtil
 
 @Singleton
 class JavaGenerator {

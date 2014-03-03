@@ -10,7 +10,7 @@ import nl.dslmeinte.simscript.structure.structureDsl.Feature
 import nl.dslmeinte.simscript.structure.structureDsl.ListTypeLiteral
 import nl.dslmeinte.simscript.structure.structureDsl.Structure
 import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 
 /**
  * Generates the Controller class for a {@link Structure}.

@@ -1,4 +1,4 @@
-package nl.dslmeinte.simscript.structure.types
+package nl.dslmeinte.simscript.types
 
 import com.google.inject.Inject
 import com.google.inject.Singleton

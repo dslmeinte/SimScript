@@ -6,7 +6,7 @@ import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
 import nl.dslmeinte.simscript.backend.simBackendDsl.LegacyServlet
 import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypes
 import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.ServiceExtensions
 import nl.dslmeinte.simscript.ui.simUiDsl.CrudServiceIdentification
 import nl.dslmeinte.simscript.ui.simUiDsl.CrudTypes

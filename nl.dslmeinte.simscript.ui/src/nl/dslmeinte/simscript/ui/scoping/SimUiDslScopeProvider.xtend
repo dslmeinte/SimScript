@@ -2,7 +2,7 @@ package nl.dslmeinte.simscript.ui.scoping
 
 import com.google.inject.Inject
 import nl.dslmeinte.simscript.structure.scoping.SimStructureDslScopeProvider
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions
 import nl.dslmeinte.simscript.ui.extensions.StatementExtensions

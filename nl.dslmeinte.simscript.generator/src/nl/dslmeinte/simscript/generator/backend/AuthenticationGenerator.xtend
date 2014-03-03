@@ -3,7 +3,7 @@ package nl.dslmeinte.simscript.generator.backend
 import com.google.inject.Inject
 import nl.dslmeinte.simscript.backend.simBackendDsl.AuthenticationDeclaration
 import nl.dslmeinte.simscript.generator.ResourceUtil
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 import org.eclipse.xtext.generator.IFileSystemAccess
 
 class AuthenticationGenerator {

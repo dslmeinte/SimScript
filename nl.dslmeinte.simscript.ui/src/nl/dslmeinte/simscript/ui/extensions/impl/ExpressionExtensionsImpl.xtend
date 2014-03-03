@@ -2,8 +2,9 @@ package nl.dslmeinte.simscript.ui.extensions.impl
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import java.util.Set
 import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
-import nl.dslmeinte.simscript.structure.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions
 import nl.dslmeinte.simscript.ui.extensions.ReferableExtensions
@@ -26,7 +27,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.TernaryExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.Value
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
-import java.util.Set
 import org.eclipse.emf.ecore.EObject
 
 import static nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctions.*

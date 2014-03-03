@@ -1,8 +1,7 @@
-package nl.dslmeinte.simscript.structure.types;
+package nl.dslmeinte.simscript.types;
 
 import java.util.List;
 
-import com.google.inject.ImplementedBy;
 import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypeLiteral;
 import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypes;
 import nl.dslmeinte.simscript.structure.structureDsl.CallbackErrorResponseLiteral;
@@ -15,6 +14,8 @@ import nl.dslmeinte.simscript.structure.structureDsl.ListTypeLiteral;
 import nl.dslmeinte.simscript.structure.structureDsl.Structure;
 import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral;
 import nl.dslmeinte.simscript.structure.structureDsl.VoidLiteral;
+
+import com.google.inject.ImplementedBy;
 
 @ImplementedBy(TypeExtensionsImpl.class)
 public interface TypeExtensions {
