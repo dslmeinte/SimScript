@@ -2,21 +2,20 @@ package nl.dslmeinte.simscript.backend.validation
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.backend.SimBackendDslExtensions
 import nl.dslmeinte.simscript.backend.simBackendDsl.BackendModel
 import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
 import nl.dslmeinte.simscript.backend.simBackendDsl.LegacyServlet
 import nl.dslmeinte.simscript.backend.simBackendDsl.NamedService
 import nl.dslmeinte.simscript.backend.simBackendDsl.SimBackendDslPackage
+import nl.dslmeinte.simscript.extensions.BackendExtensions
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.xtext.validation.Check
 
 @Singleton
 class SimBackendDslXtendValidator extends AbstractSimBackendDslJavaValidator {
 
+	@Inject extension BackendExtensions
 	@Inject extension XtextUtil
-
-	@Inject extension SimBackendDslExtensions
 
 	private SimBackendDslPackage ePackage = SimBackendDslPackage.eINSTANCE
 

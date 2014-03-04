@@ -30,8 +30,7 @@ class EnumerationLiteral {
 	String displayName
 }
 
-class TypeLiteral {
-}
+abstract class TypeLiteral {}
 
 class BuiltinTypeLiteral extends TypeLiteral {
 	BuiltinTypes builtin
@@ -58,14 +57,11 @@ class ListTypeLiteral extends TypeLiteral {
 	contains TypeLiteral itemType
 }
 
-class SyntheticTypeLiteral extends TypeLiteral {
-}
+abstract class SyntheticTypeLiteral extends TypeLiteral {}
 
-class CallbackLiteral extends SyntheticTypeLiteral {
-}
+class CallbackLiteral extends SyntheticTypeLiteral {}
 
-class CallbackErrorResponseLiteral extends SyntheticTypeLiteral {
-}
+class CallbackErrorResponseLiteral extends SyntheticTypeLiteral {}
 
-class VoidLiteral extends SyntheticTypeLiteral {
-}
+class VoidLiteral extends SyntheticTypeLiteral {}
+

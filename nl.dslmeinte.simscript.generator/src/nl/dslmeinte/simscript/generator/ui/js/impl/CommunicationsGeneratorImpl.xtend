@@ -3,9 +3,9 @@ package nl.dslmeinte.simscript.generator.ui.js.impl
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import java.util.Set
-import nl.dslmeinte.simscript.backend.SimBackendDslExtensions
 import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
 import nl.dslmeinte.simscript.backend.simBackendDsl.Service
+import nl.dslmeinte.simscript.extensions.BackendExtensions
 import nl.dslmeinte.simscript.generator.ui.js.CommunicationsGenerator
 import nl.dslmeinte.simscript.structure.structureDsl.Structure
 import nl.dslmeinte.simscript.types.TypeExtensions
@@ -19,7 +19,7 @@ import org.eclipse.xtext.EcoreUtil2
 @Singleton
 class CommunicationsGeneratorImpl implements CommunicationsGenerator {
 
-	@Inject extension SimBackendDslExtensions
+	@Inject extension BackendExtensions
 	@Inject extension TypeExtensions
 
 	override interfaceFunctions(UiModule it)

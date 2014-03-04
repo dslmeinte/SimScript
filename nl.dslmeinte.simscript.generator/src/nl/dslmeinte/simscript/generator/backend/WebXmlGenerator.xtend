@@ -1,11 +1,11 @@
 package nl.dslmeinte.simscript.generator.backend
 
 import com.google.inject.Inject
-import nl.dslmeinte.simscript.backend.SimBackendDslExtensions
 import nl.dslmeinte.simscript.backend.simBackendDsl.CrudService
 import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
 import nl.dslmeinte.simscript.backend.simBackendDsl.LegacyServlet
 import nl.dslmeinte.simscript.backend.simBackendDsl.Service
+import nl.dslmeinte.simscript.extensions.BackendExtensions
 import nl.dslmeinte.simscript.generator.ResourceUtil
 import nl.dslmeinte.simscript.structure.structureDsl.Structure
 
@@ -17,7 +17,7 @@ import nl.dslmeinte.simscript.structure.structureDsl.Structure
 class WebXmlGenerator {
 
 	@Inject extension ResourceUtil
-	@Inject extension SimBackendDslExtensions
+	@Inject extension BackendExtensions
 	@Inject private CrudServletsGenerator crudServletGenerator
 
 	def generateWebXml(Iterable<Service> declarations) {

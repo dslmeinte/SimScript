@@ -1,4 +1,4 @@
-package nl.dslmeinte.simscript.backend
+package nl.dslmeinte.simscript.extensions
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
@@ -13,7 +13,7 @@ import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
 import nl.dslmeinte.simscript.types.TypeExtensions
 
 @Singleton
-class SimBackendDslExtensions {
+class BackendExtensions {
 
 	@Inject extension TypeExtensions
 

@@ -8,7 +8,7 @@ class ReferenceGenerationTest extends XtextTestsSupport {
 		val resourceSet = loadIntoOneResourceSet(gatherFiles(new File("src-ref-model/")))
 		var nErrors = resourceSet.reportFor
 		assertTrue('''there were «nErrors» syntactic/semantic errors'''.toString, nErrors == 0)
-		generateUiAndApp(resourceSet, "src-ref-gen-gen", true)
+		generateAll(resourceSet, "src-ref-gen-gen", true)
 
 		println("\ngenerated UI artifacts from reference model")
 	}

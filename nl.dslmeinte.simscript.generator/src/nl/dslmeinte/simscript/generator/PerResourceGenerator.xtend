@@ -3,8 +3,9 @@ package nl.dslmeinte.simscript.generator
 import com.google.inject.Inject
 import nl.dslmeinte.simscript.application.SimApplicationDslExtensions
 import nl.dslmeinte.simscript.application.simApplicationDsl.ApplicationModel
-import nl.dslmeinte.simscript.backend.SimBackendDslExtensions
 import nl.dslmeinte.simscript.backend.simBackendDsl.BackendModel
+import nl.dslmeinte.simscript.extensions.BackendExtensions
+import nl.dslmeinte.simscript.generator.backend.AuthenticationGenerator
 import nl.dslmeinte.simscript.generator.backend.ControllerGenerator
 import nl.dslmeinte.simscript.generator.backend.CrudServletsGenerator
 import nl.dslmeinte.simscript.generator.backend.PojoGenerator
@@ -19,7 +20,6 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractFileSystemAccess
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
-import nl.dslmeinte.simscript.generator.backend.AuthenticationGenerator
 
 /**
  * Generator for the {@code all-in-1} DSL.
@@ -40,7 +40,7 @@ import nl.dslmeinte.simscript.generator.backend.AuthenticationGenerator
 class PerResourceGenerator implements IGenerator {
 
 	@Inject extension ResourceUtil
-	@Inject extension SimBackendDslExtensions
+	@Inject extension BackendExtensions
 	@Inject extension SimApplicationDslExtensions
 
 	@Inject private PojoGenerator pojoGenerator

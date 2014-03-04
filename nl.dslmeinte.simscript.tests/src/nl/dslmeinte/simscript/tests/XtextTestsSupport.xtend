@@ -1,21 +1,26 @@
 package nl.dslmeinte.simscript.tests
 
-import nl.dslmeinte.simscript.application.SimApplicationDslExtensions
-import nl.dslmeinte.simscript.application.SimApplicationDslStandaloneSetup
-import nl.dslmeinte.simscript.application.simApplicationDsl.ApplicationModel
-import nl.dslmeinte.simscript.backend.SimBackendDslStandaloneSetup
-import nl.dslmeinte.simscript.generator.ui.ApplicationGenerator
-import nl.dslmeinte.simscript.generator.ui.UserInterfaceGenerator
-import nl.dslmeinte.simscript.ui.SimUiDslStandaloneSetup
-import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
-import nl.dslmeinte.simscript.ui.simUiDsl.UiModule
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.util.Collection
+import nl.dslmeinte.simscript.application.SimApplicationDslExtensions
+import nl.dslmeinte.simscript.application.SimApplicationDslStandaloneSetup
+import nl.dslmeinte.simscript.application.simApplicationDsl.ApplicationModel
+import nl.dslmeinte.simscript.application.simApplicationDsl.SimApplicationDslPackage
+import nl.dslmeinte.simscript.backend.SimBackendDslStandaloneSetup
+import nl.dslmeinte.simscript.backend.simBackendDsl.SimBackendDslPackage
+import nl.dslmeinte.simscript.generator.ui.ApplicationGenerator
+import nl.dslmeinte.simscript.generator.ui.UserInterfaceGenerator
+import nl.dslmeinte.simscript.structure.structureDsl.StructureDslPackage
+import nl.dslmeinte.simscript.ui.SimUiDslStandaloneSetup
+import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
+import nl.dslmeinte.simscript.ui.simUiDsl.SimUiDslPackage
+import nl.dslmeinte.simscript.ui.simUiDsl.UiModule
+import org.eclipse.emf.common.util.Diagnostic
 import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.resource.Resource$Diagnostic
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.util.Diagnostician
 import org.eclipse.emf.ecore.util.EcoreUtil
@@ -23,15 +28,13 @@ import org.eclipse.xtext.junit.AbstractXtextTests
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.validation.AbstractValidationDiagnostic
-import org.junit.Ignore
 
 /**
  * Support class (which ought to be abstract) to help with unit testing files,
  * without using the classes from org.eclipse.xtext.junit4.parameterized
  * (which are either too limited/limiting or which I don't understand).
  */
-@Ignore
-class XtextTestsSupport extends AbstractXtextTests {
+abstract class XtextTestsSupport extends AbstractXtextTests {
 
 	protected Diagnostician diagnostician
 
@@ -41,6 +44,10 @@ class XtextTestsSupport extends AbstractXtextTests {
 		with(typeof(SimApplicationDslStandaloneSetup))
 		with(typeof(SimBackendDslStandaloneSetup))
 		with(typeof(SimUiDslStandaloneSetup))
+		EPackage.Registry.INSTANCE.put(SimApplicationDslPackage.eINSTANCE.nsURI, SimApplicationDslPackage.eINSTANCE)
+		EPackage.Registry.INSTANCE.put(SimBackendDslPackage.eINSTANCE.nsURI, SimBackendDslPackage.eINSTANCE)
+		EPackage.Registry.INSTANCE.put(StructureDslPackage.eINSTANCE.nsURI, StructureDslPackage.eINSTANCE)
+		EPackage.Registry.INSTANCE.put(SimUiDslPackage.eINSTANCE.nsURI, SimUiDslPackage.eINSTANCE)
 	}
 
 	def protected reportFor(Resource it) {
@@ -58,15 +65,15 @@ class XtextTestsSupport extends AbstractXtextTests {
 		return issues.filter[error].size + errors.size
 	}
 
-	def private print(Diagnostic it, String type) {
+	def private print(Resource.Diagnostic it, String type) {
 		println( '''parse-«type»		L«line»	«message»'''.toString )
 	}
 
-	def private print(org.eclipse.emf.common.util.Diagnostic it) {
+	def private print(Diagnostic it) {
 		println( '''semantic-«severity.severityIntToString»	«location_»	«message»'''.toString )
 	}
 
-	def private isError(org.eclipse.emf.common.util.Diagnostic it) {
+	def private isError(Diagnostic it) {
 		severity == 4
 	}
 
@@ -75,7 +82,7 @@ class XtextTestsSupport extends AbstractXtextTests {
 		'''L«node.startLine»'''
 	}
 
-	def private dispatch location_(org.eclipse.emf.common.util.Diagnostic it)
+	def private dispatch location_(Diagnostic it)
 		'''	'''
 
 	def private severityIntToString(int severity) {
@@ -127,7 +134,7 @@ class XtextTestsSupport extends AbstractXtextTests {
 		out.close
 	}
 
-	def protected generateUiAndApp(ResourceSet resourceSet, String outputPath, boolean generateHtml) {
+	def protected generateAll(ResourceSet resourceSet, String outputPath, boolean generateHtml) {
 		// clean-create output dir.:
 		val outputDir = new File(outputPath)
 		if( outputDir.exists ) {

@@ -2,8 +2,8 @@ package nl.dslmeinte.simscript.generator.backend
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.backend.SimBackendDslExtensions
 import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
+import nl.dslmeinte.simscript.extensions.BackendExtensions
 import nl.dslmeinte.simscript.generator.ResourceUtil
 import nl.dslmeinte.simscript.generator.util.GeneratorUtil
 import nl.dslmeinte.simscript.types.TypeExtensions
@@ -19,7 +19,7 @@ class ServletGenerator {
 	@Inject extension GeneratorUtil
 	@Inject extension ResourceUtil
 	@Inject extension JavaGeneratorHelper
-	@Inject extension SimBackendDslExtensions
+	@Inject extension BackendExtensions
 	@Inject extension TypeExtensions
 
 	def generateBaseServlet(Interface it)

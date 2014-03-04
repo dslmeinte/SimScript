@@ -12,7 +12,7 @@ class OverallSimScriptProjectTest extends XtextTestsSupport {
 	private String outputPath = "src-gen"
 
 	def void test_generate_all_SimScript_UI_files_in_src_main_java() {
-		generateUiAndApp(allFilesInOneResourceSet, outputPath, false)
+		generateAll(allFilesInOneResourceSet, outputPath, false)
 	}
 
 	def allFilesInOneResourceSet() {
