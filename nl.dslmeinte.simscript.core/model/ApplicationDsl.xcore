@@ -22,3 +22,4 @@ enum TargetPlatforms {
 	facebook = 1
 	mobile = 2
 }
+

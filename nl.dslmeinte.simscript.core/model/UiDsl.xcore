@@ -266,21 +266,17 @@ class FrameElement extends Element {
 	contains Expression height
 }
 
-class LineBreakElement extends Element {
-}
+class LineBreakElement extends Element {}
 
 class StatementBlock {
 	contains Statement[] statements
 }
 
-class Statement {
-}
+abstract class Statement {}
 
-class ExitingStatement extends Statement {
-}
+abstract class ExitingStatement extends Statement {}
 
-class NonExitingStatement extends Statement {
-}
+abstract class NonExitingStatement extends Statement {}
 
 class ForStatement extends NonExitingStatement {
 	contains ListVariable indexVariable
@@ -308,15 +304,13 @@ enum AssignmentOperator {
 	sub as "-=" = 2
 }
 
-class ShowModalStatement extends NonExitingStatement , ViewableCallSite {
+class ShowModalStatement extends NonExitingStatement, ViewableCallSite {
 	boolean persistent
 }
 
-class ExitModalStatement extends NonExitingStatement {
-}
+class ExitModalStatement extends NonExitingStatement {}
 
-class GotoScreenStatement extends ExitingStatement , ViewableCallSite {
-}
+class GotoScreenStatement extends ExitingStatement, ViewableCallSite {}
 
 class GotoModuleStatement extends ExitingStatement {
 	refers UiModule targetModule
@@ -344,16 +338,14 @@ class IfStatement extends NonExitingStatement {
 	contains StatementBlock elseBlock
 }
 
-class LocalValueDeclarationStatement extends AbstractValueDeclaration , NonExitingStatement {
-}
+class LocalValueDeclarationStatement extends AbstractValueDeclaration, NonExitingStatement {}
 
 class ViewableCallSite {
 	refers Viewable viewable
 	contains ArgumentList argumentList
 }
 
-class Expression {
-}
+abstract class Expression {}
 
 enum Comparator {
 	equals as "=="
@@ -376,8 +368,7 @@ enum MultiplicativeOperators {
 	mod as "%" = 2
 }
 
-class ServiceIdentification {
-}
+class ServiceIdentification {}
 
 enum CrudTypes {
 	^create
@@ -386,8 +377,7 @@ enum CrudTypes {
 	delete = 3
 }
 
-class DateExpression extends Expression {
-}
+class DateExpression extends Expression {}
 
 class BuiltinFunctionExpression extends Expression {
 	BuiltinFunctions function
@@ -407,8 +397,7 @@ enum BuiltinFunctions {
 	^id = 8
 }
 
-class LiteralExpression extends Expression {
-}
+abstract class LiteralExpression extends Expression {}
 
 class ListLiteralExpression extends LiteralExpression {
 	contains Expression[] members
@@ -434,8 +423,7 @@ class DecisionCase {
 	contains Expression valueExpr
 }
 
-class CallbackExpressions extends Expression {
-}
+class CallbackExpressions extends Expression {}
 
 class CallbackExpression extends CallbackExpressions {
 	contains StatementBlock statementBlock
@@ -451,8 +439,7 @@ class FeatureAssignment {
 	contains Expression valueExpr
 }
 
-class ValueReferenceOrMethodCallExpression extends Expression {
-}
+abstract class ValueReferenceOrMethodCallExpression extends Expression {}
 
 class ReferenceExpression extends ValueReferenceOrMethodCallExpression {
 	refers Referable ref
@@ -468,11 +455,9 @@ class TernaryExpression extends Expression {
 	contains Expression elseExpr
 }
 
-class OrExpression extends BooleanBinaryOperatorExpression {
-}
+class OrExpression extends BooleanBinaryOperatorExpression {}
 
-class AndExpression extends BooleanBinaryOperatorExpression {
-}
+class AndExpression extends BooleanBinaryOperatorExpression {}
 
 class ComparisonExpression extends BinaryOperatorExpression {
 	Comparator comparator
@@ -512,14 +497,11 @@ class FeatureAccessExpression extends Expression {
 	refers Feature<?> feature
 }
 
-class SelectionExpression extends Expression {
-}
+class SelectionExpression extends Expression {}
 
-class DateNowExpression extends DateExpression {
-}
+class DateNowExpression extends DateExpression {}
 
-class DateTodayExpression extends DateExpression {
-}
+class DateTodayExpression extends DateExpression {}
 
 class StringLiteralExpression extends LiteralExpression {
 	String value
@@ -537,24 +519,21 @@ class NumberLiteralExpression extends LiteralExpression {
 	java.math.BigDecimal value
 }
 
-class CallbackResponseExpression extends CallbackExpressions {
-}
+class CallbackResponseExpression extends CallbackExpressions {}
 
-class CallbackErrorResponseExpression extends CallbackExpressions {
-}
+class CallbackErrorResponseExpression extends CallbackExpressions {}
 
 class MethodCallExpression extends ValueReferenceOrMethodCallExpression {
 	contains ReferenceExpression methodRef
 	contains ArgumentList argumentList
 }
 
-class BooleanBinaryOperatorExpression extends BinaryOperatorExpression {
-}
+class BooleanBinaryOperatorExpression extends BinaryOperatorExpression {}
 
-class ArithmeticBinaryOperatorExpression extends BinaryOperatorExpression {
-}
+class ArithmeticBinaryOperatorExpression extends BinaryOperatorExpression {}
 
 abstract class BinaryOperatorExpression extends Expression {
 	contains Expression leftOperand
 	contains Expression rightOperand
 }
+

@@ -2,7 +2,7 @@
 @GenModel(forceOverwrite="true", modelName="SimTypes", updateClasspath="false", complianceLevel="5.0")
 package nl.dslmeinte.simscript.types
 
-class DefinedType {
+abstract class DefinedType {
 	String name
 }
 

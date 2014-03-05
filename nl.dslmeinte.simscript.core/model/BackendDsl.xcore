@@ -29,8 +29,7 @@ class AuthenticationParameter {
 	contains TypeLiteral ^type
 }
 
-class Service {
-}
+abstract class Service {}
 
 class NamedService extends Service {
 	String name
@@ -66,3 +65,4 @@ enum CrudTypes {
 	update = 2
 	delete = 3
 }
+

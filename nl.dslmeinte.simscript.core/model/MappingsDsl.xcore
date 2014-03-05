@@ -23,22 +23,21 @@ class NamedQueryDefinition {
 	contains Query queryExpr
 }
 
-class Query {
+abstract class Query {
 	refers Table table
 }
 
-class FromDbQuery extends Query {
+abstract class FromDbQuery extends Query {
 	contains UntypedParameter[] parameters
 	contains MatchingClause whereClause
 }
 
-class ToDbQuery extends Query {
+abstract class ToDbQuery extends Query {
 	contains TypedParameter[] parameters
 	contains ToDbMappingSpecification[] mappingSpecifications
 }
 
-class QueryHavingResult extends FromDbQuery {
-}
+abstract class QueryHavingResult extends FromDbQuery {}
 
 class SelectQuery extends QueryHavingResult {
 	boolean nonEmpty
@@ -49,7 +48,7 @@ class SelectQuery extends QueryHavingResult {
 	contains FromDbMappingSpecification[] mappingSpecifications
 }
 
-class FromDbMappingSpecification {
+abstract class FromDbMappingSpecification {
 	refers Feature<?> feature
 }
 
@@ -62,22 +61,19 @@ class CountQuery extends QueryHavingResult {
 	contains ResultExpression resultExpr
 }
 
-class ResultExpression {
-}
+abstract class ResultExpression {}
 
 class ColumnsSpecification extends ResultExpression {
 	refers Column[] columns
 }
 
-class AllColumnsExpression extends ResultExpression {
-}
+class AllColumnsExpression extends ResultExpression {}
 
 class MatchingClause {
 	contains MatchingSubClause[] subClauses
 }
 
-class MatchingSubClause {
-}
+abstract class MatchingSubClause {}
 
 class SimpleSubClause extends MatchingSubClause {
 	refers Column column
@@ -128,7 +124,7 @@ class InsertQuery extends ToDbQuery {
 	refers Column returnAutoIncrementColumn
 }
 
-class ToDbMappingSpecification {
+abstract class ToDbMappingSpecification {
 	refers Column column
 	contains ToDbExpression expr
 }
@@ -146,11 +142,10 @@ class ExpressionEqualitySubClause {
 	contains ToDbExpression expr
 }
 
-class DeleteQuery extends FromDbQuery {
-}
+class DeleteQuery extends FromDbQuery {}
 
-class ToDbExpression {
-}
+
+abstract class ToDbExpression {}
 
 class MonthRoundExpression extends ToDbExpression {
 	contains FeatureExpressionHead operand
@@ -160,7 +155,7 @@ class EncryptExpression extends ToDbExpression {
 	contains FeatureExpressionHead operand
 }
 
-class FeatureExpressionHead extends ToDbExpression , FeatureExpressionElement {
+class FeatureExpressionHead extends ToDbExpression, FeatureExpressionElement {
 	refers TypedParameter parameter
 }
 
@@ -172,8 +167,7 @@ class FeatureExpressionElement {
 	contains FeatureExpressionTail tail
 }
 
-class LiteralExpression extends ToDbExpression {
-}
+abstract class LiteralExpression extends ToDbExpression {}
 
 enum BooleanLiterals {
 	^false
@@ -189,6 +183,7 @@ class UntypedParameter {
 	String name
 }
 
+
 class SimpleColumnMappingSpecification extends FromDbMappingSpecification {
 	refers Column column
 }
@@ -198,12 +193,11 @@ class NestedMappingSpecification extends FromDbMappingSpecification {
 	contains Argument[] arguments
 }
 
-class DeferedMappingSpecification extends FromDbMappingSpecification {
-}
+class DeferedMappingSpecification extends FromDbMappingSpecification {}
 
-class TimestampColumnMappingSpecification extends FromDbMappingSpecification {
-}
+class TimestampColumnMappingSpecification extends FromDbMappingSpecification {}
 
 class BooleanLiteralExpression extends LiteralExpression {
 	BooleanLiterals literal
 }
+
