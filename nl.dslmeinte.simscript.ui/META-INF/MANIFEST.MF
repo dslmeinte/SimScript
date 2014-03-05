@@ -26,14 +26,12 @@ Import-Package: org.apache.log4j,
  org.eclipse.xtend2.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: nl.dslmeinte.simscript.ui,
- nl.dslmeinte.simscript.ui.extensions,
  nl.dslmeinte.simscript.ui.formatting,
+ nl.dslmeinte.simscript.ui.generator,
  nl.dslmeinte.simscript.ui.parseTreeConstruction,
  nl.dslmeinte.simscript.ui.parser.antlr,
  nl.dslmeinte.simscript.ui.parser.antlr.internal,
  nl.dslmeinte.simscript.ui.scoping,
  nl.dslmeinte.simscript.ui.services,
- nl.dslmeinte.simscript.ui.types,
- nl.dslmeinte.simscript.ui.validation,
- nl.dslmeinte.simscript.ui.generator
+ nl.dslmeinte.simscript.ui.validation
 

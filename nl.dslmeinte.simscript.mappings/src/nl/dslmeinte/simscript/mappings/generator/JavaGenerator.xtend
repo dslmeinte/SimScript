@@ -5,7 +5,7 @@ import com.google.inject.Singleton
 import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
 import nl.dslmeinte.simscript.generator.ResourceUtil
 import nl.dslmeinte.simscript.generator.backend.JavaGeneratorHelper
-import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
+import nl.dslmeinte.simscript.mappings.QueryExtensions
 import nl.dslmeinte.simscript.mappings.generator.sql.SqlGenerator
 import nl.dslmeinte.simscript.mappings.mappingsDsl.BooleanLiteralExpression
 import nl.dslmeinte.simscript.mappings.mappingsDsl.CountQuery

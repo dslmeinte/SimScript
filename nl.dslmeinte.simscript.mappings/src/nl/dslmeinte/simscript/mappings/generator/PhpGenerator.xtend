@@ -3,8 +3,8 @@ package nl.dslmeinte.simscript.mappings.generator
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
-import nl.dslmeinte.simscript.mappings.extensions.MiscellaneousExtensions
-import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
+import nl.dslmeinte.simscript.mappings.MiscellaneousExtensions
+import nl.dslmeinte.simscript.mappings.QueryExtensions
 import nl.dslmeinte.simscript.mappings.generator.sql.InterpolateableSqlGenerator
 import nl.dslmeinte.simscript.mappings.mappingsDsl.BooleanLiteralExpression
 import nl.dslmeinte.simscript.mappings.mappingsDsl.CountQuery

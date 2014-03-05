@@ -4,12 +4,12 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.util.Collection
-import nl.dslmeinte.simscript.application.SimApplicationDslExtensions
 import nl.dslmeinte.simscript.application.SimApplicationDslStandaloneSetup
 import nl.dslmeinte.simscript.application.simApplicationDsl.ApplicationModel
 import nl.dslmeinte.simscript.application.simApplicationDsl.SimApplicationDslPackage
 import nl.dslmeinte.simscript.backend.SimBackendDslStandaloneSetup
 import nl.dslmeinte.simscript.backend.simBackendDsl.SimBackendDslPackage
+import nl.dslmeinte.simscript.extensions.ApplicationExtensions
 import nl.dslmeinte.simscript.generator.ui.ApplicationGenerator
 import nl.dslmeinte.simscript.generator.ui.UserInterfaceGenerator
 import nl.dslmeinte.simscript.structure.structureDsl.StructureDslPackage
@@ -155,7 +155,7 @@ abstract class XtextTestsSupport extends AbstractXtextTests {
 				dump(outputPath + "/" + uiExtensions.name(module) + ".html", userInterfaceGenerator.htmlFile(module))
 			}
 		}
-		val appExtensions = injector.getInstance(typeof(SimApplicationDslExtensions))
+		val appExtensions = injector.getInstance(typeof(ApplicationExtensions))
 		val applicationGenerator = injector.getInstance(typeof(ApplicationGenerator))
 		for( app : allModels.filter(typeof(ApplicationModel)) ) {
 			dump(outputPath + "/" + appExtensions.name(app) + ".html", applicationGenerator.generateHtml(app))

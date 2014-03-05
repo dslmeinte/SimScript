@@ -1,14 +1,14 @@
 package nl.dslmeinte.simscript.generator.ui
 
 import com.google.inject.Inject
-import nl.dslmeinte.simscript.application.SimApplicationDslExtensions
 import nl.dslmeinte.simscript.application.simApplicationDsl.ApplicationModel
+import nl.dslmeinte.simscript.extensions.ApplicationExtensions
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
 
 class ApplicationGenerator {
 
 	@Inject extension StructuralExtensions
-	@Inject extension SimApplicationDslExtensions
+	@Inject extension ApplicationExtensions
 
 
 	def generateHtml(ApplicationModel it) {

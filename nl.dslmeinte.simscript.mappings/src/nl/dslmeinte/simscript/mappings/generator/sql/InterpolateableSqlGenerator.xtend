@@ -2,7 +2,7 @@ package nl.dslmeinte.simscript.mappings.generator.sql
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
+import nl.dslmeinte.simscript.mappings.QueryExtensions
 import nl.dslmeinte.simscript.mappings.mappingsDsl.CountQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.DeleteQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ExpressionEqualitySubClause

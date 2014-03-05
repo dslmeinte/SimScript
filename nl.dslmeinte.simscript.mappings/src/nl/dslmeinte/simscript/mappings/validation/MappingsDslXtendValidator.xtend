@@ -2,7 +2,7 @@ package nl.dslmeinte.simscript.mappings.validation
 
 import com.google.inject.Inject
 import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
-import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
+import nl.dslmeinte.simscript.mappings.QueryExtensions
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ColumnOrderSpecification
 import nl.dslmeinte.simscript.mappings.mappingsDsl.ColumnsSpecification
 import nl.dslmeinte.simscript.mappings.mappingsDsl.CountQuery

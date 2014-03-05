@@ -1,4 +1,4 @@
-package nl.dslmeinte.simscript.mappings.extensions
+package nl.dslmeinte.simscript.mappings
 
 import com.google.inject.Singleton
 import nl.dslmeinte.simscript.mappings.mappingsDsl.Argument

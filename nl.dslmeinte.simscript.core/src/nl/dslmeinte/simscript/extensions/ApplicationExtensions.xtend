@@ -1,4 +1,4 @@
-package nl.dslmeinte.simscript.application
+package nl.dslmeinte.simscript.extensions
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
@@ -7,7 +7,7 @@ import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
 import nl.dslmeinte.simscript.util.XtextUtil
 
 @Singleton
-class SimApplicationDslExtensions {
+class ApplicationExtensions {
 
 	@Inject extension StructuralExtensions
 	@Inject extension XtextUtil

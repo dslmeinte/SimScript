@@ -3,8 +3,8 @@ package nl.dslmeinte.simscript.mappings.scoping
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
-import nl.dslmeinte.simscript.mappings.extensions.MiscellaneousExtensions
-import nl.dslmeinte.simscript.mappings.extensions.QueryExtensions
+import nl.dslmeinte.simscript.mappings.MiscellaneousExtensions
+import nl.dslmeinte.simscript.mappings.QueryExtensions
 import nl.dslmeinte.simscript.mappings.mappingsDsl.FeatureExpressionElement
 import nl.dslmeinte.simscript.mappings.mappingsDsl.FeatureExpressionTail
 import nl.dslmeinte.simscript.mappings.mappingsDsl.FromDbQuery

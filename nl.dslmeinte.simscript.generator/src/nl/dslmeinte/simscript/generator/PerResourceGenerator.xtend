@@ -1,9 +1,9 @@
 package nl.dslmeinte.simscript.generator
 
 import com.google.inject.Inject
-import nl.dslmeinte.simscript.application.SimApplicationDslExtensions
 import nl.dslmeinte.simscript.application.simApplicationDsl.ApplicationModel
 import nl.dslmeinte.simscript.backend.simBackendDsl.BackendModel
+import nl.dslmeinte.simscript.extensions.ApplicationExtensions
 import nl.dslmeinte.simscript.extensions.BackendExtensions
 import nl.dslmeinte.simscript.generator.backend.AuthenticationGenerator
 import nl.dslmeinte.simscript.generator.backend.ControllerGenerator
@@ -41,7 +41,7 @@ class PerResourceGenerator implements IGenerator {
 
 	@Inject extension ResourceUtil
 	@Inject extension BackendExtensions
-	@Inject extension SimApplicationDslExtensions
+	@Inject extension ApplicationExtensions
 
 	@Inject private PojoGenerator pojoGenerator
 	@Inject private ControllerGenerator controllerGenerator
