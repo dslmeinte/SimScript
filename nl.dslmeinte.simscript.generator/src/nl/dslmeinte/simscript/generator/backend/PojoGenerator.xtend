@@ -4,10 +4,10 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import nl.dslmeinte.simscript.generator.ResourceUtil
 import nl.dslmeinte.simscript.generator.util.GeneratorUtil
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.Feature
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
+import nl.dslmeinte.simscript.types.BuiltinTypeLiteral
+import nl.dslmeinte.simscript.types.DefinedTypeLiteral
+import nl.dslmeinte.simscript.types.Feature
+import nl.dslmeinte.simscript.types.Structure
 import nl.dslmeinte.simscript.types.TypeExtensions
 
 /**

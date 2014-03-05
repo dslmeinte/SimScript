@@ -8,7 +8,7 @@ import nl.dslmeinte.simscript.generator.ui.js.JavaScriptUtil
 import nl.dslmeinte.simscript.generator.ui.js.ReturnFlags
 import nl.dslmeinte.simscript.generator.ui.js.StatementsGenerator
 import nl.dslmeinte.simscript.generator.ui.js.ViewableInvocationTypes
-import nl.dslmeinte.simscript.structure.structureDsl.Enumeration
+import nl.dslmeinte.simscript.types.Enumeration
 import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions

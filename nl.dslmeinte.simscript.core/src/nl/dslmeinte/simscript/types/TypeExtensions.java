@@ -2,19 +2,6 @@ package nl.dslmeinte.simscript.types;
 
 import java.util.List;
 
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypeLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypes;
-import nl.dslmeinte.simscript.structure.structureDsl.CallbackErrorResponseLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.CallbackLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedType;
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.Enumeration;
-import nl.dslmeinte.simscript.structure.structureDsl.Feature;
-import nl.dslmeinte.simscript.structure.structureDsl.ListTypeLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.Structure;
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.VoidLiteral;
-
 import com.google.inject.ImplementedBy;
 
 @ImplementedBy(TypeExtensionsImpl.class)

@@ -4,13 +4,13 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import nl.dslmeinte.simscript.generator.ResourceUtil
 import nl.dslmeinte.simscript.generator.util.GeneratorUtil
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.Feature
-import nl.dslmeinte.simscript.structure.structureDsl.ListTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
+import nl.dslmeinte.simscript.types.BuiltinTypeLiteral
+import nl.dslmeinte.simscript.types.DefinedTypeLiteral
+import nl.dslmeinte.simscript.types.Feature
+import nl.dslmeinte.simscript.types.ListTypeLiteral
+import nl.dslmeinte.simscript.types.Structure
 import nl.dslmeinte.simscript.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeLiteral
 
 /**
  * Generates the Controller class for a {@link Structure}.

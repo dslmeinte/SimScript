@@ -5,20 +5,20 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.Arrays;
 import java.util.List;
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypeLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypes;
-import nl.dslmeinte.simscript.structure.structureDsl.CallbackErrorResponseLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.CallbackLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedType;
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.Enumeration;
-import nl.dslmeinte.simscript.structure.structureDsl.Feature;
-import nl.dslmeinte.simscript.structure.structureDsl.ListTypeLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.Structure;
-import nl.dslmeinte.simscript.structure.structureDsl.StructureDslFactory;
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral;
-import nl.dslmeinte.simscript.structure.structureDsl.VoidLiteral;
+import nl.dslmeinte.simscript.types.BuiltinTypeLiteral;
+import nl.dslmeinte.simscript.types.BuiltinTypes;
+import nl.dslmeinte.simscript.types.CallbackErrorResponseLiteral;
+import nl.dslmeinte.simscript.types.CallbackLiteral;
+import nl.dslmeinte.simscript.types.DefinedType;
+import nl.dslmeinte.simscript.types.DefinedTypeLiteral;
+import nl.dslmeinte.simscript.types.Enumeration;
+import nl.dslmeinte.simscript.types.Feature;
+import nl.dslmeinte.simscript.types.ListTypeLiteral;
+import nl.dslmeinte.simscript.types.Structure;
 import nl.dslmeinte.simscript.types.TypeExtensions;
+import nl.dslmeinte.simscript.types.TypeLiteral;
+import nl.dslmeinte.simscript.types.TypesFactory;
+import nl.dslmeinte.simscript.types.VoidLiteral;
 import nl.dslmeinte.simscript.util.XtextUtil;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -437,7 +437,7 @@ public class TypeExtensionsImpl implements TypeExtensions {
    * | factory functions |
    * +-------------------+
    */
-  private StructureDslFactory eFactory = StructureDslFactory.eINSTANCE;
+  private final TypesFactory eFactory = TypesFactory.eINSTANCE;
   
   public BuiltinTypeLiteral createBuiltinTypeLiteral(final BuiltinTypes builtinType) {
     final BuiltinTypeLiteral typeLiteral = this.eFactory.createBuiltinTypeLiteral();

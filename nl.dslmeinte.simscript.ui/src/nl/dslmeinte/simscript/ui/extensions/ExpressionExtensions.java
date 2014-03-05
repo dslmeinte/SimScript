@@ -3,14 +3,15 @@ package nl.dslmeinte.simscript.ui.extensions;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.google.inject.ImplementedBy;
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral;
+import nl.dslmeinte.simscript.types.TypeLiteral;
 import nl.dslmeinte.simscript.ui.extensions.impl.ExpressionExtensionsImpl;
 import nl.dslmeinte.simscript.ui.simUiDsl.Expression;
 import nl.dslmeinte.simscript.ui.simUiDsl.FeatureAccessExpression;
 import nl.dslmeinte.simscript.ui.simUiDsl.ListLiteralExpression;
 import nl.dslmeinte.simscript.ui.simUiDsl.Method;
 import nl.dslmeinte.simscript.ui.simUiDsl.MethodCallExpression;
+
+import com.google.inject.ImplementedBy;
 
 @ImplementedBy(ExpressionExtensionsImpl.class)
 public interface ExpressionExtensions {

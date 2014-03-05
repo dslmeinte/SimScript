@@ -3,14 +3,14 @@ package nl.dslmeinte.simscript.generator.backend
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import nl.dslmeinte.simscript.generator.ResourceUtil
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypes
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedType
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.Feature
-import nl.dslmeinte.simscript.structure.structureDsl.ListTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
+import nl.dslmeinte.simscript.types.BuiltinTypeLiteral
+import nl.dslmeinte.simscript.types.BuiltinTypes
+import nl.dslmeinte.simscript.types.DefinedType
+import nl.dslmeinte.simscript.types.DefinedTypeLiteral
+import nl.dslmeinte.simscript.types.Feature
+import nl.dslmeinte.simscript.types.ListTypeLiteral
 import nl.dslmeinte.simscript.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeLiteral
 
 @Singleton
 class JavaGeneratorHelper {
@@ -25,15 +25,15 @@ class JavaGeneratorHelper {
 	 */
 	def asJavaTypeLiteral(BuiltinTypes it) {
 		switch it {
-			case BuiltinTypes.STRING		: "String"
-			case BuiltinTypes.TEXT			: "String"
-			case BuiltinTypes.BOOLEAN		: "Boolean"
-			case BuiltinTypes.INTEGER		: "Integer"
-			case BuiltinTypes.NUMBER		: "BigDecimal"
+			case STRING		: "String"
+			case TEXT		: "String"
+			case BOOLEAN	: "Boolean"
+			case INTEGER	: "Integer"
+			case NUMBER		: "BigDecimal"
 			// Dates are stored in an API DateString format (see the DataHelper.java framework class)
-			case BuiltinTypes.DATE			: "String"
-			case BuiltinTypes.EMAIL		: "String"
-			case BuiltinTypes.PASSWORD		: "String"
+			case DATE		: "String"
+			case EMAIL		: "String"
+			case PASSWORD	: "String"
 			default: {
 				println("warning: mapping built-in type " + getName() + " to String")
 				"String"

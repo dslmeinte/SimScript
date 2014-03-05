@@ -1,5 +1,6 @@
 grammar nl.dslmeinte.simscript.structure.SimStructureDsl with org.eclipse.xtext.common.Terminals
 
+import "http://www.dslconsultancy.com/simscript/types" as type
 import "http://www.dslconsultancy.com/simscript/structure/StructureDsl" as struct
 
 
@@ -7,11 +8,11 @@ StructureModel returns struct::StructureModel:
 	typeDefinitions+=DefinedType*
 	;
 
-DefinedType returns struct::DefinedType:
+DefinedType returns type::DefinedType:
 	StructureDefinition | EnumerationDefinition
 	;
 
-StructureDefinition returns struct::Structure:
+StructureDefinition returns type::Structure:
 	'structure' name=ID  persistent?='persistent'?
 	'{'
 		features+=Feature*
@@ -27,11 +28,11 @@ StructureDefinition returns struct::Structure:
 	 * 		as well as POJOs, controllers and CRUD servlets on the backend in case of the `persistent` marking
 	 */
 
-Feature returns struct::Feature:
+Feature returns type::Feature:
 	name=ID optional?='optional'? ':' type=TypeLiteral
 	;
 
-EnumerationDefinition returns struct::Enumeration:
+EnumerationDefinition returns type::Enumeration:
 	'enumeration' name=ID
 	'{'
 		literals+=EnumerationLiteral*
@@ -43,7 +44,7 @@ EnumerationDefinition returns struct::Enumeration:
 	 * 		2-  literals are uniquely-named		[ ]
 	 */
 
-EnumerationLiteral returns struct::EnumerationLiteral:
+EnumerationLiteral returns type::EnumerationLiteral:
 	name=EnumerationName '->' displayName=STRING
 	;
 
@@ -58,11 +59,11 @@ EnumerationName:
  * +-------------+
  */
 
-TypeLiteral returns struct::TypeLiteral:
+TypeLiteral returns type::TypeLiteral:
 	BuiltinTypeLiteral | DefinedTypeLiteral | ListTypeLiteral | SyntheticTypeLiteral
 	;
 
-BuiltinTypeLiteral returns struct::BuiltinTypeLiteral:
+BuiltinTypeLiteral returns type::BuiltinTypeLiteral:
 	builtin=BuiltinTypes
 	;
 
@@ -75,7 +76,7 @@ BuiltinTypeLiteral returns struct::BuiltinTypeLiteral:
  * - SimStructureDslExtensions.isSimpleTyped
  * - TypeSystemExtension.isPrimitiveTyped
  */
-enum BuiltinTypes returns struct::BuiltinTypes:
+enum BuiltinTypes returns type::BuiltinTypes:
 	  string='String'
 	| boolean='Boolean'
 	| integer='Integer'
@@ -89,19 +90,19 @@ enum BuiltinTypes returns struct::BuiltinTypes:
 	;
 	// highlighting: just colored, not bold (=fugly)	[ ]
 
-DefinedTypeLiteral returns struct::DefinedTypeLiteral:
-	type=[struct::DefinedType]
+DefinedTypeLiteral returns type::DefinedTypeLiteral:
+	type=[type::DefinedType]
 	;
 	// highlighting: render in italics					[ ]
 
-ListTypeLiteral returns struct::ListTypeLiteral:
+ListTypeLiteral returns type::ListTypeLiteral:
 	'[' itemType=TypeLiteral ']'
 	;
 
-SyntheticTypeLiteral returns struct::SyntheticTypeLiteral:
-	  {struct::CallbackLiteral} 'Callback'				// semantics: the (type literal of) a [ui::StatementBlock] in a `callback` feature
-	| {struct::CallbackErrorResponseLiteral} 'Error'	// semantics: the (type literal of) the response returned when an interface (AJAX) call fails
-	| {struct::VoidLiteral} '$Void'						// semantics: the (type literal of) void type
+SyntheticTypeLiteral returns type::SyntheticTypeLiteral:
+	  {type::CallbackLiteral} 'Callback'				// semantics: the (type literal of) a [ui::StatementBlock] in a `callback` feature
+	| {type::CallbackErrorResponseLiteral} 'Error'	// semantics: the (type literal of) the response returned when an interface (AJAX) call fails
+	| {type::VoidLiteral} '$Void'						// semantics: the (type literal of) void type
 	;
 	// validation: synthetic types can't be used in SimScript-Structure		[√]
 

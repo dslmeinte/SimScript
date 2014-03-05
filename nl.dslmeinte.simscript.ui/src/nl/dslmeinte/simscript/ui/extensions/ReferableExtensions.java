@@ -1,14 +1,15 @@
 package nl.dslmeinte.simscript.ui.extensions;
 
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-
-import com.google.inject.ImplementedBy;
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral;
+import nl.dslmeinte.simscript.types.TypeLiteral;
 import nl.dslmeinte.simscript.ui.extensions.impl.ReferableExtensionsImpl;
 import nl.dslmeinte.simscript.ui.simUiDsl.AbstractValueDeclaration;
 import nl.dslmeinte.simscript.ui.simUiDsl.ListElement;
 import nl.dslmeinte.simscript.ui.simUiDsl.ListVariable;
 import nl.dslmeinte.simscript.ui.simUiDsl.Value;
+
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+
+import com.google.inject.ImplementedBy;
 
 @ImplementedBy(ReferableExtensionsImpl.class)
 public interface ReferableExtensions {

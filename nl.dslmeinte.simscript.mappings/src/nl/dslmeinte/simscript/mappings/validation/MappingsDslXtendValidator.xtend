@@ -22,8 +22,8 @@ import nl.dslmeinte.simscript.mappings.mappingsDsl.ToDbMappingSpecification
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UpdateMatchingClause
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UpdateQuery
 import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.SimpleColumn
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
 import nl.dslmeinte.simscript.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeLiteral
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.xtext.validation.Check
 

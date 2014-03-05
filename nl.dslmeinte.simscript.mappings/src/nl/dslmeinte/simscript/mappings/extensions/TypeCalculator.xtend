@@ -8,9 +8,9 @@ import nl.dslmeinte.simscript.mappings.mappingsDsl.InsertQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.Query
 import nl.dslmeinte.simscript.mappings.mappingsDsl.SelectQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UpdateQuery
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypes
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
+import nl.dslmeinte.simscript.types.BuiltinTypes
 import nl.dslmeinte.simscript.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeLiteral
 
 /**
  * Calculates result types of a {@link Query} in terms of a {@link TypeLiteral}

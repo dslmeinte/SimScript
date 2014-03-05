@@ -1,9 +1,10 @@
 package nl.dslmeinte.simscript.ui.extensions;
 
-import com.google.inject.ImplementedBy;
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral;
+import nl.dslmeinte.simscript.types.TypeLiteral;
 import nl.dslmeinte.simscript.ui.extensions.impl.ServiceExtensionsImpl;
 import nl.dslmeinte.simscript.ui.simUiDsl.ServiceIdentification;
+
+import com.google.inject.ImplementedBy;
 
 @ImplementedBy(ServiceExtensionsImpl.class)
 public interface ServiceExtensions {

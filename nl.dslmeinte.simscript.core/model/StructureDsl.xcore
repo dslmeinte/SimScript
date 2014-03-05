@@ -2,66 +2,9 @@
 @GenModel(forceOverwrite="true", modelName="SimStructureDsl", updateClasspath="false", complianceLevel="5.0")
 package nl.dslmeinte.simscript.structure.structureDsl
 
+import nl.dslmeinte.simscript.types.DefinedType
+
 class StructureModel {
 	contains DefinedType[] typeDefinitions
 }
-
-class DefinedType {
-	String name
-}
-
-class Structure extends DefinedType {
-	boolean persistent
-	contains Feature < TypeLiteral >[] features
-}
-
-class Feature<T extends TypeLiteral> {
-	String name
-	boolean optional
-	contains T ^type
-}
-
-class Enumeration extends DefinedType {
-	contains EnumerationLiteral[] literals
-}
-
-class EnumerationLiteral {
-	String name
-	String displayName
-}
-
-abstract class TypeLiteral {}
-
-class BuiltinTypeLiteral extends TypeLiteral {
-	BuiltinTypes builtin
-}
-
-enum BuiltinTypes {
-	string as "String"
-	boolean as "Boolean" = 1
-	integer as "Integer" = 2
-	url as "URL" = 3
-	text as "Text" = 4
-	number as "Number" = 5
-	email as "Email" = 6
-	phone as "Phone" = 7
-	date as "Date" = 8
-	password as "Password" = 9
-}
-
-class DefinedTypeLiteral extends TypeLiteral {
-	refers DefinedType ^type
-}
-
-class ListTypeLiteral extends TypeLiteral {
-	contains TypeLiteral itemType
-}
-
-abstract class SyntheticTypeLiteral extends TypeLiteral {}
-
-class CallbackLiteral extends SyntheticTypeLiteral {}
-
-class CallbackErrorResponseLiteral extends SyntheticTypeLiteral {}
-
-class VoidLiteral extends SyntheticTypeLiteral {}
 

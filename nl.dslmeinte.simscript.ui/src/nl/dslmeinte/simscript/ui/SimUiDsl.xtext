@@ -2,7 +2,7 @@ grammar nl.dslmeinte.simscript.ui.SimUiDsl with nl.dslmeinte.simscript.structure
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore		// (ignore warning!)
 
-import "http://www.dslconsultancy.com/simscript/structure/StructureDsl" as struct
+import "http://www.dslconsultancy.com/simscript/types" as types
 import "http://www.dslconsultancy.com/simscript/backend/SimBackendDsl" as backend
 
 import "http://www.dslconsultancy.com/simscript/ui/SimUiDsl" as ui
@@ -537,7 +537,7 @@ ForStatement returns ui::ForStatement:
 	;
 
 ListRemoveStatement returns ui::ListRemoveStatement:
-	"remove" "from" listExpr=Expression (("where" feature=[struct::Feature] '==' valueExpr=Expression) | ("at" indexVariable=Expression))
+	"remove" "from" listExpr=Expression (("where" feature=[types::Feature] '==' valueExpr=Expression) | ("at" indexVariable=Expression))
 	;
 	/*
 	 * scoping: feature in listExpr.type.listItemType.structure.features			[√]
@@ -735,7 +735,7 @@ InterfaceCallExpression returns ui::Expression:
 
 ServiceIdentification returns ui::ServiceIdentification:
 	  {ui::NamedServiceReference} service=[backend::NamedService]
-	| {ui::CrudServiceIdentification} crudType=CrudTypes structure=[struct::Structure]
+	| {ui::CrudServiceIdentification} crudType=CrudTypes structure=[types::Structure]
 	;
 	// validation: check that a used CrudService(Identification) is actually declared somewhere		[ ]
 	/*
@@ -755,7 +755,7 @@ enum CrudTypes returns ui::CrudTypes:
 
 
 FeatureAccessExpression returns ui::Expression hidden():
-	PrimaryExpression ({ui::FeatureAccessExpression.previous=current} '.' feature=[struct::Feature])*	// left-associative infix binary operator
+	PrimaryExpression ({ui::FeatureAccessExpression.previous=current} '.' feature=[types::Feature])*	// left-associative infix binary operator
 	;
 	// scoping: feature in previous.type.features												[√]
 	// validation: previous must be a FeatureAccessExpression or a ValueReferenceExpression		[√]
@@ -782,7 +782,7 @@ DateExpression returns ui::DateExpression:
 	;
 
 BuiltinFunctionExpression returns ui::BuiltinFunctionExpression:
-	function=BuiltinFunctions '(' argument=Expression ('on' sortFeature=[struct::Feature])? ')'
+	function=BuiltinFunctions '(' argument=Expression ('on' sortFeature=[types::Feature])? ')'
 	;
 
 enum BuiltinFunctions returns ui::BuiltinFunctions:
@@ -829,7 +829,7 @@ ListLiteralExpression returns ui::Expression:
 	// validation: members (if any) must be compatible with each other - for now this means that everything must be compatible with the first member	[√]
 
 EnumerationLiteralExpression returns ui::EnumerationLiteralExpression hidden():
-	enumeration=[struct::Enumeration] '::' literal=[struct::EnumerationLiteral|EnumerationName]
+	enumeration=[types::Enumeration] '::' literal=[types::EnumerationLiteral|EnumerationName]
 	;
 	// scoping: literal in enumeration.literals		[√]
 	// TODO  make enumeration optional if it can be derived from (lhs) context? (seems to easily cause non-LL(*) behavior...)
@@ -885,12 +885,12 @@ CallbackExpression returns ui::CallbackExpression:
 
 
 StructureCreationExpression returns ui::StructureCreationExpression:
-	'new' structure=[struct::Structure] '(' assignments+=FeatureAssignment* ')'
+	'new' structure=[types::Structure] '(' assignments+=FeatureAssignment* ')'
 	;
 	// validation: features may not be duplicately assigned						[√]
 
 FeatureAssignment returns ui::FeatureAssignment:
-	feature=[struct::Feature] '=' valueExpr=Expression
+	feature=[types::Feature] '=' valueExpr=Expression
 	;
 	// scoping: feature in containing(StructureCreationExpression).features		[√]
 	// validation: feature.type.isAssignableFrom(valueExpr.type)				[√]

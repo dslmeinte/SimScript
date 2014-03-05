@@ -2,9 +2,9 @@
 @GenModel(forceOverwrite="true", updateClasspath="false", complianceLevel="5.0")
 package nl.dslmeinte.simscript.backend.simBackendDsl
 
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
+import nl.dslmeinte.simscript.types.DefinedTypeLiteral
+import nl.dslmeinte.simscript.types.Structure
+import nl.dslmeinte.simscript.types.TypeLiteral
 
 class BackendModel {
 	String baseUrl

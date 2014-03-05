@@ -5,7 +5,7 @@ import nl.dslmeinte.simscript.generator.ui.js.ExpressionsGenerator
 import nl.dslmeinte.simscript.generator.ui.js.JavaScriptUtil
 import nl.dslmeinte.simscript.generator.ui.js.ReturnFlags
 import nl.dslmeinte.simscript.generator.ui.js.StatementsGenerator
-import nl.dslmeinte.simscript.structure.structureDsl.CallbackLiteral
+import nl.dslmeinte.simscript.types.CallbackLiteral
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions

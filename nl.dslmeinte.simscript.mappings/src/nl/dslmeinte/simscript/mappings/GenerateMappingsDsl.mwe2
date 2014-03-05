@@ -33,6 +33,7 @@ Workflow {
         projectNameRt = projectName
         projectNameUi = "${projectName}.ui"
         language = auto-inject {
+         	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/Types.xcore"
          	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/StructureDsl.xcore"
 	       	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/SimpleDbDsl.xcore"
 	       	loadedResource = "platform:/resource/nl.dslmeinte.simscript.core/model/MappingsDsl.xcore"

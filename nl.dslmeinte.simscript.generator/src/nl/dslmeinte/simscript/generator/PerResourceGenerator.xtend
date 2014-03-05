@@ -12,8 +12,8 @@ import nl.dslmeinte.simscript.generator.backend.PojoGenerator
 import nl.dslmeinte.simscript.generator.backend.ServletGenerator
 import nl.dslmeinte.simscript.generator.ui.ApplicationGenerator
 import nl.dslmeinte.simscript.generator.ui.UserInterfaceGenerator
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
 import nl.dslmeinte.simscript.structure.structureDsl.StructureModel
+import nl.dslmeinte.simscript.types.Structure
 import nl.dslmeinte.simscript.ui.simUiDsl.UiModule
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource

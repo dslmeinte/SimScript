@@ -2,8 +2,8 @@ package nl.dslmeinte.simscript.structure.index
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedType
 import nl.dslmeinte.simscript.structure.structureDsl.StructureModel
+import nl.dslmeinte.simscript.types.DefinedType
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject

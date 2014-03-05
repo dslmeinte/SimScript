@@ -9,8 +9,8 @@ import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
 import nl.dslmeinte.simscript.backend.simBackendDsl.LegacyServlet
 import nl.dslmeinte.simscript.backend.simBackendDsl.NamedService
 import nl.dslmeinte.simscript.backend.simBackendDsl.Service
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
 import nl.dslmeinte.simscript.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeLiteral
 
 @Singleton
 class BackendExtensions {

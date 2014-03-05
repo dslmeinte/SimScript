@@ -1,15 +1,16 @@
 package nl.dslmeinte.simscript.mappings.extensions
 
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.Feature
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
 import nl.dslmeinte.simscript.mappings.mappingsDsl.Argument
 import nl.dslmeinte.simscript.mappings.mappingsDsl.FeatureExpressionElement
 import nl.dslmeinte.simscript.mappings.mappingsDsl.FeatureExpressionHead
 import nl.dslmeinte.simscript.mappings.mappingsDsl.FeatureExpressionTail
+import nl.dslmeinte.simscript.mappings.mappingsDsl.TypedParameter
 import nl.dslmeinte.simscript.mappings.mappingsDsl.UntypedParameter
+import nl.dslmeinte.simscript.types.DefinedTypeLiteral
+import nl.dslmeinte.simscript.types.Feature
+import nl.dslmeinte.simscript.types.Structure
+import nl.dslmeinte.simscript.types.TypeLiteral
 
 /**
  * Extension (Xtend) class which provides computed values on everything not query-like.

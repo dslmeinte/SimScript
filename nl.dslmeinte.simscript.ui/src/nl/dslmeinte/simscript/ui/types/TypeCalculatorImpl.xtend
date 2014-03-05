@@ -2,10 +2,10 @@ package nl.dslmeinte.simscript.ui.types
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.VoidLiteral
+import nl.dslmeinte.simscript.types.Structure
 import nl.dslmeinte.simscript.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypeLiteral
+import nl.dslmeinte.simscript.types.VoidLiteral
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions
 import nl.dslmeinte.simscript.ui.extensions.ServiceExtensions
@@ -52,7 +52,7 @@ import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.scoping.IScopeProvider
 
-import static nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypes.*
+import static nl.dslmeinte.simscript.types.BuiltinTypes.*
 import static nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctions.*
 
 /**

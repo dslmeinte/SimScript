@@ -2,23 +2,10 @@ package nl.dslmeinte.simscript.types
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypes
-import nl.dslmeinte.simscript.structure.structureDsl.CallbackErrorResponseLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.CallbackLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedType
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.Enumeration
-import nl.dslmeinte.simscript.structure.structureDsl.Feature
-import nl.dslmeinte.simscript.structure.structureDsl.ListTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
-import nl.dslmeinte.simscript.structure.structureDsl.StructureDslFactory
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.VoidLiteral
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.util.EcoreUtil
 
-import static nl.dslmeinte.simscript.structure.structureDsl.BuiltinTypes.*
+import static nl.dslmeinte.simscript.types.BuiltinTypes.*
 
 @Singleton
 class TypeExtensionsImpl implements TypeExtensions {
@@ -176,7 +163,7 @@ class TypeExtensionsImpl implements TypeExtensions {
 	 * +-------------------+
 	 */
 
-	private StructureDslFactory eFactory = StructureDslFactory.eINSTANCE
+	val eFactory = TypesFactory.eINSTANCE
 
 	override createBuiltinTypeLiteral(BuiltinTypes builtinType) {
 		val typeLiteral = eFactory.createBuiltinTypeLiteral

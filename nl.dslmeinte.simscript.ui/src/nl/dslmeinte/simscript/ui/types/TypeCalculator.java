@@ -1,9 +1,10 @@
 package nl.dslmeinte.simscript.ui.types;
 
-import com.google.inject.ImplementedBy;
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral;
+import nl.dslmeinte.simscript.types.TypeLiteral;
 import nl.dslmeinte.simscript.ui.simUiDsl.Expression;
 import nl.dslmeinte.simscript.ui.simUiDsl.Method;
+
+import com.google.inject.ImplementedBy;
 
 @ImplementedBy(TypeCalculatorImpl.class)
 public interface TypeCalculator {

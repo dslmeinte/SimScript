@@ -5,7 +5,7 @@
 
 grammar nl.dslmeinte.simscript.mappings.MappingsDsl with nl.dslmeinte.simscript.structure.SimStructureDsl
 
-import "http://www.dslconsultancy.com/simscript/structure/StructureDsl" as struct
+import "http://www.dslconsultancy.com/simscript/types" as types
 import "http://www.dslconsultancy.com/simscript/simpleDb/SimpleDbDsl" as db
 
 import "http://www.dslconsultancy.com/simscript/mappings/MappingsDsl" as map
@@ -66,7 +66,7 @@ SelectQuery returns map::SelectQuery:
 	orderClause=OrderClause?
 	atMost1?='at-most-1'?
 	// mapping part:
-	'map-to' structure=[struct::Structure] '{'
+	'map-to' structure=[types::Structure] '{'
 		( 'same-named' '[' sameNamedColumns+=[db::Column]* ']' )?
 		mappingSpecifications+=FromDbMappingSpecification*
 	'}'
@@ -91,7 +91,7 @@ FromDbMappingSpecification returns map::FromDbMappingSpecification:
 		| {map::DeferedMappingSpecification}			'defer'
 		| {map::TimestampColumnMappingSpecification}	'timestamp' '->'
 	)
-		feature=[struct::Feature]
+		feature=[types::Feature]
 	;
 	/*
 	 * scoping:
@@ -286,7 +286,7 @@ FeatureExpressionHead returns map::FeatureExpressionHead:
 	// scoping: parameter in containing(ToDbQuery).parameters					[√]
 
 FeatureExpressionTail returns map::FeatureExpressionTail:
-	'.' feature=[struct::Feature] tail=FeatureExpressionTail?
+	'.' feature=[types::Feature] tail=FeatureExpressionTail?
 	;
 	// scoping: feature in (eContainer as FeatureExpressionElement).features	[√]
 

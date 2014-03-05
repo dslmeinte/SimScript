@@ -54,4 +54,12 @@
             genModel="model/SimApplicationDsl.xcore"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Types -->
+      <package
+            uri="http://www.dslconsultancy.com/simscript/types"
+            class="nl.dslmeinte.simscript.types.TypesPackage"
+            genModel="model/Types.xcore"/>
+   </extension>
+
 </plugin>

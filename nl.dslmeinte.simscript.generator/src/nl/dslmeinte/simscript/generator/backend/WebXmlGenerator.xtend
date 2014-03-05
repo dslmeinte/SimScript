@@ -7,7 +7,7 @@ import nl.dslmeinte.simscript.backend.simBackendDsl.LegacyServlet
 import nl.dslmeinte.simscript.backend.simBackendDsl.Service
 import nl.dslmeinte.simscript.extensions.BackendExtensions
 import nl.dslmeinte.simscript.generator.ResourceUtil
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
+import nl.dslmeinte.simscript.types.Structure
 
 /**
  * Generates the {@code web.xml}.

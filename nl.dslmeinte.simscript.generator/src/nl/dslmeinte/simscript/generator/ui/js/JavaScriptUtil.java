@@ -1,12 +1,9 @@
 package nl.dslmeinte.simscript.generator.ui.js;
 
-import org.eclipse.emf.ecore.EObject;
-
-import com.google.inject.ImplementedBy;
 import nl.dslmeinte.simscript.generator.ui.js.impl.JavaScriptUtilImpl;
-import nl.dslmeinte.simscript.structure.structureDsl.Enumeration;
-import nl.dslmeinte.simscript.structure.structureDsl.Feature;
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral;
+import nl.dslmeinte.simscript.types.Enumeration;
+import nl.dslmeinte.simscript.types.Feature;
+import nl.dslmeinte.simscript.types.TypeLiteral;
 import nl.dslmeinte.simscript.ui.simUiDsl.Argument;
 import nl.dslmeinte.simscript.ui.simUiDsl.Method;
 import nl.dslmeinte.simscript.ui.simUiDsl.Parameter;
@@ -15,6 +12,10 @@ import nl.dslmeinte.simscript.ui.simUiDsl.ServiceIdentification;
 import nl.dslmeinte.simscript.ui.simUiDsl.TableRowsInvocation;
 import nl.dslmeinte.simscript.ui.simUiDsl.Viewable;
 import nl.dslmeinte.simscript.ui.simUiDsl.ViewableCallSite;
+
+import org.eclipse.emf.ecore.EObject;
+
+import com.google.inject.ImplementedBy;
 
 @ImplementedBy(JavaScriptUtilImpl.class)
 public interface JavaScriptUtil {

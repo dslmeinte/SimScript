@@ -2,14 +2,16 @@ package nl.dslmeinte.simscript.ui.extensions;
 
 import java.util.Set;
 
-import com.google.inject.ImplementedBy;
-import nl.dslmeinte.simscript.structure.structureDsl.TypeLiteral;
+import nl.dslmeinte.simscript.types.TypeLiteral;
 import nl.dslmeinte.simscript.ui.extensions.impl.StatementExtensionsImpl;
 import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOrExpressionStatement;
 import nl.dslmeinte.simscript.ui.simUiDsl.Expression;
+import nl.dslmeinte.simscript.ui.simUiDsl.Method;
 import nl.dslmeinte.simscript.ui.simUiDsl.Statement;
 import nl.dslmeinte.simscript.ui.simUiDsl.StatementBlock;
 import nl.dslmeinte.simscript.ui.simUiDsl.Value;
+
+import com.google.inject.ImplementedBy;
 
 @ImplementedBy(StatementExtensionsImpl.class)
 public interface StatementExtensions {

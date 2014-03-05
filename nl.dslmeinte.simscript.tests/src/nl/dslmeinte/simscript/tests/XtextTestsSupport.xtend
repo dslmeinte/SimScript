@@ -13,6 +13,7 @@ import nl.dslmeinte.simscript.backend.simBackendDsl.SimBackendDslPackage
 import nl.dslmeinte.simscript.generator.ui.ApplicationGenerator
 import nl.dslmeinte.simscript.generator.ui.UserInterfaceGenerator
 import nl.dslmeinte.simscript.structure.structureDsl.StructureDslPackage
+import nl.dslmeinte.simscript.types.TypesPackage
 import nl.dslmeinte.simscript.ui.SimUiDslStandaloneSetup
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
 import nl.dslmeinte.simscript.ui.simUiDsl.SimUiDslPackage
@@ -48,6 +49,7 @@ abstract class XtextTestsSupport extends AbstractXtextTests {
 		EPackage.Registry.INSTANCE.put(SimBackendDslPackage.eINSTANCE.nsURI, SimBackendDslPackage.eINSTANCE)
 		EPackage.Registry.INSTANCE.put(StructureDslPackage.eINSTANCE.nsURI, StructureDslPackage.eINSTANCE)
 		EPackage.Registry.INSTANCE.put(SimUiDslPackage.eINSTANCE.nsURI, SimUiDslPackage.eINSTANCE)
+		EPackage.Registry.INSTANCE.put(TypesPackage.eINSTANCE.nsURI, TypesPackage.eINSTANCE)
 	}
 
 	def protected reportFor(Resource it) {

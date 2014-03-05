@@ -1,16 +1,16 @@
 package nl.dslmeinte.simscript.structure.validation
 
 import com.google.inject.Inject
-import nl.dslmeinte.simscript.structure.structureDsl.DefinedTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.Enumeration
-import nl.dslmeinte.simscript.structure.structureDsl.Feature
-import nl.dslmeinte.simscript.structure.structureDsl.ListTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
-import nl.dslmeinte.simscript.structure.structureDsl.StructureDslPackage
 import nl.dslmeinte.simscript.structure.structureDsl.StructureModel
-import nl.dslmeinte.simscript.structure.structureDsl.SyntheticTypeLiteral
-import nl.dslmeinte.simscript.structure.structureDsl.VoidLiteral
+import nl.dslmeinte.simscript.types.DefinedTypeLiteral
+import nl.dslmeinte.simscript.types.Enumeration
+import nl.dslmeinte.simscript.types.Feature
+import nl.dslmeinte.simscript.types.ListTypeLiteral
+import nl.dslmeinte.simscript.types.Structure
+import nl.dslmeinte.simscript.types.SyntheticTypeLiteral
 import nl.dslmeinte.simscript.types.TypeExtensions
+import nl.dslmeinte.simscript.types.TypesPackage
+import nl.dslmeinte.simscript.types.VoidLiteral
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.validation.Check
@@ -20,7 +20,7 @@ class SimStructureDslXtendValidator extends AbstractSimStructureDslJavaValidator
 	@Inject extension XtextUtil
 	@Inject extension TypeExtensions
 
-	private StructureDslPackage ePackage = StructureDslPackage.eINSTANCE
+	val typesPackage = TypesPackage.eINSTANCE
 
 	@Check
 	def structure_has_features(Structure it) {
@@ -34,7 +34,7 @@ class SimStructureDslXtendValidator extends AbstractSimStructureDslJavaValidator
 		if( (eContainer as Structure).persistent && type.structureTyped ) {
 			val reffedStructure = (type as DefinedTypeLiteral).type as Structure
 			if( !reffedStructure.persistent ) {
-				error("structures (transitively -unchecked) referred to by a persistent structure must be persistent as well", ePackage.feature_Type)
+				error("structures (transitively -unchecked) referred to by a persistent structure must be persistent as well", typesPackage.feature_Type)
 			}
 		}
 	}
@@ -50,28 +50,28 @@ class SimStructureDslXtendValidator extends AbstractSimStructureDslJavaValidator
 	@Check
 	def feature_name_is_not_id(Feature<?> it) {
 		if( name == "id" ) {
-			error( "feature cannot be named 'id' (reserved keyword)", ePackage.feature_Name )
+			error( "feature cannot be named 'id' (reserved keyword)", typesPackage.feature_Name )
 		}
 	}
 
 	@Check
 	def structure_name_starts_with_upper_capital(Structure it) {
 		if( !capitalized ) {
-			warning( "the name of a structure should start with an upper case character", ePackage.definedType_Name )
+			warning( "the name of a structure should start with an upper case character", typesPackage.definedType_Name )
 		}
 	}
 
 	@Check
 	def feature_name_starts_with_lower_capital(Feature<?> it) {
 		if( !it.uncapitalized ) {
-			warning( "the name of a feature should start with a lower case character", ePackage.feature_Name )
+			warning( "the name of a feature should start with a lower case character", typesPackage.feature_Name )
 		}
 	}
 
 	@Check
 	def lists_not_directly_nested(ListTypeLiteral it) {
 		if( itemType.listTyped ) {
-			error( "lists may not be (directly) nested", ePackage.listTypeLiteral_ItemType )
+			error( "lists may not be (directly) nested", typesPackage.listTypeLiteral_ItemType )
 		}
 	}
 

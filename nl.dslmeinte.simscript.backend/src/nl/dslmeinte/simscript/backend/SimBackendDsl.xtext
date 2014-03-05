@@ -1,6 +1,6 @@
 grammar nl.dslmeinte.simscript.backend.SimBackendDsl with nl.dslmeinte.simscript.structure.SimStructureDsl
 
-import "http://www.dslconsultancy.com/simscript/structure/StructureDsl" as struct
+import "http://www.dslconsultancy.com/simscript/types" as types
 import "http://www.dslconsultancy.com/simscript/backend/SimBackendDsl" as backend
 
 
@@ -75,7 +75,7 @@ QualifiedName: ID ('.' ID)*;
 // CRUD services:
 
 CrudService returns backend::CrudService:
-	'crud-service' structure=[struct::Structure] ':' services+=CrudTypes*
+	'crud-service' structure=[types::Structure] ':' services+=CrudTypes*
 	;
 	// TODO  consider ditching this and just picking up what CRUD services are required from the .sim_ui models;
 	// on the other hand: it might be wise to be able to restrict the available CRUD services for security reasons.

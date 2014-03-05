@@ -5,7 +5,7 @@ import nl.dslmeinte.simscript.backend.simBackendDsl.CrudService
 import nl.dslmeinte.simscript.backend.simBackendDsl.CrudTypes
 import nl.dslmeinte.simscript.generator.ResourceUtil
 import nl.dslmeinte.simscript.generator.util.GeneratorUtil
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
+import nl.dslmeinte.simscript.types.Structure
 import org.eclipse.xtext.generator.IFileSystemAccess
 
 import static nl.dslmeinte.simscript.backend.simBackendDsl.CrudTypes.*

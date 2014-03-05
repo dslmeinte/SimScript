@@ -2,8 +2,8 @@ package nl.dslmeinte.simscript.ui.extensions.impl
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.structure.structureDsl.VoidLiteral
 import nl.dslmeinte.simscript.types.TypeExtensions
+import nl.dslmeinte.simscript.types.VoidLiteral
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.StatementExtensions
 import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOrExpressionStatement

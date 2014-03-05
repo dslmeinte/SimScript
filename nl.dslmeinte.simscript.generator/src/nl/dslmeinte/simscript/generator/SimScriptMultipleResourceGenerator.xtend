@@ -7,8 +7,8 @@ import nl.dslmeinte.simscript.generator.backend.WebXmlGenerator
 import nl.dslmeinte.simscript.generator.ui.CommunicationParseGenerator
 import nl.dslmeinte.simscript.generator.ui.js.CommunicationsGenerator
 import nl.dslmeinte.simscript.generator.util.IMultipleResourceGenerator
-import nl.dslmeinte.simscript.structure.structureDsl.Structure
 import nl.dslmeinte.simscript.structure.structureDsl.StructureModel
+import nl.dslmeinte.simscript.types.Structure
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.mwe.utils.DirectoryCleaner
 import org.eclipse.xtext.EcoreUtil2

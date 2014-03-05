@@ -2,7 +2,7 @@
 @GenModel(forceOverwrite="true", updateClasspath="false", complianceLevel="5.0")
 package nl.dslmeinte.simscript.simpleDb.simpleDbDsl
 
-import nl.dslmeinte.simscript.structure.structureDsl.Enumeration
+import nl.dslmeinte.simscript.types.Enumeration
 
 class DatabaseModel {
 	contains Definition[] definitions
