@@ -121,4 +121,5 @@ class PerResourceGenerator implements IGenerator {
 	def private logPrefix() {
 		this.^class.simpleName + ":"
 	}
+
 }

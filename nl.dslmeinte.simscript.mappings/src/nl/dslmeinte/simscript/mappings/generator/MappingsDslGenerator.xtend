@@ -31,8 +31,7 @@ class MappingsDslGenerator implements IGenerator {
 			switch model.backendTarget {
 				case BackendTargets.PHP:	fsa.generateFile(phpGenPath + "mappings_" + model.eResource.fileName + ".php", model.phpFile)
 				case BackendTargets.JAVA:	fsa.generateFile(javaGenPath + model.containingPackage.asPath + "/" + model.eResource.fileName.toFirstUpper + "Repository" + ".java", model.javaFile)
-				default:
-					throw new IllegalArgumentException("no generation implemented (yet) for backend target: " + model.backendTarget.literal)
+				default:					throw new IllegalArgumentException("no generation implemented (yet) for backend target: " + model.backendTarget.literal)
 			}
 		}
 	}
