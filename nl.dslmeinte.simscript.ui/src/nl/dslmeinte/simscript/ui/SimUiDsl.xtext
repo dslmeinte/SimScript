@@ -733,9 +733,9 @@ InterfaceCallExpression returns ui::Expression:
 	 */
 	// TODO  more validation? e.g. callback and observeSites are "often" illegal
 
-ServiceIdentification returns ui::ServiceIdentification:
-	  {ui::NamedServiceReference} service=[backend::NamedService]
-	| {ui::CrudServiceIdentification} crudType=CrudTypes structure=[types::Structure]
+ServiceIdentification returns backend::ServiceIdentification:
+	  {backend::NamedServiceReference} service=[backend::NamedService]
+	| {backend::CrudServiceIdentification} crudType=CrudTypes structure=[types::Structure]
 	;
 	// validation: check that a used CrudService(Identification) is actually declared somewhere		[ ]
 	/*
@@ -746,7 +746,7 @@ ServiceIdentification returns ui::ServiceIdentification:
 	// validation: serviceId."interface".inputType.isAssignableFrom(input.type)		[√]
 
 // copied from SimScript-Backend DSL grammar:
-enum CrudTypes returns ui::CrudTypes:
+enum CrudTypes returns backend::CrudTypes:
 	  create
 	| getById = 'get-by-id'
 	| update

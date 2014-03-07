@@ -3,16 +3,16 @@ package nl.dslmeinte.simscript.generator.ui.js.impl
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import java.util.Set
+import nl.dslmeinte.simscript.backend.simBackendDsl.CrudServiceIdentification
+import nl.dslmeinte.simscript.backend.simBackendDsl.CrudTypes
 import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
+import nl.dslmeinte.simscript.backend.simBackendDsl.NamedServiceReference
 import nl.dslmeinte.simscript.backend.simBackendDsl.Service
 import nl.dslmeinte.simscript.extensions.BackendExtensions
 import nl.dslmeinte.simscript.generator.ui.js.CommunicationsGenerator
 import nl.dslmeinte.simscript.types.Structure
 import nl.dslmeinte.simscript.types.TypeExtensions
-import nl.dslmeinte.simscript.ui.simUiDsl.CrudServiceIdentification
-import nl.dslmeinte.simscript.ui.simUiDsl.CrudTypes
 import nl.dslmeinte.simscript.ui.simUiDsl.InterfaceCallExpression
-import nl.dslmeinte.simscript.ui.simUiDsl.NamedServiceReference
 import nl.dslmeinte.simscript.ui.simUiDsl.UiModule
 import org.eclipse.xtext.EcoreUtil2
 

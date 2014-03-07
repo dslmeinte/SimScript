@@ -2,16 +2,16 @@ package nl.dslmeinte.simscript.ui.extensions.impl
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import nl.dslmeinte.simscript.backend.simBackendDsl.CrudServiceIdentification
+import nl.dslmeinte.simscript.backend.simBackendDsl.CrudTypes
 import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
 import nl.dslmeinte.simscript.backend.simBackendDsl.LegacyServlet
+import nl.dslmeinte.simscript.backend.simBackendDsl.NamedServiceReference
+import nl.dslmeinte.simscript.backend.simBackendDsl.ServiceIdentification
 import nl.dslmeinte.simscript.types.BuiltinTypes
 import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.types.TypeLiteral
 import nl.dslmeinte.simscript.ui.extensions.ServiceExtensions
-import nl.dslmeinte.simscript.ui.simUiDsl.CrudServiceIdentification
-import nl.dslmeinte.simscript.ui.simUiDsl.CrudTypes
-import nl.dslmeinte.simscript.ui.simUiDsl.NamedServiceReference
-import nl.dslmeinte.simscript.ui.simUiDsl.ServiceIdentification
 
 @Singleton
 class ServiceExtensionsImpl implements ServiceExtensions {

@@ -1,8 +1,8 @@
 package nl.dslmeinte.simscript.ui.extensions;
 
+import nl.dslmeinte.simscript.backend.simBackendDsl.ServiceIdentification;
 import nl.dslmeinte.simscript.types.TypeLiteral;
 import nl.dslmeinte.simscript.ui.extensions.impl.ServiceExtensionsImpl;
-import nl.dslmeinte.simscript.ui.simUiDsl.ServiceIdentification;
 
 import com.google.inject.ImplementedBy;
 

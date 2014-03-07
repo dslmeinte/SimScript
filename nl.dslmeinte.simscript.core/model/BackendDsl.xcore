@@ -31,7 +31,7 @@ class AuthenticationParameter {
 
 abstract class Service {}
 
-class NamedService extends Service {
+abstract class NamedService extends Service {
 	String name
 }
 
@@ -64,5 +64,19 @@ enum CrudTypes {
 	getById as "get-by-id" = 1
 	update = 2
 	delete = 3
+}
+
+
+// for use in references downstream:
+
+abstract class ServiceIdentification {}
+
+class NamedServiceReference extends ServiceIdentification {
+	refers NamedService service
+}
+
+class CrudServiceIdentification extends ServiceIdentification {
+	CrudTypes crudType
+	refers Structure structure
 }
 

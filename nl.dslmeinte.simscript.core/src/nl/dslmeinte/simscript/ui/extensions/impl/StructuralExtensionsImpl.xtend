@@ -2,6 +2,7 @@ package nl.dslmeinte.simscript.ui.extensions.impl
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import java.util.Set
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
 import nl.dslmeinte.simscript.ui.extensions.ViewableExtensions
 import nl.dslmeinte.simscript.ui.simUiDsl.Argument
@@ -16,7 +17,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.UiModule
 import nl.dslmeinte.simscript.ui.simUiDsl.Viewable
 import nl.dslmeinte.simscript.ui.simUiDsl.ViewableCallSite
 import nl.dslmeinte.simscript.util.XtextUtil
-import java.util.Set
 import org.eclipse.emf.ecore.EObject
 
 @Singleton

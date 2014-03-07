@@ -1,5 +1,6 @@
 package nl.dslmeinte.simscript.generator.ui.js;
 
+import nl.dslmeinte.simscript.backend.simBackendDsl.ServiceIdentification;
 import nl.dslmeinte.simscript.generator.ui.js.impl.JavaScriptUtilImpl;
 import nl.dslmeinte.simscript.types.Enumeration;
 import nl.dslmeinte.simscript.types.Feature;
@@ -8,7 +9,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.Argument;
 import nl.dslmeinte.simscript.ui.simUiDsl.Method;
 import nl.dslmeinte.simscript.ui.simUiDsl.Parameter;
 import nl.dslmeinte.simscript.ui.simUiDsl.Referable;
-import nl.dslmeinte.simscript.ui.simUiDsl.ServiceIdentification;
 import nl.dslmeinte.simscript.ui.simUiDsl.TableRowsInvocation;
 import nl.dslmeinte.simscript.ui.simUiDsl.Viewable;
 import nl.dslmeinte.simscript.ui.simUiDsl.ViewableCallSite;

@@ -2,6 +2,8 @@ package nl.dslmeinte.simscript.generator.ui.js.impl
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import nl.dslmeinte.simscript.backend.simBackendDsl.CrudServiceIdentification
+import nl.dslmeinte.simscript.backend.simBackendDsl.NamedServiceReference
 import nl.dslmeinte.simscript.generator.ui.js.ExpressionsGenerator
 import nl.dslmeinte.simscript.generator.ui.js.JavaScriptUtil
 import nl.dslmeinte.simscript.generator.ui.js.ViewableInvocationTypes
@@ -17,11 +19,9 @@ import nl.dslmeinte.simscript.types.TypeLiteral
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
 import nl.dslmeinte.simscript.ui.simUiDsl.Argument
-import nl.dslmeinte.simscript.ui.simUiDsl.CrudServiceIdentification
 import nl.dslmeinte.simscript.ui.simUiDsl.DefinedViewable
 import nl.dslmeinte.simscript.ui.simUiDsl.ManualViewable
 import nl.dslmeinte.simscript.ui.simUiDsl.Method
-import nl.dslmeinte.simscript.ui.simUiDsl.NamedServiceReference
 import nl.dslmeinte.simscript.ui.simUiDsl.Parameter
 import nl.dslmeinte.simscript.ui.simUiDsl.Referable
 import nl.dslmeinte.simscript.ui.simUiDsl.TableRowsInvocation

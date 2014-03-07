@@ -3,6 +3,7 @@ package nl.dslmeinte.simscript.ui.validation
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
+import nl.dslmeinte.simscript.backend.simBackendDsl.NamedServiceReference
 import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.MethodExtensions
@@ -29,7 +30,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.ListLiteralExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.Method
 import nl.dslmeinte.simscript.ui.simUiDsl.MethodCallExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.MultiplicativeExpression
-import nl.dslmeinte.simscript.ui.simUiDsl.NamedServiceReference
 import nl.dslmeinte.simscript.ui.simUiDsl.NotExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.ReferenceExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.SelectionExpression
