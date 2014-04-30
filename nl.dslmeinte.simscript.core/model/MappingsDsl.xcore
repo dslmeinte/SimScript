@@ -124,7 +124,7 @@ class InsertQuery extends ToDbQuery {
 	refers Column returnAutoIncrementColumn
 }
 
-abstract class ToDbMappingSpecification {
+class ToDbMappingSpecification {
 	refers Column column
 	contains ToDbExpression expr
 }
