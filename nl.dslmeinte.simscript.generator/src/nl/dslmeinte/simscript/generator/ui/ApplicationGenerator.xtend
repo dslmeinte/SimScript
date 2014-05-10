@@ -58,13 +58,13 @@ class ApplicationGenerator {
 					});
 				«ENDIF»
 				</script>
-				
+
 				«IF CHtmlHead != null»
 					«CHtmlHead»
 				«ENDIF»
-				
+
 			</head>
-			
+
 			«IF CHtmlBody == null»
 				<body>
 
@@ -95,4 +95,5 @@ class ApplicationGenerator {
 		</html>
 		'''
 	}
+
 }
