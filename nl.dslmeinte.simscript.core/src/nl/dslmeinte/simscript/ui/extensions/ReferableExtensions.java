@@ -34,11 +34,6 @@ public interface ReferableExtensions {
 	Boolean isVariable(Value it);
 
 	/**
-	 * @return Whether this {@link Value} is derived, i.e. represents a derived value.
-	 */
-	Boolean isDerived(Value it);
-
-	/**
 	 * @return The type of the <em>value</em> {@link ListVariable} of the {@link ListElement} given.
 	 */
 	TypeLiteral valueVariableType(ListElement it);

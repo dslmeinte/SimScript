@@ -37,7 +37,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.StructureCreationExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.TernaryExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.TimeSlotListElement
 import nl.dslmeinte.simscript.ui.simUiDsl.ValueDeclaration
-import nl.dslmeinte.simscript.ui.simUiDsl.ValueTypes
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.EReference
@@ -45,6 +44,7 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.ValidationMessageAcceptor
 
 import static nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctions.*
+import nl.dslmeinte.simscript.ui.simUiDsl.ValueSpecificationTypes
 
 @Singleton
 class ExpressionsValidator extends ValidatorSupport {
@@ -185,7 +185,7 @@ class ExpressionsValidator extends ValidatorSupport {
 	def void check_interface_call_expression_is_only_used_in_an_asynchronous_context(InterfaceCallExpression it) {
 		switch eContainer {
 			Expression:			error("interface cannot be called inside an expression", this)
-			ValueDeclaration:	if( (eContainer as ValueDeclaration).valueType != ValueTypes.VARIABLE ) {
+			ValueDeclaration:	if( (eContainer as ValueDeclaration).valueSpecificationType != ValueSpecificationTypes.INITIALIZATION ) {
 									error("interface can only be called as initialisation of a variable", this)
 								}
 			AssignmentOrExpressionStatement:

@@ -49,11 +49,12 @@ import nl.dslmeinte.simscript.ui.simUiDsl.TableRowsInvocation
 import nl.dslmeinte.simscript.ui.simUiDsl.TimeSlotListElement
 import nl.dslmeinte.simscript.ui.simUiDsl.TopLevelDefinition
 import nl.dslmeinte.simscript.ui.simUiDsl.ValueDeclaration
-import nl.dslmeinte.simscript.ui.simUiDsl.ValueTypes
 import nl.dslmeinte.simscript.ui.simUiDsl.VerticalAlignment
 import nl.dslmeinte.simscript.ui.simUiDsl.WhenElement
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
+
+import static nl.dslmeinte.simscript.ui.simUiDsl.ValueSpecificationTypes.*
 
 /**
  * Generates the defined layout as DOM-generating JavaScript code.
@@ -146,8 +147,8 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 
 	private int derivedVariableCounter = 0
 	def private definition(ValueDeclaration it) {
-		switch valueType {
-			case ValueTypes.VARIABLE: {
+		switch valueSpecificationType {
+			case INITIALIZATION: {
 				switch valueExpr {
 					InterfaceCallExpression: asyncInitialisation
 					default:
@@ -156,7 +157,7 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 						'''
 				}
 			}
-			case ValueTypes.DERIVED: {
+			case INVARIANT: {
 				derivedVariableCounter = derivedVariableCounter + 1
 				'''
 				var «value.jsName» = new Item(«valueExpr.type.asInitJs»);

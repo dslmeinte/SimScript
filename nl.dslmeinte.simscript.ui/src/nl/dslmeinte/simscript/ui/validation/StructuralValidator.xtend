@@ -10,10 +10,11 @@ import nl.dslmeinte.simscript.ui.simUiDsl.AbstractValueDeclaration
 import nl.dslmeinte.simscript.ui.simUiDsl.DefinedViewable
 import nl.dslmeinte.simscript.ui.simUiDsl.UiModule
 import nl.dslmeinte.simscript.ui.simUiDsl.ValueDeclaration
-import nl.dslmeinte.simscript.ui.simUiDsl.ValueTypes
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.xtext.validation.Check
+
+import static nl.dslmeinte.simscript.ui.simUiDsl.ValueSpecificationTypes.*
 
 @Singleton
 class StructuralValidator extends ValidatorSupport {
@@ -43,13 +44,13 @@ class StructuralValidator extends ValidatorSupport {
 
 	@Check
 	def void check_well_definedness_of(ValueDeclaration it) {
-		switch valueType {
-			case ValueTypes.VARIABLE: {
+		switch valueSpecificationType {
+			case INITIALIZATION: {
 				if( declaredType == null && valueExpr == null ) {
 					error("variable declaration must have either a declared type, a defined initialisation value (or both)", this)
 				}
 			}
-			case ValueTypes.DERIVED: {
+			case INVARIANT: {
 				if( valueExpr == null ) {
 					error("derived value must have a declared expression", this)
 				} else {

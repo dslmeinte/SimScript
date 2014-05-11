@@ -88,14 +88,14 @@ ValuesBlock returns ui::ValuesBlock:
 	;
 
 ValueDeclaration returns ui::ValueDeclaration:
-	value=Value ( ':' declaredType=TypeLiteral)? (valueType=ValueTypes valueExpr=Expression)?
+	value=Value ( ':' declaredType=TypeLiteral)? (valueSpecificationType=ValueSpecificationTypes valueExpr=Expression)?
 	;
 	// validation: either the type, the value or both must be declared, must match and the value should be observable	[√]
 	// (TODO  straighten spec out)
 
-enum ValueTypes returns ui::ValueTypes:
-	  variable='='
-	| derived='<-'
+enum ValueSpecificationTypes returns ui::ValueSpecificationTypes:
+	  initialization='='
+	| invariant='<-'
 	;
 
 Value returns ui::Value:

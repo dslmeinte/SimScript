@@ -52,12 +52,12 @@ class ValuesBlock {
 }
 
 class ValueDeclaration extends AbstractValueDeclaration {
-	ValueTypes valueType
+	ValueSpecificationTypes valueSpecificationType
 }
 
-enum ValueTypes {
-	variable as "="
-	^derived as "<-" = 1
+enum ValueSpecificationTypes {
+	initialization as "="
+	^invariant as "<-" = 1
 }
 
 class Value extends Referable {

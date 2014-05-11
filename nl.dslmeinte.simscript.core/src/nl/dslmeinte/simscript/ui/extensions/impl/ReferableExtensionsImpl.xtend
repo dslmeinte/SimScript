@@ -10,9 +10,9 @@ import nl.dslmeinte.simscript.ui.simUiDsl.ListVariable
 import nl.dslmeinte.simscript.ui.simUiDsl.LocalValueDeclarationStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.Value
 import nl.dslmeinte.simscript.ui.simUiDsl.ValueDeclaration
-import nl.dslmeinte.simscript.ui.simUiDsl.ValueTypes
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
+import nl.dslmeinte.simscript.ui.simUiDsl.ValueSpecificationTypes
 
 @Singleton
 class ReferableExtensionsImpl implements ReferableExtensions {
@@ -47,16 +47,8 @@ class ReferableExtensionsImpl implements ReferableExtensions {
 
 	override isVariable(Value it) {
 		switch d: it.declaration {
-			ValueDeclaration:				d.valueType == ValueTypes.VARIABLE
+			ValueDeclaration:				d.valueSpecificationType == ValueSpecificationTypes.INITIALIZATION
 			LocalValueDeclarationStatement:	false
-			default:						throw new IllegalArgumentException("cannot handle Value of sub type " + ^class.simpleName)
-		}
-	}
-
-	override isDerived(Value it) {
-		switch d: it.declaration {
-			ValueDeclaration:					d.valueType == ValueTypes.DERIVED
-			LocalValueDeclarationStatement:		false
 			default:						throw new IllegalArgumentException("cannot handle Value of sub type " + ^class.simpleName)
 		}
 	}
