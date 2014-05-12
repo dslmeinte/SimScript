@@ -26,6 +26,7 @@ import nl.dslmeinte.simscript.ui.simUiDsl.ReferenceExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.ShowModalStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.Statement
 import nl.dslmeinte.simscript.ui.simUiDsl.StatementBlock
+import nl.dslmeinte.simscript.ui.simUiDsl.UnsetStatement
 
 class StatementsGeneratorImpl implements StatementsGenerator {
 
@@ -85,7 +86,7 @@ class StatementsGeneratorImpl implements StatementsGenerator {
 		}
 
 		switch operator {
-			case AssignmentOperator.ASSIGN:	lhs.asAssignmentJs(rhs)
+			case AssignmentOperator.ASSIGN:		lhs.asAssignmentJs(rhs)
 			case AssignmentOperator.ADD:		lhs.asArrayAdditionAssignmentJs(rhs)
 			case AssignmentOperator.SUB:		lhs.asArraySubtractionAssignmentJs(rhs)
 		}
@@ -171,9 +172,8 @@ class StatementsGeneratorImpl implements StatementsGenerator {
 			«targetModule.name».enter(«functionSignature(targetModule.firstScreen.parameters, args.arguments, "globalModuleAuthenticationInfo")»);
 		«ENDIF»'''
 	}
-	
-	
-	
+
+
 	private int listCounter = 0
 
     def private dispatch asJs_(ForStatement it) {
@@ -196,6 +196,7 @@ class StatementsGeneratorImpl implements StatementsGenerator {
 
 	def private dispatch asJs_(LocalValueDeclarationStatement it)	'''var «value.jsName» = «valueExpr.asObservableJs»'''
 
+	def private dispatch asJs_(UnsetStatement it)					'''«lhs.asObservableJs».load(null)'''
 
 	// sentinel:
 	def private dispatch asJs_(Statement it)						{ logProblemAndReturnJSComment("StatementsGenerator.asJs_ called with unhandled type " + eClass.name) }

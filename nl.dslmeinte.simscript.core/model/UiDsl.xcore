@@ -340,6 +340,10 @@ class IfStatement extends NonExitingStatement {
 
 class LocalValueDeclarationStatement extends AbstractValueDeclaration, NonExitingStatement {}
 
+class UnsetStatement extends NonExitingStatement {
+	contains Expression lhs
+}
+
 class ViewableCallSite {
 	refers Viewable viewable
 	contains ArgumentList argumentList

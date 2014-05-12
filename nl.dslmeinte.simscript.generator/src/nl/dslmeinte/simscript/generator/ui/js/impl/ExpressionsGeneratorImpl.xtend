@@ -181,7 +181,7 @@ class ExpressionsGeneratorImpl implements ExpressionsGenerator {
 			«ENDFOR»
 			«IF !assignments.empty», «ENDIF»id : null«IF !unassignedFeatures.empty», «ENDIF»
 			«FOR feature : unassignedFeatures SEPARATOR ', '»
-				«feature.initJs»
+				«feature.initJs»«/* FIXME  should create e.g. new Item({}) for optionals */»
 			«ENDFOR»
 		}
 		'''

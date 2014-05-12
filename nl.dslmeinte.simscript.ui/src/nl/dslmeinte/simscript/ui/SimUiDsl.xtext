@@ -526,6 +526,7 @@ NonExitingStatement returns ui::NonExitingStatement:
 	| LocalValueDeclarationStatement
 	| ListRemoveStatement
 	| ForStatement
+	| UnsetStatement
 	;
 
 
@@ -644,6 +645,14 @@ IfStatement returns ui::IfStatement:
 LocalValueDeclarationStatement returns ui::LocalValueDeclarationStatement:
 	=> 'val' value=Value ( ':' declaredType=TypeLiteral )? '=' valueExpr=Expression
 	;
+
+UnsetStatement returns ui::UnsetStatement:
+	'unset' lhs=Expression
+	;
+	/*
+	 * validation:
+	 * 		lhs must be a valid left-hand side that's nullable (optional)		[?]
+	 */
 
 ViewableCallSite returns ui::ViewableCallSite:	// (synthetic type)
 	GotoScreenStatement | ComponentInvocation | TabDeclaration | ShowModalStatement
