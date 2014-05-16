@@ -9,6 +9,7 @@ import nl.dslmeinte.simscript.generator.ui.js.CommunicationsGenerator
 import nl.dslmeinte.simscript.generator.util.IMultipleResourceGenerator
 import nl.dslmeinte.simscript.structure.structureDsl.StructureModel
 import nl.dslmeinte.simscript.types.Structure
+import nl.dslmeinte.simscript.ui.extensions.ServiceExtensions
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.mwe.utils.DirectoryCleaner
 import org.eclipse.xtext.EcoreUtil2
@@ -30,6 +31,7 @@ class SimScriptMultipleResourceGenerator implements IMultipleResourceGenerator {
 	@Inject private CommunicationParseGenerator communicationParseGenerator
 	@Inject private CommunicationsGenerator communicationsGenerator
 
+	@Inject extension ServiceExtensions
 	@Inject extension ResourceUtil
 
 
@@ -58,11 +60,11 @@ class SimScriptMultipleResourceGenerator implements IMultipleResourceGenerator {
 
 		// create the structureMapper.js:
 		val allStructures = allModels.filter(typeof(StructureModel)).map[typeDefinitions.filter(typeof(Structure))].flatten
-		fsa.generateFile("../src/gen/javascript/structureMapper.js", communicationParseGenerator.generateParseFunctions(allStructures))
+		fsa.generateFile("../src/gen/javascript/structureMapper.js", communicationParseGenerator.generateParseFunctions(allStructures.sortBy[name]))
 			// TODO  remove assumptions on location (Maven and such)
 			// Note: the structure mapper source should end up next to the other JS sources.
 
-		fsa.generateFile("../src/gen/javascript/API.js", communicationsGenerator.generateDeclarations(allDeclarations))
+		fsa.generateFile("../src/gen/javascript/API.js", communicationsGenerator.generateDeclarations(allDeclarations.sortBy[nameForSorting]))
 
 		println("\t(ran generation)")
 	}

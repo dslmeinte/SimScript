@@ -1,5 +1,6 @@
 package nl.dslmeinte.simscript.ui.extensions;
 
+import nl.dslmeinte.simscript.backend.simBackendDsl.Service;
 import nl.dslmeinte.simscript.backend.simBackendDsl.ServiceIdentification;
 import nl.dslmeinte.simscript.types.TypeLiteral;
 import nl.dslmeinte.simscript.ui.extensions.impl.ServiceExtensionsImpl;
@@ -16,5 +17,7 @@ public interface ServiceExtensions {
 	boolean isInterface(ServiceIdentification it);
 
 	boolean isLegacyServlet(ServiceIdentification it);
+
+	String nameForSorting(Service it);
 
 }

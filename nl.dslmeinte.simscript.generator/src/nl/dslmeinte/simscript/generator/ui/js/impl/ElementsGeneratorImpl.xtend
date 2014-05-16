@@ -138,7 +138,7 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 
 	override enumerationFunctions()
 		'''
-		«FOR enum_ : referencedEnumerations»
+		«FOR enum_ : referencedEnumerations.sortBy[name]»
 			«enum_.jsFunction»
 
 		«ENDFOR»

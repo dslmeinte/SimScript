@@ -2,11 +2,14 @@ package nl.dslmeinte.simscript.ui.extensions.impl
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import nl.dslmeinte.simscript.backend.simBackendDsl.CrudService
 import nl.dslmeinte.simscript.backend.simBackendDsl.CrudServiceIdentification
 import nl.dslmeinte.simscript.backend.simBackendDsl.CrudTypes
 import nl.dslmeinte.simscript.backend.simBackendDsl.Interface
 import nl.dslmeinte.simscript.backend.simBackendDsl.LegacyServlet
+import nl.dslmeinte.simscript.backend.simBackendDsl.NamedService
 import nl.dslmeinte.simscript.backend.simBackendDsl.NamedServiceReference
+import nl.dslmeinte.simscript.backend.simBackendDsl.Service
 import nl.dslmeinte.simscript.backend.simBackendDsl.ServiceIdentification
 import nl.dslmeinte.simscript.types.BuiltinTypes
 import nl.dslmeinte.simscript.types.TypeExtensions
@@ -69,4 +72,17 @@ class ServiceExtensionsImpl implements ServiceExtensions {
 		it instanceof NamedServiceReference && (it as NamedServiceReference).service instanceof LegacyServlet
 	}
 
+	override String nameForSorting(Service it) {
+		val name = switch it {
+			case null:		'null'
+			NamedService:	name
+			CrudService:	structure.name
+			default:		throw new IllegalArgumentException('''can't handle sub type «^class.name» of «typeof(Service).name»''')
+		}
+		if( name === null ) {
+			println("Service name is null")
+		}
+		name
+	}
+	
 }
