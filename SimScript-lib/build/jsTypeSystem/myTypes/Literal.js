@@ -18,10 +18,10 @@
 function Literal(literalIn) {
 	// precondition: literalIn should be a literal
 	if (!isSimpleLiteral(literalIn)) { throw "Will only construct a Literal for a literal. Not for " + literalIn; }
-	
+
 	var literal = literalIn;
 	var self = this;
-	
+
 	/**
 	 * Returns this Literal's literal.
 	 */
@@ -40,7 +40,7 @@ function Literal(literalIn) {
 			self.notifyObservers();
 		}
 	};
-	
+
 	/**
 	 * Binds this Literal's literal to the given jQuery element
 	 * when one of the given events occur.
@@ -67,7 +67,7 @@ function Literal(literalIn) {
 		});
 		elementJQuery.val(self.get());
 	};
-	
+
 	/**
 	 * Returns the normal value of the literal.
 	 * It's the same as get(), but is here as convenience method,
@@ -76,7 +76,7 @@ function Literal(literalIn) {
 	this.unwrap = function() {
 		return literal;
 	};
-	
+
 	/**
 	 * Loads the given data object in this Literal.
 	 * Make sure the given data is a Literal.
@@ -84,10 +84,12 @@ function Literal(literalIn) {
 	 * @param data the new data object. Make sure it's a plain javascript literal.
 	 */
 	this.load = function(data) {
-		if (!isSimpleLiteral(data)) {throw "Won't load non-literal in a Literal.";}
+		if (!isSimpleLiteral(data)) {
+			throw "Won't load non-literal in a Literal.";
+		}
 		self.set(data);
 	};
-	
+
 	/**
 	 * Compares the given Observable item's value with this Literal's value.
 	 * Uses == operator.
@@ -116,8 +118,9 @@ function Literal(literalIn) {
             return $.datepicker.formatDate(dateFormat, literal);
         return literal;
     };
-	
-	Literal.prototype=new Observable();
+
+	Literal.prototype = new Observable();	// (probably unnecessary)
+
 }
 Literal.prototype = new Observable();
 

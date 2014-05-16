@@ -104,6 +104,9 @@ class JavaScriptUtilImpl implements JavaScriptUtil {
 	def dispatch serviceName(CrudServiceIdentification it)	'''«crudType.literal»«structure.name»'''
 
 
+	override initJs(Feature<? extends TypeLiteral> it)
+		''''«name»' : «IF optional && type.structureTyped»null«ELSE»«type.asInitJs»«ENDIF»'''
+
 	def dispatch asInitJs(DefinedTypeLiteral it) {
 		switch t: it.type {
 			Structure:		'''{ «FOR feature : t.featuresOf»«feature.initJs», «ENDFOR» id : null }'''
@@ -111,23 +114,19 @@ class JavaScriptUtilImpl implements JavaScriptUtil {
 		}
 	}
 
-	override initJs(Feature<? extends TypeLiteral> it)
-		''''«name»' : «IF optional && type.structureTyped»null«ELSE»«type.asInitJs»«ENDIF»'''
-
-
 	/**
 	 * Dependencies/Assumptions:
 	 * 1.)	When new BuiltinTypes are added, make an entry here too.
 	 */
 	def dispatch asInitJs(BuiltinTypeLiteral it) {
 		switch builtin {
-			case BuiltinTypes.STRING		: 'null'
-			case BuiltinTypes.TEXT			: 'null'
-			case BuiltinTypes.BOOLEAN		: 'null'
-			case BuiltinTypes.INTEGER		: 'null'
-			case BuiltinTypes.NUMBER		: 'null'
-			case BuiltinTypes.DATE			: 'null'
-			case BuiltinTypes.PASSWORD		: 'null'
+			case BuiltinTypes.STRING	: 'null'
+			case BuiltinTypes.TEXT		: 'null'
+			case BuiltinTypes.BOOLEAN	: 'null'
+			case BuiltinTypes.INTEGER	: 'null'
+			case BuiltinTypes.NUMBER	: 'null'
+			case BuiltinTypes.DATE		: 'null'
+			case BuiltinTypes.PASSWORD	: 'null'
 			case BuiltinTypes.EMAIL		: 'null'
 			default: {
 				throw new IllegalArgumentException('''the built-in type «builtin.literal» is (as yet) unhandled in SimScript-UI'''.toString)

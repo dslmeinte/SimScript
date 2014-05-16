@@ -181,7 +181,7 @@ class ExpressionsGeneratorImpl implements ExpressionsGenerator {
 			«ENDFOR»
 			«IF !assignments.empty», «ENDIF»id : null«IF !unassignedFeatures.empty», «ENDIF»
 			«FOR feature : unassignedFeatures SEPARATOR ', '»
-				«feature.initJs»«/* FIXME  should create e.g. new Item({}) for optionals */»
+				«feature.initJs»
 			«ENDFOR»
 		}
 		'''
@@ -194,7 +194,7 @@ class ExpressionsGeneratorImpl implements ExpressionsGenerator {
 			default:			'''«it.asObservableJs_».unwrap()'''
 		}
 	}
-	
+
 	def private dispatch CharSequence asObservableJs_(DateNowExpression it)			'''new Item(«asPlainJs_»)'''
 	def private dispatch CharSequence asPlainJs_(DateNowExpression it)				'''new Date()'''
 	def private dispatch CharSequence asObservableJs_(DateTodayExpression it)		'''new Item(«asPlainJs_»)'''

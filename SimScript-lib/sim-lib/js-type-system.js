@@ -10784,22 +10784,21 @@ function LOG(a, b) {
  * @returns an Item, Literal or List. 
  */
 function Item(obj) {
-	// since this constructor involves (possible) calls to new calls to this constructor
+	// Since this constructor involves (possible) calls to new calls to this constructor,
 	// we have to refresh the prototype at the start of the call.
 	Item.prototype = new Observable();
 
-	// Check if we're dealing with a literal (String or Num) or an Array
-	// They require 'special' wrapping
+	// Check if we're dealing with a literal (String or Num) or an Array - they require 'special' wrapping.
 	if (isSimpleLiteral(obj)) {
 		return new Literal(obj);
 	} else if ($.isArray(obj)) {
 		return new List(obj);
 	}
-	
-	// obj is a normal Object, let's wrap it
+
+	// obj is a normal Object or null, let's wrap it:
 	var self = this;
 	var _data = {};
-	
+
 	// Observer update function.
 	function updateFunction(observable, arg) {
 		// When our attributes change, the change is already made in _data,
@@ -10808,7 +10807,7 @@ function Item(obj) {
 		self._setChanged(true);
 		self.notifyObservers(arg);
 	}
-	
+
 	for (var i in obj) {
 		var prop = obj[i];
 		// this is a data wrapper, so no wrapping of functions
@@ -10823,9 +10822,8 @@ function Item(obj) {
 			_data[i].addObserver(updateFunction);
 		}
 	}
-	
-	// We need these functions to prevent all getters and setters
-	// from pointing to the same prop var.
+
+	// We need these functions to prevent all getters and setters from pointing to the same prop var.
 	function createGetter(propName) {
 		return function() {
 			return _data[propName];
@@ -10857,12 +10855,11 @@ function Item(obj) {
 		}
 		return obj;
 	};
-	
+
 	/**
 	 * Loads the given data object in this Item.
-	 * Make sure the given data has the same attributes (i.e. is of the same 'class')
-	 * as the old data.
-	 * @param data the new data object. Make sure it's a plain object of the same 'class'
+	 * Make sure the given data has the same attributes (i.e. is of the same 'class') as the old data.
+	 * @param data - the new data object. Make sure it's a plain object of the same 'class'
 	 * as the old data that was wrapped in this Item. 
 	 */
 	this.load = function(data) {
@@ -10876,7 +10873,7 @@ function Item(obj) {
 		self._setChanged(true);
 		self.notifyObservers();
 	};
-	
+
 	/**
 	 * Compares the given Observable item's value with this Item's value.
 	 * @param item an Observable which can be unwrapped.
@@ -10900,7 +10897,7 @@ function Item(obj) {
 				if (!myvalue.hasOwnProperty(i) || !propsMatch(other[i], myvalue[i])) { return 2; }
 			}
 		}
-		
+
 		function propsMatch(p1, p2) {
 			if (isSimpleLiteral(p1) && !isDate(p1)) {
 				if (p1 != p2) {return false;}
@@ -10911,9 +10908,10 @@ function Item(obj) {
 			}
 			return true;
 		}
-		
+
 		return 0;
 	};
+
 }
 Item.prototype = new Observable();
 
@@ -11000,10 +10998,10 @@ ItemSerializer = {
 function Literal(literalIn) {
 	// precondition: literalIn should be a literal
 	if (!isSimpleLiteral(literalIn)) { throw "Will only construct a Literal for a literal. Not for " + literalIn; }
-	
+
 	var literal = literalIn;
 	var self = this;
-	
+
 	/**
 	 * Returns this Literal's literal.
 	 */
@@ -11022,7 +11020,7 @@ function Literal(literalIn) {
 			self.notifyObservers();
 		}
 	};
-	
+
 	/**
 	 * Binds this Literal's literal to the given jQuery element
 	 * when one of the given events occur.
@@ -11049,7 +11047,7 @@ function Literal(literalIn) {
 		});
 		elementJQuery.val(self.get());
 	};
-	
+
 	/**
 	 * Returns the normal value of the literal.
 	 * It's the same as get(), but is here as convenience method,
@@ -11058,7 +11056,7 @@ function Literal(literalIn) {
 	this.unwrap = function() {
 		return literal;
 	};
-	
+
 	/**
 	 * Loads the given data object in this Literal.
 	 * Make sure the given data is a Literal.
@@ -11066,10 +11064,12 @@ function Literal(literalIn) {
 	 * @param data the new data object. Make sure it's a plain javascript literal.
 	 */
 	this.load = function(data) {
-		if (!isSimpleLiteral(data)) {throw "Won't load non-literal in a Literal.";}
+		if (!isSimpleLiteral(data)) {
+			throw "Won't load non-literal in a Literal.";
+		}
 		self.set(data);
 	};
-	
+
 	/**
 	 * Compares the given Observable item's value with this Literal's value.
 	 * Uses == operator.
@@ -11098,8 +11098,9 @@ function Literal(literalIn) {
             return $.datepicker.formatDate(dateFormat, literal);
         return literal;
     };
-	
-	Literal.prototype=new Observable();
+
+	Literal.prototype = new Observable();	// (probably unnecessary)
+
 }
 Literal.prototype = new Observable();
 
