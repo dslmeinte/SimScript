@@ -66,6 +66,8 @@ class SimScriptMultipleResourceGenerator implements IMultipleResourceGenerator {
 
 		fsa.generateFile("../src/gen/javascript/API.js", communicationsGenerator.generateDeclarations(allDeclarations.sortBy[nameForSorting]))
 
+		// TODO  generate JSON for the whole model (via EMF-JSON), suitable for interpretation on client
+
 		println("\t(ran generation)")
 	}
 
