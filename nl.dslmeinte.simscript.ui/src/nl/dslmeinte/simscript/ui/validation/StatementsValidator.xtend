@@ -8,11 +8,14 @@ import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
 import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOperator
 import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOrExpressionStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.CredentialArgument
+import nl.dslmeinte.simscript.ui.simUiDsl.FeatureAccessExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.GotoModuleStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.IfStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.ListRemoveStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.PrincipalArgument
+import nl.dslmeinte.simscript.ui.simUiDsl.ReferenceExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.StatementBlock
+import nl.dslmeinte.simscript.ui.simUiDsl.UnsetStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.ViewableCallSite
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
@@ -65,6 +68,24 @@ class StatementsValidator extends ValidatorSupport {
 			{
 				error('''lhs must be type-compatible with rhs: «lhs.type.toLiteral» (l) vs. «rhs.type.toLiteral» (r)'''.toString, ePackage.assignmentOrExpressionStatement_Rhs)
 			}
+		}
+	}
+
+	@Check
+	def void check_lhs_is_nullable(UnsetStatement it) {
+		switch lhs {
+			FeatureAccessExpression:	{
+				if( !(lhs as FeatureAccessExpression).feature.optional ) {
+					error("feature to unset must be optional", ePackage.unsetStatement_Lhs)
+				}
+			}
+			ReferenceExpression:		{
+				val t = (lhs as ReferenceExpression).type
+				if( !(t.stringTyped || t.structureTyped) ) {
+					error("value to unset must be a string or a structure", ePackage.unsetStatement_Lhs)
+				}
+			}
+			default:					error("value to unset must be a valid l-value", ePackage.unsetStatement_Lhs)
 		}
 	}
 

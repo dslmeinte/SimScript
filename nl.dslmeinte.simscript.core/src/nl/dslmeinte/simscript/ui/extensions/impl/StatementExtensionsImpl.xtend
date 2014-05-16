@@ -10,6 +10,7 @@ import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOrExpressionStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.LocalValueDeclarationStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.Statement
 import nl.dslmeinte.simscript.ui.simUiDsl.StatementBlock
+import nl.dslmeinte.simscript.ui.simUiDsl.UnsetStatement
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
 
@@ -42,7 +43,11 @@ class StatementExtensionsImpl implements StatementExtensions {
 
 
 	override hasResultValue(Statement it) {
-		!(resultType instanceof VoidLiteral)
+		switch resultType {
+			VoidLiteral:	false
+			UnsetStatement: false
+			default:		true
+		}
 	}
 
 
