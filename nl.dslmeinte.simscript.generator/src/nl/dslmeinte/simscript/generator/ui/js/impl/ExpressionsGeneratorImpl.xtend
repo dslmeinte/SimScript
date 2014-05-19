@@ -61,15 +61,7 @@ class ExpressionsGeneratorImpl implements ExpressionsGenerator {
 	@Inject extension XtextUtil
 
 
-	/**
-	 * @return JS code that represents the value given {@link Expression} in a wrapped form (which can be observed).
-	 *  The wrapping is done through the use of the Item, Literal and List JS-types.
-	 */
 	override CharSequence asObservableJs(Expression it)	{	asObservableJs_ }
-
-	/**
-	 * @return JS code that evaluates the given {@link Expression} as a(n unwrapped) value.
-	 */
 	override CharSequence asPlainJs(Expression it)		{	asPlainJs_ }
 
 
