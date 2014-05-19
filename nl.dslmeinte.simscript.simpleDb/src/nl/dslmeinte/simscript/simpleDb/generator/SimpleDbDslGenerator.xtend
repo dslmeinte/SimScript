@@ -114,5 +114,5 @@ class SimpleDbDslGenerator implements IGenerator {
 		DROP TABLE IF EXISTS «FOR table : tables SEPARATOR ', '»«table.name»«ENDFOR»;
 		SET foreign_key_checks = 1;
 		'''
-
+	
 }
