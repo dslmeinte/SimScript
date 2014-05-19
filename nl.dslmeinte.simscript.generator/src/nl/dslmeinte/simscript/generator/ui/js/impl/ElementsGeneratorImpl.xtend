@@ -179,7 +179,7 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 			«ice.serviceId.serviceName»(
 				«IF ice.input != null»«ice.input.asObservableJs»,«ENDIF»
 				globalModuleAuthenticationInfo,
-				function(response, error) {«value.jsName».load(response.unwrap());},«/* FIXME  wrap assignment (see Trello) */»
+				function(response, error) { «value.jsName».load(response.unwrap()); },«/* FIXME  wrap assignment (see Trello) */»
 				function() {} /* no error callback for InterfaceCallExpression */
 			);
 		};
