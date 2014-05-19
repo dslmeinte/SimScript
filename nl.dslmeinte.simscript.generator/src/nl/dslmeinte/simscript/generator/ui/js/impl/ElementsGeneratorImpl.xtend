@@ -161,7 +161,7 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 				derivedVariableCounter = derivedVariableCounter + 1
 				'''
 				var «value.jsName» = new Item(«valueExpr.type.asInitJs»);
-				function derivedValueFunction«derivedVariableCounter»() { «value.jsName».load(«valueExpr.asPlainJs»); }
+				function derivedValueFunction«derivedVariableCounter»() { «value.jsName».load(«valueExpr.asPlainJs»); }«/* FIXME  wrap assignment (see Trello) */»
 				«FOR observableJs : valueExpr.valuesToObserve.map[it.asObservableJs.toString].toSet»« /* (.toString is required since CharSequence.equals == Object.equals) */ »
 					«observableJs».addObserver(derivedValueFunction«derivedVariableCounter»);
 				«ENDFOR»
@@ -179,7 +179,7 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 			«ice.serviceId.serviceName»(
 				«IF ice.input != null»«ice.input.asObservableJs»,«ENDIF»
 				globalModuleAuthenticationInfo,
-				function(response, error) {«value.jsName».load(response.unwrap());},
+				function(response, error) {«value.jsName».load(response.unwrap());},«/* FIXME  wrap assignment (see Trello) */»
 				function() {} /* no error callback for InterfaceCallExpression */
 			);
 		};

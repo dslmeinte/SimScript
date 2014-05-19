@@ -102,8 +102,8 @@ class StatementsGeneratorImpl implements StatementsGenerator {
 	 * 	List <== array
 	 * 	Literal <== literal
 	 */
-	def private dispatch asAssignmentJs(FeatureAccessExpression it, Expression rhs)		'''«asObservableJs».load(«rhs.asPlainJs»)'''
-	def private dispatch asAssignmentJs(ReferenceExpression it, Expression rhs)			'''«asObservableJs».load(«rhs.asPlainJs»)'''
+	def private dispatch asAssignmentJs(FeatureAccessExpression it, Expression rhs)		'''«asObservableJs».load(«rhs.asPlainJs»)'''	// FIXME  wrap assignment (see Trello)
+	def private dispatch asAssignmentJs(ReferenceExpression it, Expression rhs)			'''«asObservableJs».load(«rhs.asPlainJs»)'''	// FIXME  wrap assignment (see Trello)
 
 	/**
 	 * Dependencies/Assumptions:
@@ -196,7 +196,7 @@ class StatementsGeneratorImpl implements StatementsGenerator {
 
 	def private dispatch asJs_(LocalValueDeclarationStatement it)	'''var «value.jsName» = «valueExpr.asObservableJs»'''
 
-	def private dispatch asJs_(UnsetStatement it)					'''«lhs.asObservableJs».load(null)'''
+	def private dispatch asJs_(UnsetStatement it)					'''«lhs.asObservableJs».load(null)'''	// FIXME  wrap assignment (see Trello)
 
 	// sentinel:
 	def private dispatch asJs_(Statement it)						{ logProblemAndReturnJSComment("StatementsGenerator.asJs_ called with unhandled type " + eClass.name) }
