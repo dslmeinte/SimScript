@@ -30,6 +30,7 @@ class SimScriptMultipleResourceGenerator implements IMultipleResourceGenerator {
 	@Inject private AuthenticationGenerator authenticationGenerator
 	@Inject private CommunicationParseGenerator communicationParseGenerator
 	@Inject private CommunicationsGenerator communicationsGenerator
+	@Inject private JsonSerialiser jsonSerialiser
 
 	@Inject extension ServiceExtensions
 	@Inject extension ResourceUtil
@@ -67,6 +68,9 @@ class SimScriptMultipleResourceGenerator implements IMultipleResourceGenerator {
 		fsa.generateFile("../src/gen/javascript/API.js", communicationsGenerator.generateDeclarations(allDeclarations.sortBy[nameForSorting]))
 
 		println("\t(ran generation)")
+
+		jsonSerialiser.serialiseAsJson(resourceSet)
+		// TODO  drag mappings generation to here, because doing generation after having shuffled resources into another resource set is impossible
 	}
 
 	// FIXME  throws illegalAccessError
