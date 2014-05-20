@@ -2,9 +2,10 @@
 @GenModel(forceOverwrite="true", updateClasspath="false", complianceLevel="5.0")
 package nl.dslmeinte.simscript.application.simApplicationDsl
 
+import nl.dslmeinte.simscript.naming.WithResourceInfo
 import nl.dslmeinte.simscript.ui.simUiDsl.UiModule
 
-class ApplicationModel {
+class ApplicationModel extends WithResourceInfo {
 	String title
 	TargetPlatforms targetPlatform
 	String[] includeCSSs

@@ -1,0 +1,11 @@
+@Ecore(nsURI="http://www.dslconsultancy.com/simscript/naming")
+@GenModel(forceOverwrite="true", updateClasspath="false", complianceLevel="5.0")
+package nl.dslmeinte.simscript.naming
+
+interface WithResourceInfo {
+
+	String fileName
+	String packageName
+
+}
+

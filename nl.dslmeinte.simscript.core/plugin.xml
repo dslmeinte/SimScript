@@ -62,4 +62,12 @@
             genModel="model/Types.xcore"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Naming -->
+      <package
+            uri="http://www.dslconsultancy.com/simscript/naming"
+            class="nl.dslmeinte.simscript.naming.NamingPackage"
+            genModel="model/Naming.xcore"/>
+   </extension>
+
 </plugin>
