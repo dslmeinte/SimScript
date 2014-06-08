@@ -14,6 +14,7 @@ import nl.dslmeinte.simscript.backend.SimBackendDslRuntimeModule;
 import nl.dslmeinte.simscript.generator.SimScriptGeneratorModule;
 import nl.dslmeinte.simscript.generator.ui.SimScriptGeneratorUIModule;
 import nl.dslmeinte.simscript.mappings.MappingsDslRuntimeModule;
+import nl.dslmeinte.simscript.simpleDb.SimpleDbDslRuntimeModule;
 import nl.dslmeinte.simscript.structure.SimStructureDslRuntimeModule;
 import nl.dslmeinte.simscript.ui.SimUiDslRuntimeModule;
 
@@ -37,7 +38,7 @@ public class Activator extends AbstractUIPlugin {
 		    injector = Guice.createInjector(Modules2.mixin(
 		    		new SharedStateModule(), new SimScriptGeneratorModule(), new SimScriptGeneratorUIModule(this),
 		    		new SimStructureDslRuntimeModule(), new SimBackendDslRuntimeModule(), new SimApplicationDslRuntimeModule(),
-		    		new MappingsDslRuntimeModule(),
+		    		new MappingsDslRuntimeModule(), new SimpleDbDslRuntimeModule(),
 		    		new SimUiDslRuntimeModule()
 		    			/*
 		    			 * Note: for some reason (and only from Xtext >= 2.3), only the extension for the last-registered DSL runtime module

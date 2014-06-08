@@ -11,10 +11,12 @@ import nl.dslmeinte.simscript.generator.backend.CrudServletsGenerator
 import nl.dslmeinte.simscript.generator.backend.PojoGenerator
 import nl.dslmeinte.simscript.generator.backend.ServletGenerator
 import nl.dslmeinte.simscript.generator.mappings.MappingsDslGenerator
+import nl.dslmeinte.simscript.generator.simpleDb.DbSchemaGenerator
 import nl.dslmeinte.simscript.generator.ui.ApplicationGenerator
 import nl.dslmeinte.simscript.generator.ui.UserInterfaceGenerator
 import nl.dslmeinte.simscript.mappings.mappingsDsl.MappingsModel
 import nl.dslmeinte.simscript.naming.WithResourceInfo
+import nl.dslmeinte.simscript.simpleDb.simpleDbDsl.DatabaseModel
 import nl.dslmeinte.simscript.structure.structureDsl.StructureModel
 import nl.dslmeinte.simscript.types.Structure
 import nl.dslmeinte.simscript.ui.simUiDsl.UiModule
@@ -54,6 +56,7 @@ class PerResourceGenerator implements IGenerator {
 	@Inject private ApplicationGenerator applicationGenerator
 	@Inject private AuthenticationGenerator authGenerator
 	@Inject private MappingsDslGenerator mappingsGenerator
+	@Inject private DbSchemaGenerator simpleDbGenerator
 
 	// constants:
 	public String javaGenFolder = "../src/gen/java/"
@@ -130,6 +133,10 @@ class PerResourceGenerator implements IGenerator {
 
 	def private dispatch void generate(MappingsModel it) {
 		mappingsGenerator.generate(it, fileSystemAccess)
+	}
+
+	def private dispatch void generate(DatabaseModel it) {
+		simpleDbGenerator.generate(it, fileSystemAccess)
 	}
 
 	def private dispatch void generate(EObject it) {
