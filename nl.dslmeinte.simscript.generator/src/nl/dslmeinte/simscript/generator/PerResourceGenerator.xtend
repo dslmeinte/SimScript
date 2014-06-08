@@ -10,8 +10,10 @@ import nl.dslmeinte.simscript.generator.backend.ControllerGenerator
 import nl.dslmeinte.simscript.generator.backend.CrudServletsGenerator
 import nl.dslmeinte.simscript.generator.backend.PojoGenerator
 import nl.dslmeinte.simscript.generator.backend.ServletGenerator
+import nl.dslmeinte.simscript.generator.mappings.MappingsDslGenerator
 import nl.dslmeinte.simscript.generator.ui.ApplicationGenerator
 import nl.dslmeinte.simscript.generator.ui.UserInterfaceGenerator
+import nl.dslmeinte.simscript.mappings.mappingsDsl.MappingsModel
 import nl.dslmeinte.simscript.naming.WithResourceInfo
 import nl.dslmeinte.simscript.structure.structureDsl.StructureModel
 import nl.dslmeinte.simscript.types.Structure
@@ -51,6 +53,7 @@ class PerResourceGenerator implements IGenerator {
 	@Inject private UserInterfaceGenerator userInterfaceGenerator
 	@Inject private ApplicationGenerator applicationGenerator
 	@Inject private AuthenticationGenerator authGenerator
+	@Inject private MappingsDslGenerator mappingsGenerator
 
 	// constants:
 	public String javaGenFolder = "../src/gen/java/"
@@ -123,6 +126,10 @@ class PerResourceGenerator implements IGenerator {
 
 	def private dispatch void generate(ApplicationModel it) {
 		fileSystemAccess.generateFile(name + "_app.html", applicationGenerator.generateHtml(it))
+	}
+
+	def private dispatch void generate(MappingsModel it) {
+		mappingsGenerator.generate(it, fileSystemAccess)
 	}
 
 	def private dispatch void generate(EObject it) {

@@ -1,4 +1,4 @@
-package nl.dslmeinte.simscript.mappings.generator.sql
+package nl.dslmeinte.simscript.generator.mappings.sql
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
@@ -31,15 +31,15 @@ class SqlUtil {
 
 	def asSql(LeftRangeDelimiters it) {
 		switch it {
-			case LeftRangeDelimiters.CLOSED:	"<="
-			case LeftRangeDelimiters.OPEN:		"<"
+			case CLOSED:	"<="
+			case OPEN:		"<"
 		}
 	}
 
 	def asSql(RightRangeDelimiters it) {
 		switch it {
-			case RightRangeDelimiters.CLOSED:	"<="
-			case RightRangeDelimiters.OPEN:	"<"
+			case CLOSED:	"<="
+			case OPEN:	"<"
 		}
 	}
 

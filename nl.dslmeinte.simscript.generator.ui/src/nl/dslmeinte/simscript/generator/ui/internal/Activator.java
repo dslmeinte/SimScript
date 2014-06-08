@@ -8,10 +8,12 @@ import org.osgi.framework.BundleContext;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+
 import nl.dslmeinte.simscript.application.SimApplicationDslRuntimeModule;
 import nl.dslmeinte.simscript.backend.SimBackendDslRuntimeModule;
 import nl.dslmeinte.simscript.generator.SimScriptGeneratorModule;
 import nl.dslmeinte.simscript.generator.ui.SimScriptGeneratorUIModule;
+import nl.dslmeinte.simscript.mappings.MappingsDslRuntimeModule;
 import nl.dslmeinte.simscript.structure.SimStructureDslRuntimeModule;
 import nl.dslmeinte.simscript.ui.SimUiDslRuntimeModule;
 
@@ -34,7 +36,9 @@ public class Activator extends AbstractUIPlugin {
 		try {
 		    injector = Guice.createInjector(Modules2.mixin(
 		    		new SharedStateModule(), new SimScriptGeneratorModule(), new SimScriptGeneratorUIModule(this),
-		    		new SimStructureDslRuntimeModule(), new SimBackendDslRuntimeModule(), new SimApplicationDslRuntimeModule(), new SimUiDslRuntimeModule()
+		    		new SimStructureDslRuntimeModule(), new SimBackendDslRuntimeModule(), new SimApplicationDslRuntimeModule(),
+		    		new MappingsDslRuntimeModule(),
+		    		new SimUiDslRuntimeModule()
 		    			/*
 		    			 * Note: for some reason (and only from Xtext >= 2.3), only the extension for the last-registered DSL runtime module
 		    			 * is set in the FileExtensionProvider instance. For the other extensions, you'd have to do a full build for the change

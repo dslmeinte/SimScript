@@ -1,11 +1,11 @@
-package nl.dslmeinte.simscript.mappings.generator
+package nl.dslmeinte.simscript.generator.mappings
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import nl.dslmeinte.simscript.extensions.SimpleDbExtensions
+import nl.dslmeinte.simscript.generator.mappings.sql.InterpolateableSqlGenerator
 import nl.dslmeinte.simscript.mappings.MiscellaneousExtensions
 import nl.dslmeinte.simscript.mappings.QueryExtensions
-import nl.dslmeinte.simscript.mappings.generator.sql.InterpolateableSqlGenerator
 import nl.dslmeinte.simscript.mappings.mappingsDsl.BooleanLiteralExpression
 import nl.dslmeinte.simscript.mappings.mappingsDsl.CountQuery
 import nl.dslmeinte.simscript.mappings.mappingsDsl.DeferedMappingSpecification
