@@ -1,4 +1,4 @@
-package nl.dslmeinte.simscript.mappings.generator.sql
+package nl.dslmeinte.simscript.generator.mappings.sql
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
