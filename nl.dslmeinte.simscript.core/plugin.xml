@@ -19,7 +19,7 @@
       <package
             uri="http://www.dslconsultancy.com/simscript/backend/SimBackendDsl"
             class="nl.dslmeinte.simscript.backend.simBackendDsl.SimBackendDslPackage"
-            genModel="model/SimBackendDsl.xcore"/>
+            genModel="model/BackendDsl.xcore"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
@@ -27,7 +27,7 @@
       <package
             uri="http://www.dslconsultancy.com/simscript/ui/SimUiDsl"
             class="nl.dslmeinte.simscript.ui.simUiDsl.SimUiDslPackage"
-            genModel="model/SimUiDsl.xcore"/>
+            genModel="model/UiDsl.xcore"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
@@ -51,7 +51,7 @@
       <package
             uri="http://www.dslconsultancy.com/simscript/application/SimApplicationDsl"
             class="nl.dslmeinte.simscript.application.simApplicationDsl.SimApplicationDslPackage"
-            genModel="model/SimApplicationDsl.xcore"/>
+            genModel="model/ApplicationDsl.xcore"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
