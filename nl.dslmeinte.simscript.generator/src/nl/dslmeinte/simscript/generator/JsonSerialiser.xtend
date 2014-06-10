@@ -24,7 +24,7 @@ class JsonSerialiser {
 		resourceSet.resources.forEach[jsonResource.contents += contents]
 		jsonResource.save(#{ EMFJs.OPTION_INDENT_OUTPUT -> true, EMFJs.OPTION_SERIALIZE_TYPE -> true })
 
-		println("serialized to JSON!")
+		println("serialized model to JSON")
 	}
 
 }
