@@ -111,6 +111,7 @@ class ExpressionExtensionsImpl implements ExpressionExtensions {
 			case CONFIRM:	false
 			case IS_VALID:	true
 			case ID:		true
+			default:		throw new RuntimeException("unhandled enum: " + name())
 		}
 	}
 

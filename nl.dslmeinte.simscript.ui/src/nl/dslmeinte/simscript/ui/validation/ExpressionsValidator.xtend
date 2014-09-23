@@ -250,7 +250,8 @@ class ExpressionsValidator extends ValidatorSupport {
 			case IS_VALID:	if( !argument.type.emailTyped ) {
 								error("argument of isValid function must be email-typed", ePackage.builtinFunctionExpression_Argument)
 							}
-//			case SORT:		// TODO
+			case COPY_OF,
+			case SORT:		{ /* do nothing */ }
 			case ID:		if( !argument.type.structureTyped ) {
 								error("argument of id function must be structure-typed", ePackage.builtinFunctionExpression_Argument)
 							}

@@ -35,10 +35,11 @@ class ServiceExtensionsImpl implements ServiceExtensions {
 
 	def private dispatch TypeLiteral inputType_(CrudServiceIdentification it) {
 		switch crudType {
-			case CrudTypes.CREATE: 	structure.createDefinedTypeLiteral
-			case CrudTypes.UPDATE: 	structure.createDefinedTypeLiteral
-			case CrudTypes.DELETE: 	structure.createDefinedTypeLiteral
+			case CrudTypes.CREATE: 		structure.createDefinedTypeLiteral
+			case CrudTypes.UPDATE: 		structure.createDefinedTypeLiteral
+			case CrudTypes.DELETE: 		structure.createDefinedTypeLiteral
 			case CrudTypes.GET_BY_ID:	BuiltinTypes.INTEGER.createBuiltinTypeLiteral
+			default:					throw new RuntimeException("unhandled enum: " + crudType.name())
 		}
 	}
 
@@ -60,6 +61,7 @@ class ServiceExtensionsImpl implements ServiceExtensions {
 			case CrudTypes.DELETE:		createVoidLiteral
 			case CrudTypes.GET_BY_ID:	structure.createDefinedTypeLiteral
 			case CrudTypes.UPDATE:		createVoidLiteral
+			default:					throw new RuntimeException("unhandled enum: " + crudType.name())
 		}
 	}
 
