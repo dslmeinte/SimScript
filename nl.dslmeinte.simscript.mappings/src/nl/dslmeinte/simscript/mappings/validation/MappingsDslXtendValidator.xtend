@@ -66,7 +66,7 @@ class MappingsDslXtendValidator extends AbstractMappingsDslJavaValidator {
 			error("nested query/mapping must be a select or a count query", ePackage.nestedMappingSpecification_Query)
 		}
 		if( query.eResource != it.eResource ) {
-			warning("nested query/mapping resides in other mappings file", ePackage.nestedMappingSpecification_Query)
+			warning('''nested query/mapping resides in other mappings file («query.eResource.URI.toString»)''', ePackage.nestedMappingSpecification_Query)
 		}
 	}
 
