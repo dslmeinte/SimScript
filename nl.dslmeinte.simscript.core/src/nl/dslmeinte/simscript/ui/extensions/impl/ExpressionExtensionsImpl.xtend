@@ -107,7 +107,6 @@ class ExpressionExtensionsImpl implements ExpressionExtensions {
 			case TO_MILLIS:	true
 			case ROUND:		true
 			case COPY_OF:	false
-			case ALERT:		false
 			case CONFIRM:	false
 			case IS_VALID:	true
 			case ID:		true

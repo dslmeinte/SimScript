@@ -189,7 +189,6 @@ class ExpressionsGeneratorImpl implements ExpressionsGenerator {
 			case IS_SET:	'''new Item(«asPlainJs_»)'''
 			case TO_MILLIS:	'''new Item(«asPlainJs_»)'''
 			case ROUND:		'''new Item(«asPlainJs_»)'''
-			case ALERT:		'''«asPlainJs_»'''				// note: alert not observable
 			case CONFIRM:	'''«asPlainJs_»'''				// note: confirm not observable
 			case SORT:			logProblemAndReturnJSComment('''built in function «function.getName()» only works in ExpressionsGenerator.asPlainJs_''')
 			case IS_VALID:	'''new Item(«asPlainJs_»)'''
@@ -204,7 +203,6 @@ class ExpressionsGeneratorImpl implements ExpressionsGenerator {
 			case IS_SET:	'''(«argument.asPlainJs_» != null)'''
 			case TO_MILLIS:	'''(«argument.asPlainJs_»).getTime()'''
 			case ROUND:		'''Math.round(«argument.asPlainJs_»)'''
-			case ALERT:		'''alert(«argument.asPlainJs_»)'''
 			case CONFIRM:	'''confirm(«argument.asPlainJs_»)'''
 			case SORT:		'''«argument.asObservableJs_».sort(function(item) { return item.get«sortFeature.name.toFirstUpper»(); })'''
 			case IS_VALID:	logProblemAndReturnJSComment('''not implemented yet''')

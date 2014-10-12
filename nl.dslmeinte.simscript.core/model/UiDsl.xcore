@@ -243,6 +243,13 @@ class StatementBlock {
 	contains Statement[] statements
 }
 
+
+/*
+ * +------------+
+ * | statements |
+ * +-------------+
+ */
+
 abstract class Statement {}
 
 abstract class ExitingStatement extends Statement {}
@@ -320,6 +327,17 @@ class ViewableCallSite {
 	contains ArgumentList argumentList
 }
 
+class AlertStatement extends NonExitingStatement {
+	contains Expression argument
+}
+
+
+/*
+ * +-------------+
+ * | expressions |
+ * +-------------+
+ */
+
 abstract class Expression {}
 
 enum Comparator {
@@ -353,8 +371,7 @@ class BuiltinFunctionExpression extends Expression {
 
 enum BuiltinFunctions {
 	^isSet
-	alert = 1
-	confirm = 2
+	confirm = 2		// has a boolean result
 	copyOf = 3
 	toMillis = 4
 	round = 5

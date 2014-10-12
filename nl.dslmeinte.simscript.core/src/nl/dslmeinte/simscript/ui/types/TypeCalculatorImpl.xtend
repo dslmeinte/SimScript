@@ -185,7 +185,6 @@ class TypeCalculatorImpl implements TypeCalculator {
 			case IS_SET:	BOOLEAN.createBuiltinTypeLiteral
 			case TO_MILLIS:	NUMBER.createBuiltinTypeLiteral
 			case ROUND:		INTEGER.createBuiltinTypeLiteral
-			case ALERT:		createVoidLiteral
 			case CONFIRM:	BOOLEAN.createBuiltinTypeLiteral
 			case IS_VALID:	BOOLEAN.createBuiltinTypeLiteral
 			case ID:		STRING.createBuiltinTypeLiteral

@@ -9,6 +9,7 @@ import nl.dslmeinte.simscript.generator.ui.js.StatementsGenerator
 import nl.dslmeinte.simscript.generator.ui.js.ViewableInvocationTypes
 import nl.dslmeinte.simscript.ui.extensions.StatementExtensions
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
+import nl.dslmeinte.simscript.ui.simUiDsl.AlertStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOperator
 import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOrExpressionStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackExpression
@@ -89,6 +90,7 @@ class StatementsGeneratorImpl implements StatementsGenerator {
 			case AssignmentOperator.ASSIGN:		lhs.asAssignmentJs(rhs)
 			case AssignmentOperator.ADD:		lhs.asArrayAdditionAssignmentJs(rhs)
 			case AssignmentOperator.SUB:		lhs.asArraySubtractionAssignmentJs(rhs)
+			// TODO  add default case
 		}
 	}
 
@@ -197,6 +199,8 @@ class StatementsGeneratorImpl implements StatementsGenerator {
 	def private dispatch asJs_(LocalValueDeclarationStatement it)	'''var «value.jsName» = «valueExpr.asObservableJs»'''
 
 	def private dispatch asJs_(UnsetStatement it)					'''«lhs.asObservableJs».load(null)'''	// FIXME  wrap assignment (see Trello)
+
+	def private dispatch asJs_(AlertStatement it)					'''alert(«argument.asPlainJs»)'''
 
 	// sentinel:
 	def private dispatch asJs_(Statement it)						{ logProblemAndReturnJSComment("StatementsGenerator.asJs_ called with unhandled type " + eClass.name) }

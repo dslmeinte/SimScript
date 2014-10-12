@@ -478,7 +478,7 @@ NonExitingStatement returns ui::NonExitingStatement:
 	| ListRemoveStatement
 	| ForStatement
 	| UnsetStatement
-//	| LegacyModalStatement	TODO
+	| AlertStatement
 	;
 
 
@@ -610,6 +610,15 @@ ViewableCallSite returns ui::ViewableCallSite:	// (synthetic type)
 	GotoScreenStatement | ComponentInvocation | TabDeclaration | ShowModalStatement
 	;
 	// validation: arguments are checked against viewable.parameters for unmapped and duplicately-mapped parameters		[√]
+
+AlertStatement returns ui::AlertStatement:
+	'alert' '(' argument=Expression ')'
+	;
+	/*
+	 * validation:
+	 * 		argument must be textually-typed	[ ]
+	 * 		++ warning about semi-deprecated -> show-modal
+	 */
 
 
 /*
@@ -748,11 +757,7 @@ BuiltinFunctionExpression returns ui::BuiltinFunctionExpression:
 
 enum BuiltinFunctions returns ui::BuiltinFunctions:
 	  isSet
-
-	// TODO  Next two should not be functions, but statements! (Then AssignmentOrExpression can become only Assigment?)
-	| alert
 	| confirm
-
 	| copyOf	// copy an object									Note: used for Blaasfunctie.nl!
 	| toMillis	// convert a Date to milliseconds, for calculation
 	| round		// rounds a Number to an Integer

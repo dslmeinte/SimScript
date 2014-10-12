@@ -5,6 +5,7 @@ import com.google.inject.Singleton
 import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.ui.extensions.ExpressionExtensions
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
+import nl.dslmeinte.simscript.ui.simUiDsl.AlertStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOperator
 import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOrExpressionStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.CredentialArgument
@@ -175,6 +176,14 @@ class StatementsValidator extends ValidatorSupport {
 	            error('''you must suply parameter «parameter.name»'''.toString, ePackage.gotoModuleStatement_Args)
 	        }
 	    }
+	}
+
+	@Check
+	def void check_argument_of(AlertStatement it) {
+		if( !argument.type.textuallyTyped ) {
+			error("argument of alert must be textually-typed", ePackage.alertStatement_Argument)
+		}
+		warning("use of alert is quasi-deprecated: use show-modal instead", ePackage.alertStatement_Argument)
 	}
 
 }

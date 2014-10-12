@@ -227,10 +227,12 @@ class ExpressionsValidator extends ValidatorSupport {
 	@Check
 	def void check_argument_of(BuiltinFunctionExpression it) {
 		switch function {
-
-			case ALERT:		checkForPopup
-			case CONFIRM:	checkForPopup
-
+			case CONFIRM:	{
+				if( !argument.type.textuallyTyped ) {
+					error("argument of confirm must be textually-typed", ePackage.builtinFunctionExpression_Argument)
+				}
+				warning("use of confirm is quasi-deprecated: use show-modal instead", ePackage.builtinFunctionExpression_Function)
+			}
 			case TO_MILLIS: if( !argument.type.dateTyped ) {
 								error("argument of toMillis function must be date-typed", ePackage.builtinFunctionExpression_Argument)
 							}
@@ -243,24 +245,15 @@ class ExpressionsValidator extends ValidatorSupport {
 			case IS_VALID:	if( !argument.type.emailTyped ) {
 								error("argument of isValid function must be email-typed", ePackage.builtinFunctionExpression_Argument)
 							}
-			case COPY_OF,
-			case SORT:		{ /* do nothing */ }
 			case ID:		if( !argument.type.structureTyped ) {
 								error("argument of id function must be structure-typed", ePackage.builtinFunctionExpression_Argument)
 							}
+			default:		{ /* nothing to check */ }
 		}
 		if( function != SORT && sortFeature != null ) {
 			error("sort feature can only be specified for the sort function", ePackage.builtinFunctionExpression_SortFeature)
 		}
 	}
-
-	def private void checkForPopup(BuiltinFunctionExpression it) {
-		if( !argument.type.textuallyTyped ) {
-			error("argument of " + function.literal + " must be textually-typed", ePackage.builtinFunctionExpression_Argument)
-		}
-		warning("use of " + function.literal + " is quasi-deprecated: use show-modal instead", ePackage.builtinFunctionExpression_Function)
-	}
-
 
 	@Check
 	def void check_members_of_a_list_literal_expression_are_type_compatible(ListLiteralExpression it) {
