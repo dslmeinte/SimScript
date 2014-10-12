@@ -43,6 +43,7 @@ enum BuiltinTypes {
 	phone as "Phone" = 7
 	date as "Date" = 8
 	password as "Password" = 9
+	// TODO  add DateTime (for timestamps and such)?
 }
 
 class DefinedTypeLiteral extends TypeLiteral {
