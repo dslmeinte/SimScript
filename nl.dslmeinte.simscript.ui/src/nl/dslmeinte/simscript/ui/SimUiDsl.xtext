@@ -796,8 +796,11 @@ BuiltinFunctionExpression returns ui::BuiltinFunctionExpression:
 
 enum BuiltinFunctions returns ui::BuiltinFunctions:
 	  isSet
+
+	// TODO  Next two should not be functions, but statements! (Then AssignmentOrExpression can become only Assigment?)
 	| alert
 	| confirm
+
 	| copyOf	// copy an object									Note: used for Blaasfunctie.nl!
 	| toMillis	// convert a Date to milliseconds, for calculation
 	| round		// rounds a Number to an Integer
