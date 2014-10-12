@@ -13,7 +13,8 @@ DefinedType returns type::DefinedType:
 	;
 
 StructureDefinition returns type::Structure:
-	'structure' name=ID  persistent?='persistent'?
+	'structure' name=ID
+		persistent?='persistent'?	// TODO  still required?
 	'{'
 		features+=Feature*
 	'}'

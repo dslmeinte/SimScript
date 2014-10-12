@@ -8,7 +8,7 @@ abstract class DefinedType {
 
 class Structure extends DefinedType {
 	boolean persistent
-	contains Feature < TypeLiteral >[] features
+	contains Feature<TypeLiteral>[] features
 }
 
 class Feature<T extends TypeLiteral> {

@@ -51,7 +51,7 @@ class ResourceUtil {
 				return uriAsString.after(validModelFolder)
 			}
 		}
-		throw new IllegalArgumentException()
+		throw new IllegalArgumentException
 	}
 
 	/**
