@@ -14,7 +14,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.AndExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.ArithmeticBinaryOperatorExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.BooleanLiteralExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctionExpression
-import nl.dslmeinte.simscript.ui.simUiDsl.CalendarElement
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackErrorResponseExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackResponseExpression
@@ -38,9 +37,7 @@ import nl.dslmeinte.simscript.ui.simUiDsl.SelectionExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.StringLiteralExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.StructureCreationExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.TernaryExpression
-import nl.dslmeinte.simscript.ui.simUiDsl.TimeSlotListElement
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
-import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.EObject
 
 import static nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctions.*
@@ -57,8 +54,6 @@ class ExpressionsGeneratorImpl implements ExpressionsGenerator {
 	@Inject extension ExpressionExtensions
 	@Inject extension MethodExtensions
 	@Inject extension TypeCalculator
-
-	@Inject extension XtextUtil
 
 
 	override CharSequence asObservableJs(Expression it)	{	asObservableJs_ }
@@ -140,11 +135,7 @@ class ExpressionsGeneratorImpl implements ExpressionsGenerator {
 	 */
 	def private dispatch CharSequence asObservableJs_(CallbackExpression it)			{ asPlainJs_ }	// note: Callbacks don't return values, so they are not observable
 	def private dispatch CharSequence asPlainJs_(CallbackExpression it) {
-		if( containerHaving(typeof(CalendarElement)) != null || containerHaving(typeof(TimeSlotListElement)) != null ) {
-			'''function(selection) «statementBlock.asJs(ReturnFlags.returnsVoid)»'''
-		} else {
-			'''function() «statementBlock.asJs(ReturnFlags.returnsVoid)»'''
-		}
+		'''function() «statementBlock.asJs(ReturnFlags.returnsVoid)»'''
 	}
 
 	/**

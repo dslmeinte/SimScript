@@ -2,7 +2,6 @@ package nl.dslmeinte.simscript.ui.types
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import nl.dslmeinte.simscript.types.Structure
 import nl.dslmeinte.simscript.types.TypeExtensions
 import nl.dslmeinte.simscript.types.TypeLiteral
 import nl.dslmeinte.simscript.types.VoidLiteral
@@ -17,14 +16,12 @@ import nl.dslmeinte.simscript.ui.simUiDsl.ArithmeticBinaryOperatorExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.BooleanBinaryOperatorExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.BooleanLiteralExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctionExpression
-import nl.dslmeinte.simscript.ui.simUiDsl.CalendarElement
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackErrorResponseExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackResponseExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.ComparisonExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.DateExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.DecisionExpression
-import nl.dslmeinte.simscript.ui.simUiDsl.Element
 import nl.dslmeinte.simscript.ui.simUiDsl.EnumerationLiteralExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.Expression
 import nl.dslmeinte.simscript.ui.simUiDsl.FeatureAccessExpression
@@ -42,15 +39,12 @@ import nl.dslmeinte.simscript.ui.simUiDsl.Parameter
 import nl.dslmeinte.simscript.ui.simUiDsl.Referable
 import nl.dslmeinte.simscript.ui.simUiDsl.ReferenceExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.SelectionExpression
-import nl.dslmeinte.simscript.ui.simUiDsl.SimUiDslPackage
 import nl.dslmeinte.simscript.ui.simUiDsl.StringLiteralExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.StructureCreationExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.TernaryExpression
-import nl.dslmeinte.simscript.ui.simUiDsl.TimeSlotListElement
 import nl.dslmeinte.simscript.ui.simUiDsl.Value
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.scoping.IScopeProvider
 
 import static nl.dslmeinte.simscript.types.BuiltinTypes.*
 import static nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctions.*
@@ -79,8 +73,6 @@ class TypeCalculatorImpl implements TypeCalculator {
 	@Inject extension StatementExtensions
 	@Inject extension MethodExtensions
 	@Inject extension ServiceExtensions
-
-	@Inject private IScopeProvider scopeProvider
 
 	@Inject extension XtextUtil
 
@@ -202,11 +194,7 @@ class TypeCalculatorImpl implements TypeCalculator {
 	}
 
 	def private dispatch type_(SelectionExpression it) {
-		switch containerHaving(typeof(Element)) {
-			CalendarElement:		DATE.createBuiltinTypeLiteral
-			TimeSlotListElement:	slotStructure.createDefinedTypeLiteral
-			default:				return null		// (return is required for this dispatch function to have correct return type)
-		}
+		null
 	}
 
 	def private dispatch type_(MethodCallExpression it)			{ method.refType }
@@ -260,13 +248,6 @@ class TypeCalculatorImpl implements TypeCalculator {
 	def private unhandled(EObject it) {
 		println("WARNING\tdon't know how to compute type for instance of " + ^class.simpleName + " (returning Void)")
 		createVoidLiteral
-	}
-
-	/**
-	 * @return The {@link Structure} named '{@code Slot}' anywhere in the global scope, or {@code null}.
-	 */
-	def private slotStructure(EObject context) {
-		scopeProvider.getScope(context, SimUiDslPackage.eINSTANCE.structureCreationExpression_Structure).allElements.map[EObjectOrProxy as Structure].findFirst[it.name == 'Slot']
 	}
 
 }

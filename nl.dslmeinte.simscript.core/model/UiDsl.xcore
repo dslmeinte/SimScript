@@ -214,38 +214,9 @@ enum VerticalAlignment {
 	middle = 2
 }
 
-class CountdownTimer extends Element {
-	boolean observed
-	contains Expression endTime
-	contains Expression onEnd
-}
-
 class ObserveElement extends Element {
 	contains Expression observeExpr
 	contains StatementBlock statementBlock
-}
-
-class CalendarElement extends Element {
-	contains Expression date
-	contains Expression onSelect
-	contains Expression allowFrom
-	String dateFormat
-	contains Expression days
-	String cssClass
-}
-
-class TimeSlotListElement extends Element {
-	contains Expression slots
-	contains Expression onSelect
-	contains Expression onDelete
-}
-
-class SlotAddElement extends Element {
-	contains Expression product
-	contains Expression day
-	contains Expression slots
-	contains Expression startHour
-	contains Expression endHour
 }
 
 class WhenElement extends Element {

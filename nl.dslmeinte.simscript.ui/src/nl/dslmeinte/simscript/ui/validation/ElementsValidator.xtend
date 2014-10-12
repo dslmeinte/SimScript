@@ -12,9 +12,7 @@ import nl.dslmeinte.simscript.ui.simUiDsl.Argument
 import nl.dslmeinte.simscript.ui.simUiDsl.Binding
 import nl.dslmeinte.simscript.ui.simUiDsl.BlockElement
 import nl.dslmeinte.simscript.ui.simUiDsl.ButtonElement
-import nl.dslmeinte.simscript.ui.simUiDsl.CalendarElement
 import nl.dslmeinte.simscript.ui.simUiDsl.ComponentInvocation
-import nl.dslmeinte.simscript.ui.simUiDsl.CountdownTimer
 import nl.dslmeinte.simscript.ui.simUiDsl.Element
 import nl.dslmeinte.simscript.ui.simUiDsl.ElementBody
 import nl.dslmeinte.simscript.ui.simUiDsl.FrameElement
@@ -248,34 +246,6 @@ class ElementsValidator extends ValidatorSupport {
 		&& param1.type.structure == structure
 		&& method.function
 		&& method.returnType.stringTyped
-	}
-
-	@Check
-	def void check_bind_site_of_count_down_timer_is_a_valid_lhs_if_observed(CountdownTimer it) {
-		if( observed && !endTime.isLValue ) {
-			error("bind site of an input must be a valid l-value", ePackage.inputElement_BindSite)
-		}
-	}
-
-	@Check
-	def void check_countdown_timer_onEnd_is_callback(CountdownTimer it) {
-		if( onEnd != null && !onEnd.type.callback ) {
-			error("onEnd must be a Callback", ePackage.countdownTimer_OnEnd)
-		}
-	}
-
-	@Check
-	def void check_calendar_onSelect_is_callback(CalendarElement it) {
-		if( onSelect != null && !onSelect.type.callback ) {
-			error("onSelect must be a Callback", ePackage.calendarElement_OnSelect)
-		}
-	}
-
-	@Check
-	def void check_calendar_allowFrom_is_date_typed(CalendarElement it) {
-		if( allowFrom != null && !allowFrom.type.dateTyped ) {
-			error("allowFrom must be date-typed", ePackage.calendarElement_AllowFrom)
-		}
 	}
 
 	@Check

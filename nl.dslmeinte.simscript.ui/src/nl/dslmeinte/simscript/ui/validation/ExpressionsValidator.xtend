@@ -14,7 +14,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.AdditiveOperators
 import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOrExpressionStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.BooleanBinaryOperatorExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctionExpression
-import nl.dslmeinte.simscript.ui.simUiDsl.CalendarElement
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackErrorResponseExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackResponseExpression
@@ -35,8 +34,8 @@ import nl.dslmeinte.simscript.ui.simUiDsl.ReferenceExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.SelectionExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.StructureCreationExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.TernaryExpression
-import nl.dslmeinte.simscript.ui.simUiDsl.TimeSlotListElement
 import nl.dslmeinte.simscript.ui.simUiDsl.ValueDeclaration
+import nl.dslmeinte.simscript.ui.simUiDsl.ValueSpecificationTypes
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.EReference
@@ -44,7 +43,6 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.ValidationMessageAcceptor
 
 import static nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctions.*
-import nl.dslmeinte.simscript.ui.simUiDsl.ValueSpecificationTypes
 
 @Singleton
 class ExpressionsValidator extends ValidatorSupport {
@@ -227,17 +225,12 @@ class ExpressionsValidator extends ValidatorSupport {
 	}
 
 	@Check
-	def void check_selection_only_used_within_onSelect_callback(SelectionExpression it) {
-		if( containerHaving(typeof(CalendarElement)) == null && containerHaving(typeof(TimeSlotListElement)) == null ) {
-			error("selection expression may only be used within a callback within a calendar statement", this)
-		}
-	}
-
-	@Check
 	def void check_argument_of(BuiltinFunctionExpression it) {
 		switch function {
+
 			case ALERT:		checkForPopup
 			case CONFIRM:	checkForPopup
+
 			case TO_MILLIS: if( !argument.type.dateTyped ) {
 								error("argument of toMillis function must be date-typed", ePackage.builtinFunctionExpression_Argument)
 							}

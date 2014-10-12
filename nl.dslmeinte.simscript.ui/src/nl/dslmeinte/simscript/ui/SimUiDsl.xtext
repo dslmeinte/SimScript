@@ -152,10 +152,6 @@ Element returns ui::Element:
 	// other elements:
 	| InputElement
 	| ButtonElement
-	| CountdownTimer
-	| CalendarElement
-	| TimeSlotListElement
-	| SlotAddElement
 	| ImageElement
 	| FrameElement
 	| LineBreakElement
@@ -392,56 +388,11 @@ enum VerticalAlignment returns ui::VerticalAlignment:
 	;
 
 
-CountdownTimer returns ui::CountdownTimer:
-	'countdownTimer' '(' observed?='observe'?  endTime=Expression ( 'onEnd' '=' onEnd=Expression )? ')'
-	;
-	/*
-	 * validation:
-	 *		1-  bindSite must be a proper target/valid left-hand side iff bound		[√]
-	 * 		2-  onEnd.type == CallbackExpression iff onEnd != null					[√]
-	 */
-
-
 ObserveElement returns ui::ObserveElement:
 	'observe' observeExpr=Expression statementBlock=StatementBlock
 	;
 	// TODO  document precise semantics (and how is it different from a Binding e.g.)
 
-
-CalendarElement returns ui::CalendarElement:
-	'calendar' '(' date=Expression
-		(
-			  ( 'onSelect' '=' onSelect=Expression )?
-			& ( 'allowFrom' '=' allowFrom=Expression )?
-			& ( 'dateFormat' '=' dateFormat=STRING )?
-			& ( 'cssForDays' '=' '(' 'days''=' days=Expression ',' 'class' '=' cssClass=STRING ')' )?
-		)
-	')'
-	;
-	/*
-	 * validation:
-	 * 		1-  onSelect.type == CallbackExpression		[√]
-	 * 		2-	allowFrom.type.dateTyped				[√]
-	 * 		3-	date.type.dateTyped						[ ]
-	 * 		4-  date.lhs???		TODO
-	 * 		5-	days.type.listTyped						[ ]
-	 * 		6-	days.type.listItemType.dateTyped		[ ]
-	 */
-
-
-TimeSlotListElement returns ui::TimeSlotListElement:
-	'timeSlotList' '(' slots=Expression 
-		(('onSelect' '=' onSelect=Expression)? & ('onDelete' '=' onDelete=Expression)?) ')'
-	;
-	/* validation:
-	 * 		1-	slots.type = [Slot]						[ ]
-	 */
-
-SlotAddElement returns ui::SlotAddElement:
-	'slotAddList' '('
-		product=Expression day=Expression slots=Expression ( '{' startHour=Expression 'to' endHour=Expression '}' )?
-	')'
-	;
 
 WhenElement returns ui::WhenElement:
 	'when' '(' condition=Expression ')' body=ElementBody
@@ -527,6 +478,7 @@ NonExitingStatement returns ui::NonExitingStatement:
 	| ListRemoveStatement
 	| ForStatement
 	| UnsetStatement
+//	| LegacyModalStatement	TODO
 	;
 
 

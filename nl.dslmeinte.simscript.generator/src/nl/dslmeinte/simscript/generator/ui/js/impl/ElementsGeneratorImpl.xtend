@@ -17,10 +17,8 @@ import nl.dslmeinte.simscript.ui.extensions.ViewableExtensions
 import nl.dslmeinte.simscript.ui.simUiDsl.Binding
 import nl.dslmeinte.simscript.ui.simUiDsl.BlockElement
 import nl.dslmeinte.simscript.ui.simUiDsl.ButtonElement
-import nl.dslmeinte.simscript.ui.simUiDsl.CalendarElement
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.ComponentInvocation
-import nl.dslmeinte.simscript.ui.simUiDsl.CountdownTimer
 import nl.dslmeinte.simscript.ui.simUiDsl.DefinedViewable
 import nl.dslmeinte.simscript.ui.simUiDsl.Element
 import nl.dslmeinte.simscript.ui.simUiDsl.ElementBody
@@ -40,13 +38,11 @@ import nl.dslmeinte.simscript.ui.simUiDsl.ObserveElement
 import nl.dslmeinte.simscript.ui.simUiDsl.Parameter
 import nl.dslmeinte.simscript.ui.simUiDsl.ProgressBarTabSet
 import nl.dslmeinte.simscript.ui.simUiDsl.Quotation
-import nl.dslmeinte.simscript.ui.simUiDsl.SlotAddElement
 import nl.dslmeinte.simscript.ui.simUiDsl.TabDeclaration
 import nl.dslmeinte.simscript.ui.simUiDsl.TableElement
 import nl.dslmeinte.simscript.ui.simUiDsl.TableRow
 import nl.dslmeinte.simscript.ui.simUiDsl.TableRowsDefinition
 import nl.dslmeinte.simscript.ui.simUiDsl.TableRowsInvocation
-import nl.dslmeinte.simscript.ui.simUiDsl.TimeSlotListElement
 import nl.dslmeinte.simscript.ui.simUiDsl.TopLevelDefinition
 import nl.dslmeinte.simscript.ui.simUiDsl.ValueDeclaration
 import nl.dslmeinte.simscript.ui.simUiDsl.VerticalAlignment
@@ -168,6 +164,7 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 				derivedValueFunction«derivedVariableCounter»();
 				'''
 			}
+			// TODO  add default case
 		}
 	}
 
@@ -355,7 +352,7 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 
 	def private groupOrientationStyle(GroupElement it) {
 		switch orientation {
-			case GroupOrientations.HORIZONTAL: '''display: inline-block;'''
+			case GroupOrientations.HORIZONTAL:	'''display: inline-block;'''
 			default:							''''''
 		}
 	}
@@ -365,6 +362,7 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 			case VerticalAlignment.TOP:	'''vertical-align: top;'''
 			case VerticalAlignment.MIDDLE:	'''vertical-align: middle;'''
 			case VerticalAlignment.BOTTOM:	'''vertical-align: bottom;'''
+			// TODO  add default case
 		}
 	}
 
@@ -586,95 +584,11 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 		)
 		'''
 
-	/**
-	 * Dependencies/Assumptions:
-	 * 1.)	Assumes the callback.asJs generates valid, callable javascript function. 
-	 */
-	private int countdownCounter = 0
-	def private dispatch CharSequence domCreate_(CountdownTimer it) {
-		countdownCounter = countdownCounter + 1
-		'''
-		var countdown«countdownCounter» = new CountDown(«endTime.asPlainJs», «IF onEnd==null»function(){}«ELSE»«onEnd.asPlainJs»«ENDIF», container);
-		«IF observed»«endTime.asObservableJs».addObserver(function(a) { countdown«countdownCounter».setDate(a.get()); });«ENDIF»
-		'''
-	}
-
-
 	def private dispatch domCreate_(ObserveElement it)
 		'''
 		«observeExpr.asObservableJs».addObserver(function() «statementBlock.asJs(ReturnFlags.returnsVoid)» );
 		'''
 
-
-	private int calendarCounter = 0
-	def private dispatch CharSequence domCreate_(CalendarElement it) {
-		calendarCounter = calendarCounter + 1
-		val counter = calendarCounter
-		'''
-		var calendar«counter» = $('<div>');
-		calendar«counter».datepicker({
-			«IF dateFormat!=null» dateFormat: "«dateFormat»",«ENDIF»
-			/*TODO onselect and allowfrom*/
-			onSelect : function(dateText, inst) {
-				if (!«date.asPlainJs» || !DateUtil.dateEquals($(this).datepicker('getDate'), «date.asPlainJs»)) {
-					«date.asObservableJs».set($(this).datepicker('getDate'));
-				}
-				«IF onSelect != null»
-					new «onSelect.asPlainJs»();
-				«ENDIF»
-			}
-			«IF days != null»
-			, beforeShowDay : function(date) {
-				if («days.asObservableJs».contains(new Item(date))) {
-					return [true, '«cssClass»'];
-				} else {
-					return [true, ""];
-				}
-			}
-			«ENDIF»
-		});
-		
-		«IF days != null»
-		«days.asObservableJs».addObserver(function() {
-			calendar«counter».datepicker('refresh');
-		});
-		«ENDIF»
-		
-		«date.asObservableJs».addObserver(function(a){
-			if (!DateUtil.dateEquals(calendar«counter».datepicker('getDate'), a.get())) {
-				calendar«counter».datepicker('setDate', a.get());
-			}
-		});
-		container.append(calendar«counter»);
-		'''
-	}
-
-
-	private int timeslotlistCounter = 0
-	def private dispatch CharSequence domCreate_(TimeSlotListElement it) {
-		timeslotlistCounter = timeslotlistCounter + 1
-		val counter = timeslotlistCounter
-		'''
-		var timeslotlist«counter» = new TimeSlotList(container);
-		«IF onDelete != null»
-			timeslotlist«counter».onDelete(function(slot){
-				function(selection) {
-					selection = new Item(selection);
-					«onDelete.asPlainJs»
-				}
-			});
-		«ENDIF»
-		«slots.asObservableJs».addObserver(function(a) { timeslotlist«counter».loadSlots(a.unwrap()); });
-		«IF onSelect != null»timeslotlist«counter».onSelect(function(slot){new «onSelect.asPlainJs»(new Item(slot));});«ENDIF»
-		timeslotlist«counter».loadSlots(«slots.asPlainJs»);
-		'''
-	}
-	
-	def private dispatch domCreate_(SlotAddElement it) {
-		'''
-		timeList(«slots.asObservableJs», container, «product.asObservableJs», «day.asObservableJs», «IF startHour == null»null«ELSE»«startHour.asPlainJs»«ENDIF», «IF endHour == null»null«ELSE»«endHour.asPlainJs»«ENDIF»);
-		'''
-	}
 
 	private int whenCounter = 0
 	def private dispatch CharSequence domCreate_(WhenElement it) {
