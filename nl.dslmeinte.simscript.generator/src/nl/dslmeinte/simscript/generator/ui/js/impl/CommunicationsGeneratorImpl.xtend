@@ -53,7 +53,7 @@ class CommunicationsGeneratorImpl implements CommunicationsGenerator {
 			var data = {«IF !notAuthenticated»authenticationInfo : auth.unwrap()«ENDIF»};
 			«IF inputType != null»data = $.extend(data, { '«inputType.structure.name.toFirstLower»' : ItemSerializer.serialize(input) });«ENDIF»
 			$.ajax({
-				url: '«baseUrl»«url»«suffix»',
+				url: '«baseUrl»«url»«suffix»',«/* TODO  make the baseUrl configurable from outside so we can use absolute paths but vary them (e.g., for Acceptance) */»
 				data: data,
 				dataType:'json',
 				type:'«method»',

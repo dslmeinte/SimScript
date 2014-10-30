@@ -13,4 +13,5 @@ public interface CommunicationsGenerator {
 	CharSequence interfaceFunctions(UiModule it);
 
 	CharSequence generateDeclarations(Iterable<Service> it);
+
 }

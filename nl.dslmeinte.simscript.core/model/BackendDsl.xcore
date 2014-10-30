@@ -7,7 +7,7 @@ import nl.dslmeinte.simscript.types.Structure
 import nl.dslmeinte.simscript.types.TypeLiteral
 
 class BackendModel {
-	String baseUrl
+	String baseUrl	// TODO  make this more flexible and configurable-from-outside
 	Flavors flavor
 	contains AuthenticationDeclaration[] authOpts
 	contains Service[] declarations

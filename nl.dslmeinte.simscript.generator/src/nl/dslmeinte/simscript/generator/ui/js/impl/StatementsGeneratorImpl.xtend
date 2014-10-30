@@ -10,7 +10,6 @@ import nl.dslmeinte.simscript.generator.ui.js.ViewableInvocationTypes
 import nl.dslmeinte.simscript.ui.extensions.StatementExtensions
 import nl.dslmeinte.simscript.ui.extensions.StructuralExtensions
 import nl.dslmeinte.simscript.ui.simUiDsl.AlertStatement
-import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOperator
 import nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOrExpressionStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.ExitModalStatement
@@ -28,6 +27,8 @@ import nl.dslmeinte.simscript.ui.simUiDsl.ShowModalStatement
 import nl.dslmeinte.simscript.ui.simUiDsl.Statement
 import nl.dslmeinte.simscript.ui.simUiDsl.StatementBlock
 import nl.dslmeinte.simscript.ui.simUiDsl.UnsetStatement
+
+import static nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOperator.*
 
 class StatementsGeneratorImpl implements StatementsGenerator {
 
@@ -87,10 +88,10 @@ class StatementsGeneratorImpl implements StatementsGenerator {
 		}
 
 		switch operator {
-			case AssignmentOperator.ASSIGN:		lhs.asAssignmentJs(rhs)
-			case AssignmentOperator.ADD:		lhs.asArrayAdditionAssignmentJs(rhs)
-			case AssignmentOperator.SUB:		lhs.asArraySubtractionAssignmentJs(rhs)
-			// TODO  add default case
+			case ASSIGN:	lhs.asAssignmentJs(rhs)
+			case ADD:		lhs.asArrayAdditionAssignmentJs(rhs)
+			case SUB:		lhs.asArraySubtractionAssignmentJs(rhs)
+			default:		throw new IllegalArgumentException("unhandled operator: " + operator)
 		}
 	}
 
@@ -152,7 +153,7 @@ class StatementsGeneratorImpl implements StatementsGenerator {
 		«ELSEIF containingModule.notAuthenticated»
 			var gotoModuleErrCallback«gotoModuleCounter» = function(response, error) «errorCallback.nullSafeAsJs»;
 			$.ajax({
-				url: '«CommunicationsGenerator.defaultApiBaseUrl»authenticate',
+				url: '«CommunicationsGenerator.defaultApiBaseUrl /* FIXME  this cannot work in general */»authenticate',
 				data: {authenticationInfo:{
 					type : '«authOption.name»',
 					'«principal.principal.name»' : «principal.valueExpr.asPlainJs»,
