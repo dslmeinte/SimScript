@@ -40,8 +40,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.TernaryExpression
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import org.eclipse.emf.ecore.EObject
 
-import static nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctions.*
-
 /*
  * This class could currently be @Singleton, but may want to introduce some settable state
  * regarding the context to quote text in and whether to escape for JS or HTML?		<== TODO  consider that <==

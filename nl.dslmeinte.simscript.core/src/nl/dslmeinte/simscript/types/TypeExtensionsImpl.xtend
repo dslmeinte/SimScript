@@ -15,7 +15,7 @@ class TypeExtensionsImpl implements TypeExtensions {
 
 	// built-in types:
 
-	def private isBuiltinTyped(TypeLiteral it)		{ it instanceof BuiltinTypeLiteral }
+	def private isBuiltinTyped(TypeLiteral it)	{ it instanceof BuiltinTypeLiteral }
 
 	def private isBuiltinTypedAs(TypeLiteral it, BuiltinTypes builtintType) {
 		builtinTyped && (it as BuiltinTypeLiteral).builtin == builtintType
@@ -23,11 +23,11 @@ class TypeExtensionsImpl implements TypeExtensions {
 
 	override isBooleanTyped(TypeLiteral it)		{ isBuiltinTypedAs(BOOLEAN) }
 	override isStringTyped(TypeLiteral it)		{ isBuiltinTypedAs(STRING) }
-	override isTextTyped(TypeLiteral it)			{ isBuiltinTypedAs(TEXT) }
+	override isTextTyped(TypeLiteral it)		{ isBuiltinTypedAs(TEXT) }
 	override isIntegerTyped(TypeLiteral it)		{ isBuiltinTypedAs(INTEGER) }
 	override isNumberTyped(TypeLiteral it)		{ isBuiltinTypedAs(NUMBER) }
-	override isDateTyped(TypeLiteral it)			{ isBuiltinTypedAs(DATE) }
-	override isPasswordTyped(TypeLiteral it)		{ isBuiltinTypedAs(PASSWORD) }
+	override isDateTyped(TypeLiteral it)		{ isBuiltinTypedAs(DATE) }
+	override isPasswordTyped(TypeLiteral it)	{ isBuiltinTypedAs(PASSWORD) }
 	override isEmailTyped(TypeLiteral it)		{ isBuiltinTypedAs(EMAIL) }
 
 	/**
@@ -52,15 +52,15 @@ class TypeExtensionsImpl implements TypeExtensions {
 
 	// non-built-in types:
 
-	override isListTyped(TypeLiteral it)			{ it instanceof ListTypeLiteral }
+	override isListTyped(TypeLiteral it)		{ it instanceof ListTypeLiteral }
 	override isDefinedTyped(TypeLiteral it)		{ it instanceof DefinedTypeLiteral }
 	override isStructureTyped(TypeLiteral it)	{ definedTyped && (it as DefinedTypeLiteral).type instanceof Structure }
 	override isEnumerationTyped(TypeLiteral it)	{ definedTyped && (it as DefinedTypeLiteral).type instanceof Enumeration }
 	override isCallback(TypeLiteral it)			{ it instanceof CallbackLiteral }
 	override isVaguelyTyped(TypeLiteral it)		{ listTyped && (it as ListTypeLiteral).itemType == null }
-	override isVoidTyped(TypeLiteral it)			{ it instanceof VoidLiteral }
+	override isVoidTyped(TypeLiteral it)		{ it instanceof VoidLiteral }
 
-	def private isLinkedTyped(TypeLiteral it) 		{ !(simpleTyped || listTyped) }
+	def private isLinkedTyped(TypeLiteral it) 	{ !(simpleTyped || listTyped) }
 
 	override listItemType(TypeLiteral it) {
 		checkedCast(typeof(ListTypeLiteral)).itemType

@@ -28,8 +28,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.Statement
 import nl.dslmeinte.simscript.ui.simUiDsl.StatementBlock
 import nl.dslmeinte.simscript.ui.simUiDsl.UnsetStatement
 
-import static nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOperator.*
-
 class StatementsGeneratorImpl implements StatementsGenerator {
 
 	@Inject extension JavaScriptUtil

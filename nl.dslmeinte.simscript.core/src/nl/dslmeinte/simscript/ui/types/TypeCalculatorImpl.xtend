@@ -47,7 +47,6 @@ import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.EObject
 
 import static nl.dslmeinte.simscript.types.BuiltinTypes.*
-import static nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctions.*
 
 /**
  * This class computes types of {@link Expression expressions} and other

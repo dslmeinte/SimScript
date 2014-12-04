@@ -22,8 +22,6 @@ import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.xtext.validation.Check
 
-import static nl.dslmeinte.simscript.ui.simUiDsl.AssignmentOperator.*
-
 @Singleton
 class StatementsValidator extends ValidatorSupport {
 

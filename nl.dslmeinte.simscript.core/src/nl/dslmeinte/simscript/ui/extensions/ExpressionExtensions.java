@@ -47,6 +47,6 @@ public interface ExpressionExtensions {
 	 */
 	LinkedHashSet<Expression> observeSingleton(Expression it);
 
-	Boolean isLValue(Expression it);
+	boolean isLValue(Expression it);
 
 }

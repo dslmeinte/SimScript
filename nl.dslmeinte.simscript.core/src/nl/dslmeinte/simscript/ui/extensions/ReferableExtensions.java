@@ -31,7 +31,7 @@ public interface ReferableExtensions {
 	/**
 	 * @return Whether this {@link Value} is variable, i.e. represents a variable.
 	 */
-	Boolean isVariable(Value it);
+	boolean isVariable(Value it);
 
 	/**
 	 * @return The type of the <em>value</em> {@link ListVariable} of the {@link ListElement} given.

@@ -29,8 +29,6 @@ import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
 import org.eclipse.emf.ecore.EObject
 
-import static nl.dslmeinte.simscript.ui.simUiDsl.BuiltinFunctions.*
-
 /**
  * Class with common extensions on {@link Expression expressions}.
  * 
@@ -53,13 +51,13 @@ class ExpressionExtensionsImpl implements ExpressionExtensions {
 	 * +-------------+
 	 */
 
-	def dispatch isLValue(FeatureAccessExpression it)		{ previous.LValue as boolean }	// (cast is necessary to get type inference to work in the face of recursion)
-	def dispatch isLValue(ReferenceExpression it)			{ ref.LValue_ }
-	def dispatch isLValue(Expression it)					{ false }						// (sentinel @ Expression-level)
+	def dispatch boolean isLValue(FeatureAccessExpression it)	{ previous.LValue }
+	def dispatch boolean isLValue(ReferenceExpression it)		{ ref.LValue_ }
+	def dispatch boolean isLValue(Expression it)				{ false }				// (sentinel @ Expression-level)
 
 	def private dispatch isLValue_(Value it)				{ variable }
 	def private dispatch isLValue_(Parameter it)			{ !(type.callback || type.voidTyped) }
-	def private dispatch isLValue_(ListVariable it) 		{ ifIndexVarThenElse([false], [valueVariableType.structureTyped]) }
+	def private dispatch isLValue_(ListVariable it) 		{ ifIndexVarThenElse([false], [valueVariableType.structureTyped]) as boolean }
 	def private dispatch isLValue_(Method it)				{ false }
 
 	// sentinel:

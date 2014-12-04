@@ -50,8 +50,6 @@ import nl.dslmeinte.simscript.ui.simUiDsl.WhenElement
 import nl.dslmeinte.simscript.ui.types.TypeCalculator
 import nl.dslmeinte.simscript.util.XtextUtil
 
-import static nl.dslmeinte.simscript.ui.simUiDsl.ValueSpecificationTypes.*
-
 /**
  * Generates the defined layout as DOM-generating JavaScript code.
  */
