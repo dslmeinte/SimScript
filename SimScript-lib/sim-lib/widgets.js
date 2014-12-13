@@ -1858,6 +1858,11 @@ var LoadSymbol = new function() {
 	}
 	
 }
+function downloadLink(container, url, argument) {
+
+	// TODO
+
+}
 var Modal = new function() {
 
 	var inModal = false;

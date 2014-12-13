@@ -20,6 +20,7 @@ import nl.dslmeinte.simscript.ui.simUiDsl.ButtonElement
 import nl.dslmeinte.simscript.ui.simUiDsl.CallbackExpression
 import nl.dslmeinte.simscript.ui.simUiDsl.ComponentInvocation
 import nl.dslmeinte.simscript.ui.simUiDsl.DefinedViewable
+import nl.dslmeinte.simscript.ui.simUiDsl.DownloadLinkElement
 import nl.dslmeinte.simscript.ui.simUiDsl.Element
 import nl.dslmeinte.simscript.ui.simUiDsl.ElementBody
 import nl.dslmeinte.simscript.ui.simUiDsl.FrameElement
@@ -217,6 +218,8 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 	def private dispatch CharSequence domCreate_(ComponentInvocation it)	'''«invocation(ViewableInvocationTypes.nested)»;'''
 
 	def private dispatch CharSequence domCreate_(LineBreakElement it) '''container.append("<br />");'''
+
+	def private dispatch CharSequence domCreate_(DownloadLinkElement it) '''downloadLink(container, «serviceId», {});'''	// FIXME  actually implement this
 
 	private int bindingCounter = 0
 	def private dispatch CharSequence domCreate_(Binding it) {

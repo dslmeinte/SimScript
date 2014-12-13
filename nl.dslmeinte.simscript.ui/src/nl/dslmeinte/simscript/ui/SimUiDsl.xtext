@@ -156,6 +156,7 @@ Element returns ui::Element:
 	| FrameElement
 	| LineBreakElement
 	| ObserveElement
+	| DownloadLinkElement
 	| LabeledTableRow
 	;
 
@@ -433,6 +434,12 @@ FrameElement returns ui::FrameElement:	// (not called 'IFrameElement' because of
 LineBreakElement returns ui::LineBreakElement:
 	{ui::LineBreakElement}
 	'line-break'
+	;
+
+
+DownloadLinkElement returns ui::DownloadLinkElement:
+	'download-link' serviceId=ServiceIdentification
+	('with' argument=Expression)?
 	;
 
 
