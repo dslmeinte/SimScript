@@ -221,7 +221,8 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 
 	def private dispatch CharSequence domCreate_(LineBreakElement it) '''container.append("<br />");'''
 
-	def private dispatch CharSequence domCreate_(DownloadLinkElement it) '''downloadLink(container, '«service.baseUrl»«service.url»«service.suffix»', {});'''	// TODO  passing of argument
+	def private dispatch CharSequence domCreate_(DownloadLinkElement it)
+		'''downloadLink(container, '«service.baseUrl»«service.url»«service.suffix»', «argument?.asPlainJs», «title?.asPlainJs»);'''
 
 	private int bindingCounter = 0
 	def private dispatch CharSequence domCreate_(Binding it) {

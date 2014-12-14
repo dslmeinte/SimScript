@@ -243,6 +243,7 @@ class LineBreakElement extends Element {}
 class DownloadLinkElement extends Element {
 	refers NamedService service
 	contains Expression argument
+	contains Expression title
 }
 
 
