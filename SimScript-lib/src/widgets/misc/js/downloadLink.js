@@ -1,11 +1,11 @@
 function downloadLink(container, url, argument, title) {
 
-	$('<button>').text(title || 'Download').click(function () {
+	$('<button>').text(title.unwrap() || 'Download').click(function () {
 		// kludge since triggering a download is not really an unload:
 		window.preventUserFromExiting = function () {
 			return false;
 		}
-		window.location = url;
+		window.location = url + '?' + $.param(argument.unwrap());
 		setTimeout(function () {
 			window.preventUserFromExiting = undefined;
 		}, 500);
