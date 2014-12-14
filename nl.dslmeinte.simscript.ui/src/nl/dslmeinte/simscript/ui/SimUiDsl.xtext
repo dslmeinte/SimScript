@@ -438,9 +438,13 @@ LineBreakElement returns ui::LineBreakElement:
 
 
 DownloadLinkElement returns ui::DownloadLinkElement:
-	'download-link' serviceId=ServiceIdentification
+	'download-link' service=[backend::NamedService]
 	('with' argument=Expression)?
 	;
+	/*
+	 * validation:
+	 * 		type of input parameter of service matches type of argument		[ ]
+	 */
 
 
 /*

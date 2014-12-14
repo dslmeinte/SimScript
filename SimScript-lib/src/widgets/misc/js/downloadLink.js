@@ -1,5 +1,7 @@
-function downloadLink(container, url, argument) {
+function downloadLink(container, url, argument, title) {
 
-	// TODO
+	$('<button>').text(title || 'Download').click(function () {
+		window.location = url;
+	}).appendTo(container);
 
 }

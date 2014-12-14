@@ -69,7 +69,7 @@ class BackendExtensions {
 		}
 	}
 
-	def suffix(Interface it) {
+	def suffix(Service it) {
 		val model = eContainer as BackendModel
 		if( model.flavor == Flavors.PHP ) {
 			".php"

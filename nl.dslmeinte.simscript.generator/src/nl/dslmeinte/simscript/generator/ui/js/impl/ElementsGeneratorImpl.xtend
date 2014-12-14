@@ -2,6 +2,7 @@ package nl.dslmeinte.simscript.generator.ui.js.impl
 
 import com.google.inject.Inject
 import java.util.Set
+import nl.dslmeinte.simscript.extensions.BackendExtensions
 import nl.dslmeinte.simscript.generator.ui.js.ElementsGenerator
 import nl.dslmeinte.simscript.generator.ui.js.ExpressionsGenerator
 import nl.dslmeinte.simscript.generator.ui.js.JavaScriptUtil
@@ -66,6 +67,7 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 	@Inject extension ViewableExtensions
 	@Inject extension StructuralExtensions
 	@Inject extension MethodExtensions
+	@Inject extension BackendExtensions
 
 	@Inject extension XtextUtil
 
@@ -219,7 +221,7 @@ class ElementsGeneratorImpl implements ElementsGenerator {
 
 	def private dispatch CharSequence domCreate_(LineBreakElement it) '''container.append("<br />");'''
 
-	def private dispatch CharSequence domCreate_(DownloadLinkElement it) '''downloadLink(container, «serviceId», {});'''	// FIXME  actually implement this
+	def private dispatch CharSequence domCreate_(DownloadLinkElement it) '''downloadLink(container, '«service.baseUrl»«service.url»«service.suffix»', {});'''	// TODO  passing of argument
 
 	private int bindingCounter = 0
 	def private dispatch CharSequence domCreate_(Binding it) {
