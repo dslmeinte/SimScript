@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.5.2";visibility:=reexport,
  nl.dslmeinte.simscript.simpleDb;bundle-version="1.0.0",
  nl.dslmeinte.simscript.backend;bundle-version="1.0.0",
  nl.dslmeinte.simscript.structure;bundle-version="1.0.0",
- nl.dslmeinte.simscript.core;bundle-version="1.0.0"
+ nl.dslmeinte.simscript.core;bundle-version="1.0.0",
+ org.eclipse.xtext.xbase.lib
 Import-Package: nl.dslmeinte.simscript.generator,
  nl.dslmeinte.simscript.generator.backend,
  org.apache.commons.logging,
@@ -37,4 +38,3 @@ Export-Package: nl.dslmeinte.simscript.mappings,
  nl.dslmeinte.simscript.mappings.serializer,
  nl.dslmeinte.simscript.mappings.services,
  nl.dslmeinte.simscript.mappings.validation
-

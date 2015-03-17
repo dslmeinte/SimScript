@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.5.2";visibility:=reexport,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- nl.dslmeinte.simscript.core;bundle-version="1.0.0"
+ nl.dslmeinte.simscript.core;bundle-version="1.0.0",
+ org.eclipse.xtext.xbase.lib
 Import-Package: nl.dslmeinte.simscript.util,
  org.apache.commons.logging,
  org.apache.log4j,
@@ -34,4 +35,3 @@ Export-Package: nl.dslmeinte.simscript.application,
  nl.dslmeinte.simscript.application.serializer,
  nl.dslmeinte.simscript.application.services,
  nl.dslmeinte.simscript.application.validation
-
