@@ -23,6 +23,6 @@ Import-Package: org.apache.commons.logging,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.osgi.framework;version="1.6.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: nl.dslmeinte.simscript.generator.ui

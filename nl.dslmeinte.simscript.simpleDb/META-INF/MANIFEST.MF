@@ -24,7 +24,7 @@ Import-Package: org.apache.log4j,
  org.apache.commons.logging,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend2.lib
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: nl.dslmeinte.simscript.simpleDb,
  nl.dslmeinte.simscript.simpleDb.formatting,
  nl.dslmeinte.simscript.simpleDb.generator,

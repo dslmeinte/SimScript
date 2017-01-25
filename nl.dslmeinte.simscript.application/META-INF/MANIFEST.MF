@@ -25,7 +25,7 @@ Import-Package: nl.dslmeinte.simscript.util,
  org.apache.log4j,
  org.eclipse.xtend2.lib,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: nl.dslmeinte.simscript.application,
  nl.dslmeinte.simscript.application.formatting,
  nl.dslmeinte.simscript.application.generator,

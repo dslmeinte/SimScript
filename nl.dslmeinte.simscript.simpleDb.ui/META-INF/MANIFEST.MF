@@ -19,7 +19,7 @@ Import-Package: nl.dslmeinte.simscript.structure.services,
  nl.dslmeinte.simscript.structure.ui.contentassist,
  org.apache.commons.logging,
  org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: nl.dslmeinte.simscript.simpleDb.ui.contentassist.antlr,
  nl.dslmeinte.simscript.simpleDb.ui.contentassist,
  nl.dslmeinte.simscript.simpleDb.ui.quickfix,
