@@ -23,5 +23,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: nl.dslmeinte.simscript.mappings.ui.contentassist,
  nl.dslmeinte.simscript.mappings.ui.contentassist.antlr,
  nl.dslmeinte.simscript.mappings.ui.internal,
- nl.dslmeinte.simscript.mappings.ui.quickfix
+ nl.dslmeinte.simscript.mappings.ui.quickfix,
+ nl.dslmeinte.simscript.mappings.ui.contentassist.antlr.internal
 Bundle-Activator: nl.dslmeinte.simscript.mappings.ui.internal.MappingsDslActivator

@@ -22,5 +22,6 @@ Import-Package: nl.dslmeinte.simscript.structure.services,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: nl.dslmeinte.simscript.backend.ui.contentassist,
  nl.dslmeinte.simscript.backend.ui.contentassist.antlr,
- nl.dslmeinte.simscript.backend.ui.quickfix
+ nl.dslmeinte.simscript.backend.ui.quickfix,
+ nl.dslmeinte.simscript.backend.ui.contentassist.antlr.internal
 Bundle-Activator: nl.dslmeinte.simscript.backend.ui.internal.SimBackendDslActivator

@@ -21,5 +21,6 @@ Import-Package: org.apache.log4j,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: nl.dslmeinte.simscript.structure.ui.contentassist,
  nl.dslmeinte.simscript.structure.ui.contentassist.antlr,
- nl.dslmeinte.simscript.structure.ui.quickfix
+ nl.dslmeinte.simscript.structure.ui.quickfix,
+ nl.dslmeinte.simscript.structure.ui.contentassist.antlr.internal
 Bundle-Activator: nl.dslmeinte.simscript.structure.ui.internal.SimStructureDslActivator

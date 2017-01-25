@@ -22,5 +22,6 @@ Import-Package: nl.dslmeinte.simscript.structure.services,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: nl.dslmeinte.simscript.simpleDb.ui.contentassist.antlr,
  nl.dslmeinte.simscript.simpleDb.ui.contentassist,
- nl.dslmeinte.simscript.simpleDb.ui.quickfix
+ nl.dslmeinte.simscript.simpleDb.ui.quickfix,
+ nl.dslmeinte.simscript.simpleDb.ui.contentassist.antlr.internal
 Bundle-Activator: nl.dslmeinte.simscript.simpleDb.ui.internal.SimpleDbDslActivator

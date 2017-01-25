@@ -828,7 +828,7 @@ NumberLiteral returns ecore::EBigDecimal hidden(): INT '.' INT;
 
 
 enum BooleanLiterals returns ui::BooleanLiterals:
-	false /* default */ | true
+	^false /* default */ | ^true
 	;
 
 

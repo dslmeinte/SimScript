@@ -303,7 +303,7 @@ LiteralExpression returns map::LiteralExpression:
 	;
 
 enum BooleanLiterals returns map::BooleanLiterals:
-	false /* == ord(0) */ | true /* == order(1) */
+	^false /* == ord(0) */ | ^true /* == order(1) */
 	;
 
 
