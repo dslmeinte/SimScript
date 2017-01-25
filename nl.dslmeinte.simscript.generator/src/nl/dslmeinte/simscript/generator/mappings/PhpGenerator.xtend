@@ -73,7 +73,7 @@ class PhpGenerator {
 						«ENDFOR»
 					);
 				«ENDIF»
-			$db_result = @mysql_query($query);
+			$db_result = @mysql_query($query);«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 			if( !$db_result ) {
 				die( "Could not execute query '" . $query . "' because of: " . mysql_error() );
 			}
@@ -84,7 +84,7 @@ class PhpGenerator {
 				}
 			«ENDIF»
 			«resultMapping(name)»
-			@mysql_free_result($db_result);
+			@mysql_free_result($db_result);«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 			return $result;
 		}
 
@@ -95,7 +95,7 @@ class PhpGenerator {
 
 	def asPhp(Object it) {
 		switch it {
-			UntypedParameter:				'''mysql_real_escape_string($«it.name»)'''
+			UntypedParameter:				'''mysql_real_escape_string($«it.name»)'''	// TODO  replace use of this PHP function with that of a non-deprecated one
 			ToDbMappingSpecification:		'''«it.column.type.wrapTo(it.expr.asPhp)»'''
 			ExpressionEqualitySubClause:	'''«it.column.type.wrapTo(it.expr.asPhp)»'''
 			BooleanLiteralExpression:		'''boolLit2NumVal('«it.literal.literal»')'''
@@ -109,21 +109,21 @@ class PhpGenerator {
 			'''
 			$result = null;
 			if( $num_rows == 1 ) {
-				$result = «name»_mapper(mysql_fetch_assoc($db_result));
+				$result = «name»_mapper(mysql_fetch_assoc($db_result));«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 			}
 			'''
 			else
 			'''
 			$result = array();
 			for( $i = 0; $i < $num_rows; $i++ ) {
-				array_push($result, «name»_mapper(mysql_fetch_assoc($db_result)));
+				array_push($result, «name»_mapper(mysql_fetch_assoc($db_result)));«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 			}
 			'''
 	}
 
 	def private dispatch resultMapping(CountQuery it, String name)
 		'''
-		$result = count_mapper(mysql_fetch_assoc($db_result));
+		$result = count_mapper(mysql_fetch_assoc($db_result));«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 		'''
 
 
@@ -182,11 +182,11 @@ class PhpGenerator {
 					«ENDFOR»
 				);
 			error_log("«name»: insert query string = ".$query);«/* TODO  remove later on */»
-			$db_result = @mysql_query($query);
+			$db_result = @mysql_query($query);«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 			«IF returnAutoIncrementColumn != null»
-				$auto_id = mysql_insert_id();
+				$auto_id = mysql_insert_id();«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 			«ENDIF»
-			@mysql_free_result($db_result);
+			@mysql_free_result($db_result);«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 			«IF returnAutoIncrementColumn != null»
 				return $auto_id;
 			«ENDIF»
@@ -206,8 +206,8 @@ class PhpGenerator {
 					«ENDFOR»
 				);
 			error_log("«name»: update query string = ".$query);«/* TODO  remove later on */»
-			$db_result = @mysql_query($query);
-			@mysql_free_result($db_result);
+			$db_result = @mysql_query($query);«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
+			@mysql_free_result($db_result);«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 		}
 
 		'''
@@ -218,7 +218,7 @@ class PhpGenerator {
 			switch type {
 				BooleanLiteral:	"boolLit2NumVal"
 				DateLiteral:	"sim2sql_date"
-				default:		"mysql_real_escape_string"
+				default:		"mysql_real_escape_string"	// TODO  replace use of this PHP function with that of a non-deprecated one
 			},
 			inner
 		)
@@ -258,11 +258,11 @@ class PhpGenerator {
 						«ENDFOR»
 					);
 				«ENDIF»
-			$db_result = @mysql_query($query);
+			$db_result = @mysql_query($query);«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 			if( !$db_result ) {
-				die( "Could not execute query '" . $query . "' because of: " . mysql_error() );
+				die( "Could not execute query '" . $query . "' because of: " . mysql_error() );«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 			}
-			@mysql_free_result($db_result);
+			@mysql_free_result($db_result);«/* TODO  replace use of this PHP function with that of a non-deprecated one */»
 		}
 
 		'''
