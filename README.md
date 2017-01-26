@@ -16,7 +16,7 @@ Steps to perform:
 
 2. Clone this repository locally (i.e., to your disk).
 
-3. Import all projects into Eclipse, except (currently) for the `nl.dslmeinte.simscript.tests` one.
+3. Import all projects into Eclipse, except (currently) for `nl.dslmeinte.simscript.tests` and `SimScript-examples`.
 
 4. Run (in any way you see fit) `dev-support/scripts/all-touchXtend`, and refresh (F5) all open projects in the workspace.
 
@@ -45,4 +45,28 @@ Steps to perform:
 6. Run the `run on Linux-Windows` or the `run on Mac` launch target located in `nl.dslmeinte.simscript.structure/.launch`, depending on your OS.
 	(This is mainly for the benefit of having small fonts under Mac OS X.)
 	If this is not pre-populated in the Run-dropdown, you'll have to use the Navigator View.
+
+
+## An example application
+
+After running SimScript (in the 2nd Eclipse instance; step 6 of the previous section), do the following:
+
+1. Import the `SimScript-example` project into the workspace.
+
+2. Verify that the following simlinks are present:
+
+	`SimScript-example/sim-lib/` &rarr; (`../`)`SimScript-lib/sim-lib`
+	`SimScript-example/src-gen/structureMapper.js` &rarr; `SimScript-example/src/gen/javascript/structureMapper.js`
+
+	(These could make it through Git, but I'm not entirely sure and can't be bothered to check it right now.)
+
+3. Rebuild the entire project to generate everything needed.
+
+	*Note*: unfortunately, the generator is not set up to build the entire project automatically when only a subset has been changed, causing only the artifacts for that subset to be emitted/generated.
+	This means you have to rebuild the entire project for every change (other than to the `.sim_app` file).
+
+4. Point a browser to `SimScript-example/src-gen/ExampleApp_app.html`.
+
+	You can also point directly to `SimScript-example/sr-gen/perModuleTest/Questionnaire.html` for the (slightly) more interesting stuff.
+	Note that screen isn't entirely working `:(` &hellip;
 

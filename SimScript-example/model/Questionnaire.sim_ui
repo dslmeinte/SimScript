@@ -1,0 +1,41 @@
+ui-module
+
+/*
+ * This "app" is based on the LWC Questionnaire assignment
+ * 	- see http://www.languageworkbenches.net/wp-content/uploads/2013/11/Call-for-Participation1.pdf
+ */
+
+screen questionnaire(name: String) {
+
+	block(header={"Questionnaire for " + name}) {
+		embed box1HouseOwning()
+	}
+
+}
+
+
+component box1HouseOwning() {
+
+	values {
+		hasSoldHouse = false
+		hasBoughtHouse = false
+		hasMaintLoan = false
+		sellingPrice: Number = 0.0
+		privateDebt: Number = 0.0
+		valueResidue <- sellingPrice - privateDebt
+	}
+
+	labeled-table {
+		label="Did you sell a house in 2010?"							{ input(hasSoldHouse) "Yes" }
+		label="Did you buy a house in 2010?"							{ input(hasBoughtHouse) "Yes" }
+		label="Did you enter a loan for maintenance/reconstruction?"	{ input(hasMaintLoan) "Yes" }
+		when(hasSoldHouse) {
+			label="Price the house was sold for:"		{ input(sellingPrice) "€" }
+			label="Private debts for the sold house:"	{ input(privateDebt) "€" }
+			label="Value residue:"						{ valueResidue "€" }
+				// FIXME  this value doesn't get updated
+		}
+	}
+
+}
+

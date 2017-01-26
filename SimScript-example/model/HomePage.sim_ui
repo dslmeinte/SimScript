@@ -1,0 +1,24 @@
+ui-module
+
+screen homePage() {
+
+	values {
+		namePlaceholder = "Your name"
+		name = "Your name"
+		nameIsEmpty <- (name == "")
+		nameIsValid <- !(nameIsEmpty || name == namePlaceholder)
+	}
+
+	"Welcome to the SimScript example application!"
+
+	labeled-table {
+		label="Your name"	{ input(name) }
+	}
+	when(!nameIsValid) {
+		"Input your name to go to questionnaire."
+	}
+	when(nameIsValid) {
+		button(text="Go to questionnaire" onClick={ goto-screen questionnaire(name=name) })
+	}
+
+}

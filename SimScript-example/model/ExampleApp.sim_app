@@ -1,0 +1,8 @@
+application
+	title="Example application"
+	target-platform=html5
+	with-default-css
+	included-modules HomePage Questionnaire
+	entry-module=HomePage
+	
+
